@@ -223,7 +223,7 @@ namespace DuiLib
 		if ( NULL == hDC || NULL == m_pGifImage ) return;
 		GUID pageGuid = Gdiplus::FrameDimensionTime;
 		Gdiplus::Graphics graphics( hDC );
-		graphics.DrawImage( m_pGifImage, m_rcItem.left, m_rcItem.top, m_rcItem.right-m_rcItem.left, m_rcItem.bottom-m_rcItem.top );
+		graphics.DrawImage( m_pGifImage, (INT)m_rcItem.left, m_rcItem.top, m_rcItem.right-m_rcItem.left, m_rcItem.bottom-m_rcItem.top );
 		m_pGifImage->SelectActiveFrame( &pageGuid, m_nFramePosition );
 	}
 }

@@ -280,6 +280,12 @@ namespace DuiLib {
 	{
 		IUnknown *pUnk = NULL;
 		HRESULT hr;
+#ifdef _UNICODE		
+		HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
+#else
+		HMODULE hmod = LoadLibrary(_T("Riched20.dll"));
+#endif
+		PCreateTextServices TextServicesProc = NULL;
 
 		m_re = re;
 		// Initialize Reference count
@@ -322,12 +328,6 @@ namespace DuiLib {
 
 		fInplaceActive = TRUE;
 
-		PCreateTextServices TextServicesProc = NULL;
-#ifdef _UNICODE		
-		HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
-#else
-		HMODULE hmod = LoadLibrary(_T("Riched20.dll"));
-#endif
 		if (hmod) {
 			TextServicesProc = (PCreateTextServices)GetProcAddress(hmod,"CreateTextServices");
 		}

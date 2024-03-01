@@ -296,7 +296,7 @@ namespace DuiLib
 			pRoot = builder.Create(xml, sSkinType, this, &m_pm);
 		}
 		else {
-			pRoot = builder.Create(GetSkinFile().GetData(), (UINT)0, this, &m_pm);
+			pRoot = builder.Create(GetSkinFile().GetData(), NULL, this, &m_pm);
 		}
 
 		if (pRoot == NULL) {

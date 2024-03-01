@@ -389,7 +389,7 @@ namespace DuiLib {
 						pControl = builder.Create((UINT)id, m_pstrtype, m_pCallback, pManager, pParent);
 					}
 					else {
-						pControl = builder.Create((LPCTSTR)szValue, (UINT)0, m_pCallback, pManager, pParent);
+						pControl = builder.Create((LPCTSTR)szValue, NULL, m_pCallback, pManager, pParent);
 					}
 				}
 				continue;
