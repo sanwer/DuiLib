@@ -20,6 +20,7 @@
 #endif
 #endif
 #define UILIB_COMDAT __declspec(selectany)
+#define Dui_Version  TEXT("2024.3.13.2116")
 
 #pragma warning(disable:4100 4121 4189 4251 4505)
 
