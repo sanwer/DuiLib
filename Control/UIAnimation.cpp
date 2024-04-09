@@ -71,7 +71,7 @@ namespace DuiLib {
 		}
 		else
 		{
-			size_t nCount = m_pImp->m_arAnimations.size();
+			int nCount = m_pImp->m_arAnimations.size();
 			for(int i=0; i<nCount; ++i)
 			{
 				CAnimationData* pData = m_pImp->m_arAnimations[i];
@@ -166,7 +166,7 @@ namespace DuiLib {
 	CAnimationData* CUIAnimation::GetAnimationDataByID(int nAnimationID)
 	{
 		CAnimationData* pRet = NULL;
-		size_t nCount = m_pImp->m_arAnimations.size();
+		int nCount = m_pImp->m_arAnimations.size();
 		for(int i=0; i<nCount; ++i)
 		{
 			if(m_pImp->m_arAnimations[i]->m_nAnimationID == nAnimationID)

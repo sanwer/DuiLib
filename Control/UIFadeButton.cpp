@@ -35,7 +35,7 @@ namespace DuiLib {
 	void CFadeButtonUI::DoEvent(TEventUI& event)
 	{
 		if( event.Type == UIEVENT_TIMER ) {
-			OnTimer((int)event.wParam);
+			OnTimer(  event.wParam );
 		}
 		else if(IsEnabled()) {
 			if( event.Type == UIEVENT_MOUSEENTER && !IsAnimationRunning( FADE_IN_ID ) )

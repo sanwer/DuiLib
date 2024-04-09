@@ -135,7 +135,8 @@ namespace DuiLib {
 	m_pOwner(NULL),
 		m_pLayout(),
 		m_xml(_T("")),
-		isClosing(false)
+		isClosing(false),
+		m_bCaptured(false)
 	{
 		m_dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top;
 	}
@@ -360,7 +361,7 @@ namespace DuiLib {
 			m_pm.GetDPIObj()->SetScale(CMenuWnd::GetGlobalContextMenuObserver().GetManager()->GetDPIObj()->GetDPI());
 			CDialogBuilder builder;
 
-			CControlUI* pRoot = builder.Create(m_xml, NULL, this, &m_pm);
+			CControlUI* pRoot = builder.Create(m_xml,UINT(0), this, &m_pm);
 			bShowShadow = m_pm.GetShadow()->IsShowShadow();
 			m_pm.GetShadow()->ShowShadow(false);
 			m_pm.AttachDialog(pRoot);
@@ -601,12 +602,24 @@ namespace DuiLib {
 				m_pOwner->SetFocus();
 			}
 			break;
-		case WM_RBUTTONDOWN:
 		case WM_CONTEXTMENU:
 		case WM_RBUTTONUP:
-		case WM_RBUTTONDBLCLK:
-			return 0L;
+			if(m_bCaptured) {
+				m_bCaptured = false;
+				ReleaseCapture();
+				if( m_pOwner != NULL )
+				{
+					m_pOwner->SetManager(m_pOwner->GetManager(), m_pOwner->GetParent(), false);
+					m_pOwner->SetPos(m_pOwner->GetPos());
+					m_pOwner->SetFocus();
+				}
+			}
 			break;
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONDBLCLK:
+			m_bCaptured = true;
+			SetCapture(m_hWnd);
+			return 0L;
 		default:
 			bHandled = FALSE;
 			break;
@@ -623,7 +636,7 @@ namespace DuiLib {
 	CMenuElementUI::CMenuElementUI():
 	m_pWindow(NULL),
 		m_bDrawLine(false),
-		m_dwLineColor(DEFAULT_LINE_COLOR),
+		m_dwLineColor((DWORD)DEFAULT_LINE_COLOR),
 		m_bCheckItem(false),
 		m_bShowExplandIcon(false)
 	{
@@ -772,7 +785,7 @@ namespace DuiLib {
 			SIZE cxyFixed = GetManager()->GetDPIObj()->Scale(m_cxyFixed);
 			int padding = GetManager()->GetDPIObj()->Scale(ITEM_DEFAULT_EXPLAND_ICON_WIDTH) / 3;
 			const TDrawInfo* pDrawInfo = GetManager()->GetDrawInfo((LPCTSTR)strExplandIcon, NULL);
-			const TImageInfo *pImageInfo = GetManager()->GetImageEx(pDrawInfo->sImageName, NULL, 0);
+			const TImageInfo *pImageInfo = GetManager()->GetImageEx(pDrawInfo->sImageName, NULL, 0, false, pDrawInfo->bGdiplus);
 			if (!pImageInfo) {
 				return;
 			}

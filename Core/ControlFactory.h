@@ -40,6 +40,14 @@ public:\
 
 #define INNER_REGISTER_DUICONTROL(class_name)\
 	RegistControl(_T(#class_name), (CreateClass)class_name::CreateControl);
+
+
+#define INNER_REGISTER_DUICONTROL_EX(str_class_name,class_type)\
+	{\
+		CDuiString sRegClassName;\
+		sRegClassName.Format(_T("C%sUI"), str_class_name); \
+		RegistControl(sRegClassName, (CreateClass)class_type::CreateControl);\
+    }
 }
 
 #endif //__CONTROL_FACTORY_H__

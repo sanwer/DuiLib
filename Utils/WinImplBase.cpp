@@ -46,17 +46,17 @@ namespace DuiLib
 
 	LRESULT WindowImplBase::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM /*lParam*/, bool& /*bHandled*/)
 	{
-		if (uMsg == WM_KEYDOWN)
-		{
-			switch (wParam)
-			{
-			case VK_RETURN:
-			case VK_ESCAPE:
-				return ResponseDefaultKeyEvent(wParam);
-			default:
-				break;
-			}
-		}
+        if (uMsg == WM_KEYDOWN)
+        {
+            switch (wParam)
+            {
+            case VK_RETURN:
+            case VK_ESCAPE:
+                return ResponseDefaultKeyEvent(wParam);
+            default:
+                break;
+            }
+        }
 		return FALSE;
 	}
 
@@ -143,6 +143,21 @@ namespace DuiLib
 
 		RECT rcClient;
 		::GetClientRect(*this, &rcClient);
+		
+		CControlUI* pMaxBtn = static_cast<CControlUI*>(m_pm.FindControl(_T("maxbtn")));
+		CControlUI* pRestoreBtn = static_cast<CControlUI*>(m_pm.FindControl(_T("restorebtn")));
+		if (pMaxBtn && pMaxBtn->IsVisible()) {
+			RECT rcBtn = pMaxBtn->GetPos();
+			if (::PtInRect(&rcBtn, pt)) {
+				return HTMAXBUTTON;
+			}
+		}
+		else if (pRestoreBtn && pRestoreBtn->IsVisible()) {
+			RECT rcBtn = pRestoreBtn->GetPos();
+			if (::PtInRect(&rcBtn, pt)) {
+				return HTMAXBUTTON;
+			}
+		}
 
 		if (!::IsZoomed(*this))
 		{
@@ -232,6 +247,13 @@ namespace DuiLib
 			HRGN hRgn = ::CreateRoundRectRgn(rcWnd.left, rcWnd.top, rcWnd.right, rcWnd.bottom, szRoundCorner.cx, szRoundCorner.cy);
 			::SetWindowRgn(*this, hRgn, TRUE);
 			::DeleteObject(hRgn);
+
+			if (m_pm.IsValid() && wParam == SIZE_RESTORED) {
+				CControlUI* pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("maxbtn")));
+				if (pControl) pControl->SetVisible(true);
+				pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("restorebtn")));
+				if (pControl) pControl->SetVisible(false);
+			}
 		}
 #endif
 		bHandled = FALSE;
@@ -296,7 +318,7 @@ namespace DuiLib
 			pRoot = builder.Create(xml, sSkinType, this, &m_pm);
 		}
 		else {
-			pRoot = builder.Create(GetSkinFile().GetData(), NULL, this, &m_pm);
+			pRoot = builder.Create(GetSkinFile().GetData(), (UINT)0, this, &m_pm);
 		}
 
 		if (pRoot == NULL) {
@@ -364,6 +386,45 @@ namespace DuiLib
 		case WM_NCCALCSIZE:		lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled); break;
 		case WM_NCPAINT:		lRes = OnNcPaint(uMsg, wParam, lParam, bHandled); break;
 		case WM_NCHITTEST:		lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled); break;
+		case WM_NCLBUTTONDOWN:
+		case WM_NCLBUTTONUP:
+		case WM_NCLBUTTONDBLCLK: {
+			if (wParam == HTMAXBUTTON) {
+				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+				::ScreenToClient(m_hWnd, &pt);
+				LPARAM param = MAKELPARAM(pt.x, pt.y);
+				if (uMsg == WM_NCLBUTTONDOWN) {
+					::SendMessage(m_hWnd, WM_LBUTTONDOWN, wParam, param);
+				}
+				else if (uMsg == WM_NCLBUTTONUP) {
+					::SendMessage(m_hWnd, WM_LBUTTONUP, wParam, param);
+				}
+				return 0;
+			}
+			bHandled = FALSE;
+			break;
+		}
+		case WM_NCMOUSEHOVER:
+		case WM_NCMOUSELEAVE:
+		case WM_NCMOUSEMOVE: {
+			if (wParam == HTMAXBUTTON) {
+				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+				::ScreenToClient(m_hWnd, &pt);
+				LPARAM param = MAKELPARAM(pt.x, pt.y);
+				if (uMsg == WM_NCMOUSEHOVER) {
+					//::SendMessage(m_hWnd, WM_MOUSEHOVER, wParam, param);
+				}
+				else if (uMsg == WM_NCMOUSELEAVE) {
+					//::SendMessage(m_hWnd, WM_MOUSELEAVE, wParam, param);
+				}
+				else {
+					::SendMessage(m_hWnd, WM_MOUSEMOVE, wParam, param);
+				}
+				return 0;
+			}
+			bHandled = FALSE;
+			break;
+		}
 		case WM_GETMINMAXINFO:	lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled); break;
 		case WM_MOUSEWHEEL:		lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled); break;
 #endif

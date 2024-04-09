@@ -131,7 +131,7 @@ namespace DuiLib {
 		if( m_sText == pstrText ) return;
 
 		m_sText = pstrText;
-		// Ω‚Œˆxmlªª––∑˚
+		// Ëß£ÊûêxmlÊç¢Ë°åÁ¨¶
 		m_sText.Replace(_T("{\\n}"), _T("\n"));
 		Invalidate();
 	}
@@ -837,7 +837,7 @@ namespace DuiLib {
 				::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(GetCursor())));
 			}
 			else {
-				::SetCursor(::LoadCursor(NULL, IDC_ARROW));
+				::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_ARROW)));
 			}
 			return;
 		}
@@ -939,7 +939,7 @@ namespace DuiLib {
 
 	void CControlUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
-		// —˘ Ω±Ì
+		// Ê†∑ÂºèË°®
 		if(m_pManager != NULL &&  _tcsicmp(pstrName, _T("style")) == 0) {
 			LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
 			if( pStyle != NULL) {
@@ -947,7 +947,7 @@ namespace DuiLib {
 				return;
 			}
 		}
-		//  Ù–‘
+		// Â±ûÊÄß
 		if( _tcsicmp(pstrName, _T("innerstyle")) == 0 ) {
 			ApplyAttributeList(pstrValue);
 		}
@@ -965,7 +965,7 @@ namespace DuiLib {
 		}
 		else if( _tcsicmp(pstrName, _T("float")) == 0 ) {
 			CDuiString nValue = pstrValue;
-			// ∂ØÃ¨º∆À„œ‡∂‘±»¿˝
+			// Âä®ÊÄÅËÆ°ÁÆóÁõ∏ÂØπÊØî‰æã
 			if(nValue.Find(',') < 0) {
 				SetFloat(_tcsicmp(pstrValue, _T("true")) == 0);
 			}
@@ -982,7 +982,7 @@ namespace DuiLib {
 		}
 		else if( _tcsicmp(pstrName, _T("floatalign")) == 0) {
 			UINT uAlign = GetFloatAlign();
-			// Ω‚ŒˆŒƒ◊÷ Ù–‘
+			// Ëß£ÊûêÊñáÂ≠óÂ±ûÊÄß
 			while( *pstrValue != _T('\0') ) {
 				CDuiString sValue;
 				while( *pstrValue == _T(',') || *pstrValue == _T(' ') ) pstrValue = ::CharNext(pstrValue);
@@ -1150,7 +1150,7 @@ namespace DuiLib {
 
 	CControlUI* CControlUI::ApplyAttributeList(LPCTSTR pstrValue)
 	{
-		// Ω‚Œˆ—˘ Ω±Ì
+		// Ëß£ÊûêÊ†∑ÂºèË°®
 		if(m_pManager != NULL) {
 			LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
 			if( pStyle != NULL) {
@@ -1159,13 +1159,22 @@ namespace DuiLib {
 		}
 		CDuiString sXmlData = pstrValue;
 		sXmlData.Replace(_T("&quot;"), _T("\""));
+		sXmlData.Replace(_T("\r"), _T(" "));
+		sXmlData.Replace(_T("\n"), _T(" "));
+		sXmlData.Replace(_T("\t"), _T(" "));
+		sXmlData.Trim();
+
 		LPCTSTR pstrList = sXmlData.GetData();
-		// Ω‚Œˆ—˘ Ω Ù–‘
+		// Ëß£ÊûêÊ†∑ÂºèÂ±ûÊÄß
 		CDuiString sItem;
 		CDuiString sValue;
 		while( *pstrList != _T('\0') ) {
 			sItem.Empty();
 			sValue.Empty();
+			while (*pstrList != _T('\0')  && (*pstrList == _T(' ')) )
+			{
+				pstrList++;
+			}
 			while( *pstrList != _T('\0') && *pstrList != _T('=') ) {
 				LPTSTR pstrTemp = ::CharNext(pstrList);
 				while( pstrList < pstrTemp) {
@@ -1213,7 +1222,7 @@ namespace DuiLib {
 
 	bool CControlUI::DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl)
 	{
-		// ªÊ÷∆—≠–Ú£∫±≥æ∞—’…´->±≥æ∞Õº->◊¥Ã¨Õº->Œƒ±æ->±ﬂøÚ
+		// ÁªòÂà∂Âæ™Â∫èÔºöËÉåÊôØÈ¢úËâ≤->ËÉåÊôØÂõæ->Áä∂ÊÄÅÂõæ->ÊñáÊú¨->ËæπÊ°Ü
 		SIZE cxyBorderRound = GetBorderRound();
 		RECT rcBorderSize = GetBorderRectSize();
 
@@ -1296,7 +1305,7 @@ namespace DuiLib {
 		RECT rcBorderSize = GetBorderRectSize();
 		
 		if(m_dwBorderColor != 0 || m_dwFocusBorderColor != 0) {
-			//ª≠‘≤Ω«±ﬂøÚ
+			//ÁîªÂúÜËßíËæπÊ°Ü
 			if(nBorderSize > 0 && ( cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0 )) {
 				if (IsFocused() && m_dwFocusBorderColor != 0)
 					CRenderEngine::DrawRoundRect(hDC, m_rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(m_dwFocusBorderColor), m_nBorderStyle);

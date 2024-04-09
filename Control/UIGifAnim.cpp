@@ -160,8 +160,15 @@ namespace DuiLib
 
 	void CGifAnimUI::InitGifImage()
 	{
-		m_pGifImage = CRenderEngine::GdiplusLoadImage(GetBkImage());
+		TImageInfo* pImageInfo = CRenderEngine::GdiplusLoadImage(GetBkImage());
+		if(pImageInfo != NULL) {
+			m_pGifImage = pImageInfo->pImage;
+
+			delete pImageInfo;
+			pImageInfo = NULL;
+		}
 		if ( NULL == m_pGifImage ) return;
+
 		UINT nCount	= 0;
 		nCount	=	m_pGifImage->GetFrameDimensionsCount();
 		GUID* pDimensionIDs	=	new GUID[ nCount ];
@@ -223,7 +230,7 @@ namespace DuiLib
 		if ( NULL == hDC || NULL == m_pGifImage ) return;
 		GUID pageGuid = Gdiplus::FrameDimensionTime;
 		Gdiplus::Graphics graphics( hDC );
-		graphics.DrawImage( m_pGifImage, (INT)m_rcItem.left, m_rcItem.top, m_rcItem.right-m_rcItem.left, m_rcItem.bottom-m_rcItem.top );
+		graphics.DrawImage( m_pGifImage, m_rcItem.left, m_rcItem.top, m_rcItem.right-m_rcItem.left, m_rcItem.bottom-m_rcItem.top );
 		m_pGifImage->SelectActiveFrame( &pageGuid, m_nFramePosition );
 	}
 }

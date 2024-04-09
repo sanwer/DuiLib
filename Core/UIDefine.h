@@ -120,6 +120,9 @@ namespace DuiLib
 #define DUI_MSGTYPE_LISTHEADITEMCHECKED    (_T("listheaditemchecked"))
 #define DUI_MSGTYPE_LISTPAGECHANGED        (_T("listpagechanged"))
 
+#define DUI_MSGTYPE_PAGECHANED				(_T("page_selected_changed"))
+
+
 	//////////////////////////////////////////////////////////////////////////
 
 	struct DUI_MSGMAP_ENTRY;
@@ -258,24 +261,31 @@ protected:                                                                \
 	//////////////END消息映射宏定义////////////////////////////////////////////////////
 
 
-	//////////////BEGIN控件名称宏定义//////////////////////////////////////////////////
-	///
+//////////////BEGIN控件名称宏定义//////////////////////////////////////////////////
+///
+#define  DUI_CTR_BOX                             (_T("Box"))
 
 #define  DUI_CTR_EDIT                            (_T("Edit"))
 #define  DUI_CTR_LIST                            (_T("List"))
 #define  DUI_CTR_TEXT                            (_T("Text"))
+#define  DUI_CTR_HBOX                            (_T("HBox"))
+#define  DUI_CTR_VBOX                            (_T("VBox"))
+#define  DUI_CTR_RING                            (_T("Ring"))
 
 #define  DUI_CTR_COMBO                           (_T("Combo"))
 #define  DUI_CTR_LABEL                           (_T("Label"))
-#define  DUI_CTR_FLASH                             (_T("Flash"))
+#define  DUI_CTR_FLASH                           (_T("Flash"))
 
 #define  DUI_CTR_BUTTON                          (_T("Button"))
 #define  DUI_CTR_OPTION                          (_T("Option"))
 #define  DUI_CTR_SLIDER                          (_T("Slider"))
+#define  DUI_CTR_TAB_BOX                         (_T("TabBox"))
 
 #define  DUI_CTR_CONTROL                         (_T("Control"))
 #define  DUI_CTR_ACTIVEX                         (_T("ActiveX"))
 #define  DUI_CTR_GIFANIM                         (_T("GifAnim"))
+#define	 DUI_CTR_TILE_BOX                        (_T("TileBox"))
+#define  DUI_CTR_LOADINGCIRCLE                   (_T("Loading"))
 
 #define  DUI_CTR_LISTITEM                        (_T("ListItem"))
 #define  DUI_CTR_PROGRESS                        (_T("Progress"))
@@ -285,6 +295,7 @@ protected:                                                                \
 #define  DUI_CTR_DATETIME                        (_T("DateTime"))
 #define  DUI_CTR_TREEVIEW                        (_T("TreeView"))
 #define  DUI_CTR_TREENODE                        (_T("TreeNode"))
+#define  DUI_CTR_CHILD_BOX                       (_T("ChildBox"))
 
 #define  DUI_CTR_CONTAINER                       (_T("Container"))
 #define  DUI_CTR_TABLAYOUT                       (_T("TabLayout"))

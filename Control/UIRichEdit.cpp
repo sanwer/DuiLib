@@ -280,12 +280,6 @@ namespace DuiLib {
 	{
 		IUnknown *pUnk = NULL;
 		HRESULT hr;
-#ifdef _UNICODE		
-		HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
-#else
-		HMODULE hmod = LoadLibrary(_T("Riched20.dll"));
-#endif
-		PCreateTextServices TextServicesProc = NULL;
 
 		m_re = re;
 		// Initialize Reference count
@@ -328,6 +322,12 @@ namespace DuiLib {
 
 		fInplaceActive = TRUE;
 
+		PCreateTextServices TextServicesProc = NULL;
+#ifdef _UNICODE		
+		HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
+#else
+		HMODULE hmod = LoadLibrary(_T("Riched20.dll"));
+#endif
 		if (hmod) {
 			TextServicesProc = (PCreateTextServices)GetProcAddress(hmod,"CreateTextServices");
 		}
@@ -1861,6 +1861,37 @@ err:
 		}
 	}
 
+    CDuiSize CRichEditUI::GetNaturalSize(LONG width, LONG height)
+    {
+        if (width < 0)
+        {
+            width = 0;
+        }
+        if (height < 0)
+        {
+            height = 0;
+        }
+        CDuiSize sz(0, 0);
+        LONG lWidth = width;
+        LONG lHeight = height;
+        SIZEL szExtent = { -1, -1 };
+
+        if (m_pTwh)
+        {
+            m_pTwh->GetTextServices()->TxGetNaturalSize(
+                DVASPECT_CONTENT,
+                m_pManager->GetPaintDC(),
+                NULL,
+                NULL,
+                TXTNS_FITTOCONTENT,
+                &szExtent,
+                &lWidth,
+                &lHeight);
+        }
+        sz.cx = (int)lWidth;
+        sz.cy = (int)lHeight;
+        return sz;
+    }
 	// 多行非rich格式的richedit有一个滚动条bug，在最后一行是空行时，LineDown和SetScrollPos无法滚动到最后
 	// 引入iPos就是为了修正这个bug
 	void CRichEditUI::SetScrollPos(SIZE szPos, bool bMsg)
@@ -2042,6 +2073,11 @@ err:
 		{
 			return;
 		}
+
+		if( event.Type == UIEVENT_MOUSEENTER ) 
+		{
+			return;
+		}
 		if( event.Type == UIEVENT_BUTTONUP ) 
 		{
 			return;
@@ -2088,17 +2124,19 @@ err:
 		}
 
 		if( m_pTwh != NULL ) {
+			RECT rcTextPadding = GetTextPadding();
 			RECT rcScrollTextView = rcScrollView;
-			rcScrollTextView.left += m_rcTextPadding.left;
-			rcScrollTextView.right -= m_rcTextPadding.right;
-			rcScrollTextView.top += m_rcTextPadding.top;
-			rcScrollTextView.bottom -= m_rcTextPadding.bottom;
+			rcScrollTextView.left += rcTextPadding.left;
+			rcScrollTextView.right -= rcTextPadding.right;
+			rcScrollTextView.top += rcTextPadding.top;
+			rcScrollTextView.bottom -= rcTextPadding.bottom;
 			RECT rcText = rc;
-			rcText.left += m_rcTextPadding.left;
-			rcText.right -= m_rcTextPadding.right;
-			rcText.top += m_rcTextPadding.top;
-			rcText.bottom -= m_rcTextPadding.bottom;
+			rcText.left += rcTextPadding.left;
+			rcText.right -= rcTextPadding.right;
+			rcText.top += rcTextPadding.top;
+			rcText.bottom -= rcTextPadding.bottom;
 			m_pTwh->SetClientRect(&rcScrollTextView);
+
 			if( bVScrollBarVisiable && (!m_pVerticalScrollBar->IsVisible() || m_bVScrollBarFixing) ) {
 				LONG lWidth = rcText.right - rcText.left + m_pVerticalScrollBar->GetFixedWidth();
 				LONG lHeight = 0;
@@ -2567,6 +2605,9 @@ err:
 							bWasHandled = false;
 							return 0;
 						}
+						else {
+							break;
+						}
 					}
 					break;
 				}
@@ -2576,16 +2617,18 @@ err:
 			if( dwHitResult == HITRESULT_OUTSIDE ) {
 				RECT rc;
 				m_pTwh->GetControlRect(&rc);
+
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 				if( uMsg == WM_SETCURSOR ) {
 					::GetCursorPos(&pt);
 					::ScreenToClient(GetManager()->GetPaintWindow(), &pt);
 				}
 				else if( uMsg == WM_MOUSEWHEEL ) ::ScreenToClient(GetManager()->GetPaintWindow(), &pt);
+
 				if( ::PtInRect(&rc, pt) && !GetManager()->IsCaptured() ) dwHitResult = HITRESULT_HIT;
 			}
 			if( dwHitResult != HITRESULT_HIT ) return 0;
-			if( uMsg == WM_SETCURSOR ) bWasHandled = false;
+			if( uMsg == WM_SETCURSOR || uMsg == WM_MOUSEMOVE ) bWasHandled = false;
 			else if( uMsg == WM_LBUTTONDOWN || uMsg == WM_LBUTTONDBLCLK || uMsg == WM_RBUTTONDOWN ) {
 				if (!GetManager()->IsNoActivate()) ::SetFocus(GetManager()->GetPaintWindow());
 				SetFocus();

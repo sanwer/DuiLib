@@ -324,6 +324,9 @@ namespace DuiLib
 		CDuiString Left(int nLength) const;
 		CDuiString Mid(int iPos, int nLength = -1) const;
 		CDuiString Right(int nLength) const;
+		CDuiString& TrimLeft();
+		CDuiString& TrimRight();
+		CDuiString& Trim();
 
 		int Find(TCHAR ch, int iPos = 0) const;
 		int Find(LPCTSTR pstr, int iPos = 0) const;
@@ -354,7 +357,7 @@ namespace DuiLib
 		}
 		vResults.push_back(text);
 		return vResults;
-	}
+}
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 

@@ -51,7 +51,7 @@ namespace DuiLib
 		if( event.Type == UIEVENT_SETCURSOR ) {
 			for( int i = 0; i < m_nLinks; i++ ) {
 				if( ::PtInRect(&m_rcLinks[i], event.ptMouse) ) {
-					::SetCursor(::LoadCursor(NULL, IDC_HAND));
+					::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_HAND)));
 					return;
 				}
 			}
@@ -126,7 +126,7 @@ namespace DuiLib
 		
 		if (m_bAutoCalcWidth)
 		{
-			m_cxyFixed.cx = MulDiv(cXY.cx, 100, GetManager()->GetDPIObj()->GetScale());
+			m_cxyFixed.cx = MulDiv(cXY.cx, 100.0, GetManager()->GetDPIObj()->GetScale());
 		}
 
 		return CControlUI::EstimateSize(szAvailable);

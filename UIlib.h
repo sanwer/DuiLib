@@ -20,9 +20,13 @@
 #endif
 #endif
 #define UILIB_COMDAT __declspec(selectany)
-#define Dui_Version  TEXT("2024.3.13.2116")
+#define Dui_Version  TEXT("2024.4.9.2136")
 
-#pragma warning(disable:4100 4121 4189 4251 4505)
+#pragma warning(disable:4505)
+#pragma warning(disable:4251)
+#pragma warning(disable:4189)
+#pragma warning(disable:4121)
+#pragma warning(disable:4100)
 
 #if defined _M_IX86
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
@@ -112,9 +116,10 @@
 #include "Control/UIHotKey.h"
 #include "Control/UIFadeButton.h"
 #include "Control/UIRing.h"
+#include "Control/UILoading.h"
+#include "Control/UIPageControl.h"
 
 #pragma comment( lib, "comctl32.lib" )
-#pragma comment( lib, "Gdi32.lib" )
 #pragma comment( lib, "GdiPlus.lib" )
 #pragma comment( lib, "Imm32.lib" )
 

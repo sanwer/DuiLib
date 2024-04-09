@@ -134,7 +134,7 @@ namespace DuiLib {
 				CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
 				if (pLItem != NULL && pLItem == msg.pSender)
 				{
-					OnListItemChecked(LOWORD(msg.wParam), HIWORD(msg.wParam), (BOOL)msg.lParam);
+					OnListItemChecked(LOWORD(msg.wParam), HIWORD(msg.wParam), msg.lParam);
 					break;
 				}
 			}
@@ -168,8 +168,8 @@ namespace DuiLib {
 		else if (_tcsicmp(strName, _T("ListEx_Combo")) == 0 && m_pComboBoxUI && m_nRow >= 0 && m_nColum >= 0)
 		{
 			int  iCurSel, iOldSel;
-			iCurSel = (int)msg.wParam;
-			iOldSel = (int)msg.lParam;
+			iCurSel = msg.wParam;
+			iOldSel = msg.lParam;
 
 			if(_tcsicmp(msg.sType, DUI_MSGTYPE_SETFOCUS) == 0)
 			{
@@ -392,7 +392,7 @@ namespace DuiLib {
 		else return 0;
 	}
 
-	void CListContainerHeaderItemUI::SetEnabled(bool bEnable)
+	void CListContainerHeaderItemUI::SetEnabled(BOOL bEnable)
 	{
 		CContainerUI::SetEnabled(bEnable);
 		if( !IsEnabled() ) {
@@ -745,7 +745,7 @@ namespace DuiLib {
 			else
 				rcSeparator.right+=4;
 			if( IsEnabled() && m_bDragable && ::PtInRect(&rcSeparator, event.ptMouse) ) {
-				::SetCursor(::LoadCursor(NULL, IDC_SIZEWE));
+				::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_SIZEWE)));
 				return;
 			}
 		}
@@ -1139,7 +1139,7 @@ Label_ForeImage:
 		if( event.Type == UIEVENT_SETCURSOR ) {
 			for( int i = 0; i < m_nLinks; i++ ) {
 				if( ::PtInRect(&m_rcLinks[i], event.ptMouse) ) {
-					::SetCursor(::LoadCursor(NULL, IDC_HAND));
+					::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_HAND)));
 					return;
 				}
 			}      

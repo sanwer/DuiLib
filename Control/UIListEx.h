@@ -83,7 +83,7 @@ namespace DuiLib {
 		LPVOID GetInterface(LPCTSTR pstrName);
 		UINT GetControlFlags() const;
 
-		void SetEnabled(bool bEnable = true);
+		void SetEnabled(BOOL bEnable = TRUE);
 
 		BOOL IsDragable() const;
 		void SetDragable(BOOL bDragable);

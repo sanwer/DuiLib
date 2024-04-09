@@ -230,12 +230,7 @@ namespace DuiLib {
 				m_mTextResourceHashMap.Insert(lpstrId, (LPVOID)lpstrFind);
 			}
 		}
-
-		//return lpstrFind == NULL ? lpstrId : *lpstrFind;
-		if (lpstrFind == NULL)
-			return lpstrId;
-		else
-			return *lpstrFind;
+		return lpstrFind == NULL ? lpstrId : *lpstrFind;
 	}
 
 	void CResourceManager::ReloadText()

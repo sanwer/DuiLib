@@ -71,7 +71,7 @@ namespace DuiLib{
 				::InvalidateRect(m_hWnd, &rcClient, FALSE);
 			}
 		}
-		else if( uMsg == WM_KEYDOWN && wParam == VK_RETURN ) {
+		else if( uMsg == WM_KEYDOWN && TCHAR(wParam) == VK_RETURN ) {
 			m_pOwner->GetManager()->SendNotify(m_pOwner, _T("return"));
 		}
 		else if ( (uMsg == WM_NCACTIVATE) || (uMsg == WM_NCACTIVATE) || (uMsg == WM_NCCALCSIZE) )
@@ -147,7 +147,7 @@ namespace DuiLib{
 	DWORD CHotKeyWnd::GetHotKey() const
 	{
 		ASSERT(::IsWindow(m_hWnd));
-		return ((DWORD)::SendMessage(m_hWnd, HKM_GETHOTKEY, 0, 0L));
+		return (::SendMessage(m_hWnd, HKM_GETHOTKEY, 0, 0L));
 	}
 
 	void CHotKeyWnd::GetHotKey(WORD &wVirtualKeyCode, WORD &wModifiers) const
@@ -269,7 +269,7 @@ namespace DuiLib{
 
 		if( event.Type == UIEVENT_SETCURSOR && IsEnabled() )
 		{
-			::SetCursor(::LoadCursor(NULL, IDC_IBEAM));
+			::SetCursor(::LoadCursor(NULL, MAKEINTRESOURCE(IDC_IBEAM)));
 			return;
 		}
 		if( event.Type == UIEVENT_WINDOWSIZE )
