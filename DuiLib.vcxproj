@@ -30,6 +30,13 @@
     <ProjectGuid>{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}</ProjectGuid>
     <RootNamespace>DuiLib</RootNamespace>
     <ProjectName>DuiLib</ProjectName>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '17.0'">v143</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '16.0' And '$(PlatformToolset)' == ''">v142</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '15.0' And '$(PlatformToolset)' == ''">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '14.0' And '$(PlatformToolset)' == ''">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '12.0' And '$(PlatformToolset)' == ''">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' >= '11.0' And '$(PlatformToolset)' == ''">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0' Or '$(PlatformToolset)' == ''">v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -347,4 +354,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(VisualStudioVersion)' >= '14.0'">
+    <ClCompile>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(VisualStudioVersion)' >= '15.0'">
+    <ClCompile>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>
