@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UIPageControl.h"
 
 #pragma warning(disable:4996)
@@ -322,13 +322,13 @@ namespace DuiLib
             }
         }
 
-        //��������
+        //更新索引
         UpdateItemIndex();
 
-        //����ҳ��
+        //更新页码
         UpdatePageNo(0, true);
 
-        //ѡ��
+        //选中
         if (m_nSelPageNo == -1 || m_nSelPageNo > m_nShowPage)
         {
             SelectPage(0);
@@ -440,7 +440,7 @@ namespace DuiLib
         if (nGotoPageNo > 0 && nGotoPageNo <= m_nMaxPage)
         {
             int nExistsPageNoIdx = GetIndexByPageNo(nGotoPageNo);
-            //ҳ����ڵ��ǲ������һ��ҳ��
+            //页面存在但是不是最后一个页码
             if (nExistsPageNoIdx != -1 && nExistsPageNoIdx != m_OptPageNoArr.GetSize() - 1)
             {
                 SelectPage(nExistsPageNoIdx);
@@ -473,7 +473,7 @@ namespace DuiLib
         }
         else if (bAutoGotoOneWhenError)
         {
-            DUITRACE(_T("����Խ�磬ѡ�е�һ��ҳ"));
+            DUITRACE(_T("索引越界，选中第一个页"));
             SelectPage(0);
         }
     }
@@ -568,10 +568,10 @@ namespace DuiLib
                 if (iPageIndex == m_OptPageNoArr.GetSize() - 1)
                 {
                     int nPrePageNo = GetPageNoByControl((CControlUI*)m_OptPageNoArr[m_OptPageNoArr.GetSize() - 2]);
-                    //ǰN-1�����µ����һҳ
+                    //前N-1个更新到最后一页
                     int nDelta = m_nMaxPage - nPrePageNo - 1;
                     UpdatePageNo(nDelta);
-                    //����more��ť�Ƿ���ʾ
+                    //更新more按钮是否显示
                     UpdateMoreBtnVisiable();
                 }
 
@@ -593,10 +593,10 @@ namespace DuiLib
                 int nFirstPageNo = GetPageNoByControl((COptionUI*)m_OptPageNoArr[0]);
                 int iPageIndex = ((COptionUI*)m_OptPageNoArr[0])->GetTag();
 
-                //��һ��ҳ����1
+                //第一个页码是1
                 if (nFirstPageNo == 1)
                 {
-                    //����ѡ��,��ǰѡ�в��ǵ�һҳ
+                    //左移选中,当前选中不是第一页
                     if (iCurSelIndex != 0) SelectPage(--iCurSelIndex);
                 }
                 else
@@ -605,17 +605,17 @@ namespace DuiLib
                     {
                         //if (iCurSelIndex >= 0)
                         {
-                            //ǰN-1��ҳ��-1
+                            //前N-1个页码-1
                             UpdatePageNo(-1);
-                            //���ƶ�����ѡ��
+                            //不移动更新选中
                             SelectPage(iCurSelIndex);
                         }
 
                     }
-                    //(ѡ�����һ��)
+                    //(选中最后一个)
                     else
                     {
-                        //����ѡ��
+                        //左移选中
                         SelectPage(--iCurSelIndex);
                     }
                 }
@@ -628,20 +628,20 @@ namespace DuiLib
                 int nCurSelPage = GetCurSel();
                 int nCurSelIdx = m_ConCurSel->GetTag();
 
-                //��ǰѡ���ǵ����ڶ���֮ǰ��ҳ
+                //当前选中是倒数第二个之前的页
                 if (nCurSelIdx < GetShowPageNum() - 1)
                 {
-                    //��������һ�����ఴť���߲��ǵ����ڶ�����ť
+                    //不存在下一个更多按钮或者不是倒数第二个按钮
                     if (!IsExistNextMore() || nCurSelIdx != GetShowPageNum() - 2)
                     {
-                        //����ѡ��
+                        //右移选中
                         SelectPage(++nCurSelIdx);
                     }
-                    else//���ڸ��ఴť
+                    else//存在更多按钮
                     {
-                        //ҳ��+1
+                        //页码+1
                         UpdatePageNo(1);
-                        //֪ͨѡ��
+                        //通知选中
                         SelectPage(nCurSelIdx);
                     }
                 }

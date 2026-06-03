@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UIResourceManager.h"
 
 namespace DuiLib {
@@ -57,7 +57,7 @@ namespace DuiLib {
 		LPCTSTR pstrValue = NULL;
 		LPTSTR pstr = NULL;
 
-		//����ͼƬ��Դ
+		//锟斤拷锟斤拷图片锟斤拷源
 		LPCTSTR pstrId = NULL;
 		LPCTSTR pstrPath = NULL;
 		for( CMarkupNode node = Root.GetChild() ; node.IsValid(); node = node.GetSibling() ) 
@@ -67,7 +67,7 @@ namespace DuiLib {
 			if(ChildNode.IsValid()) LoadResource(node);
 			else if ((_tcsicmp(pstrClass,_T("Image")) == 0) && node.HasAttributes())
 			{
-				//����ͼƬ��Դ
+				//锟斤拷锟斤拷图片锟斤拷源
 				nAttributes = node.GetAttributeCount();
 				for( int i = 0; i < nAttributes; i++ ) 
 				{
@@ -89,7 +89,7 @@ namespace DuiLib {
 				m_mImageHashMap.Insert(pstrId, (LPVOID)new CDuiString(pstrPath));
 			}
 			else if( _tcsicmp(pstrClass,_T("Xml")) == 0 && node.HasAttributes()) {
-				//����XML�����ļ�
+				//锟斤拷锟斤拷XML锟斤拷锟斤拷锟侥硷拷
 				nAttributes = node.GetAttributeCount();
 				for( int i = 0; i < nAttributes; i++ ) 
 				{
@@ -177,7 +177,7 @@ namespace DuiLib {
 		LPCTSTR pstrValue = NULL;
 		LPTSTR pstr = NULL;
 
-		//����ͼƬ��Դ
+		//锟斤拷锟斤拷图片锟斤拷源
 		LPCTSTR pstrId = NULL;
 		LPCTSTR pstrText = NULL;
 		for( CMarkupNode node = Root.GetChild() ; node.IsValid(); node = node.GetSibling() ) 
@@ -185,7 +185,7 @@ namespace DuiLib {
 			pstrClass = node.GetName();
 			if ((_tcsicmp(pstrClass,_T("Text")) == 0) && node.HasAttributes())
 			{
-				//����ͼƬ��Դ
+				//锟斤拷锟斤拷图片锟斤拷源
 				nAttributes = node.GetAttributeCount();
 				for( int i = 0; i < nAttributes; i++ ) 
 				{
@@ -230,13 +230,13 @@ namespace DuiLib {
 				m_mTextResourceHashMap.Insert(lpstrId, (LPVOID)lpstrFind);
 			}
 		}
-		return lpstrFind == NULL ? lpstrId : *lpstrFind;
+		return lpstrFind == NULL ? lpstrId : lpstrFind->GetData();
 	}
 
 	void CResourceManager::ReloadText()
 	{
 		if(m_pQuerypInterface == NULL) return;
-		//������������
+		//锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 		LPCTSTR lpstrId = NULL;
 		LPCTSTR lpstrText;
 		for( int i = 0; i < m_mTextResourceHashMap.GetSize(); i++ )

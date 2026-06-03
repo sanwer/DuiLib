@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 
 #include "UIMenu.h"
 
@@ -240,7 +240,7 @@ namespace DuiLib {
 		m_xml = xml;
 		m_dwAlignment = dwAlignment;
 
-		// �����һ���˵��Ĵ���
+		// 锟斤拷锟斤拷锟揭伙拷锟斤拷说锟斤拷拇锟斤拷锟?
 		if (pOwner == NULL)
 		{
 			ASSERT(pMainPaintManager != NULL);
@@ -308,7 +308,7 @@ namespace DuiLib {
 			m_pOwner->m_uButtonState &= ~ UISTATE_PUSHED;
 			m_pOwner->Invalidate();
 
-			// �ڲ��������ڲ�ɾ��
+			// 锟节诧拷锟斤拷锟斤拷锟斤拷锟节诧拷删锟斤拷
 			delete this;
 		}
 	}
@@ -361,7 +361,7 @@ namespace DuiLib {
 			m_pm.GetDPIObj()->SetScale(CMenuWnd::GetGlobalContextMenuObserver().GetManager()->GetDPIObj()->GetDPI());
 			CDialogBuilder builder;
 
-			CControlUI* pRoot = builder.Create(m_xml,UINT(0), this, &m_pm);
+			CControlUI* pRoot = builder.Create(m_xml, NULL, this, &m_pm);
 			bShowShadow = m_pm.GetShadow()->IsShowShadow();
 			m_pm.GetShadow()->ShowShadow(false);
 			m_pm.AttachDialog(pRoot);
@@ -397,7 +397,7 @@ namespace DuiLib {
 		szAvailable = pRoot->EstimateSize(szAvailable);
 		m_pm.SetInitSize(szAvailable.cx, szAvailable.cy);
 
-		//������Menu��ǩ��Ϊxml�ĸ��ڵ�
+		//锟斤拷锟斤拷锟斤拷Menu锟斤拷签锟斤拷为xml锟侥革拷锟节碉拷
 		CMenuUI *pMenuRoot = static_cast<CMenuUI*>(pRoot);
 		ASSERT(pMenuRoot);
 

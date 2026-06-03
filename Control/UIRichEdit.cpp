@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIRichEdit.h"
 
 #ifdef _USEIMM
@@ -162,7 +162,7 @@ namespace DuiLib {
 		unsigned	fTimer				:1;	// A timer is set
 		unsigned    fCaptured           :1;
 		unsigned    fShowCaret          :1;
-		unsigned    fNeedFreshCaret     :1; // ĞŞÕı¸Ä±ä´óĞ¡ºóµã»÷ÆäËûÎ»ÖÃÔ­À´¹â±ê²»ÄÜÏû³ıµÄÎÊÌâ
+		unsigned    fNeedFreshCaret     :1; // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿä¾¥æ†‹æ‹·é”Ÿå«â˜…æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿè½¿ä¼™æ‹·é”Ÿçš†î…¨æ‹·é”Ÿæ–¤æ‹·é”Ÿç–¥ä¸é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 
 		INT         iCaretWidth;
 		INT         iCaretHeight;
@@ -280,6 +280,8 @@ namespace DuiLib {
 	{
 		IUnknown *pUnk = NULL;
 		HRESULT hr;
+		PCreateTextServices TextServicesProc = NULL;
+		HMODULE hmod = NULL;
 
 		m_re = re;
 		// Initialize Reference count
@@ -322,11 +324,10 @@ namespace DuiLib {
 
 		fInplaceActive = TRUE;
 
-		PCreateTextServices TextServicesProc = NULL;
-#ifdef _UNICODE		
-		HMODULE hmod = LoadLibrary(_T("Msftedit.dll"));
+		#ifdef _UNICODE		
+		hmod = LoadLibrary(_T("Msftedit.dll"));
 #else
-		HMODULE hmod = LoadLibrary(_T("Riched20.dll"));
+		hmod = LoadLibrary(_T("Riched20.dll"));
 #endif
 		if (hmod) {
 			TextServicesProc = (PCreateTextServices)GetProcAddress(hmod,"CreateTextServices");
@@ -1892,8 +1893,8 @@ err:
         sz.cy = (int)lHeight;
         return sz;
     }
-	// ¶àĞĞ·Çrich¸ñÊ½µÄricheditÓĞÒ»¸ö¹ö¶¯Ìõbug£¬ÔÚ×îºóÒ»ĞĞÊÇ¿ÕĞĞÊ±£¬LineDownºÍSetScrollPosÎŞ·¨¹ö¶¯µ½×îºó
-	// ÒıÈëiPos¾ÍÊÇÎªÁËĞŞÕıÕâ¸öbug
+	// é”Ÿæ–¤æ‹·é”Ÿå«å‡¤æ‹·riché”Ÿæ–¤æ‹·å¼é”Ÿæ–¤æ‹·richedité”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·bugé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ­ä¼™æ‹·é”Ÿæ–¤æ‹·å¼ºé”Ÿæ–¤æ‹·é”Ÿç»æ†‹æ‹·é”ŸçµƒineDowné”Ÿæ–¤æ‹·SetScrollPosé”Ÿç«å‡¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
+	// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·iPosé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿçµ™ug
 	void CRichEditUI::SetScrollPos(SIZE szPos, bool bMsg)
 	{
 		int cx = 0;
@@ -2329,7 +2330,7 @@ err:
 				}
 			}
 		}
-		// »æÖÆÌáÊ¾ÎÄ×Ö
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç¤ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		CDuiString sDrawText = GetText();
 		if(sDrawText.IsEmpty() && !m_bFocused) {
 			DWORD dwTextColor = GetTipValueColor();
@@ -2571,7 +2572,7 @@ err:
 		if( uMsg == WM_MOUSEWHEEL && (LOWORD(wParam) & MK_CONTROL) == 0 ) return 0;
 
 		if (uMsg == WM_IME_COMPOSITION) {
-			// ½â¾öÎ¢ÈíÊäÈë·¨Î»ÖÃÒì³£µÄÎÊÌâ
+			// é”Ÿæ–¤æ‹·é”Ÿè½¿î®æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ••ã„ä¼™æ‹·é”Ÿæ–¤æ‹·æ–ï½æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 			HIMC hIMC = ImmGetContext(GetManager()->GetPaintWindow());
 			if (hIMC)  {
 				POINT point;
@@ -2665,7 +2666,7 @@ err:
 		}
 #endif
 		else if( uMsg == WM_CONTEXTMENU ) {
-			// RichEditÊÇ·ñÖ§³ÖÓÒ¼ü²Ëµ¥£¬Ê¹ÓÃmenuÊôĞÔÀ´¿ØÖÆ
+			// RichEdité”Ÿè§’å‡¤æ‹·æ”¯é”Ÿæ–¤æ‹·é”Ÿæ­ç¡·æ‹·é”Ÿå‰¿ç¢‰æ‹·é”Ÿæ–¤æ‹·ä½¿é”Ÿæ–¤æ‹·menué”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 			if(!IsContextMenuUsed()) {
 				bWasHandled = false;
 				return 0;
@@ -2677,19 +2678,19 @@ err:
 				bWasHandled = false;
 				return 0;
 			}
-			//´´½¨Ò»¸öµ¯³öÊ½²Ëµ¥
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å¼é”Ÿå‰¿ç¢‰æ‹·
 			HMENU hPopMenu = CreatePopupMenu();
-			AppendMenu(hPopMenu, 0, ID_RICH_UNDO, _T("³·Ïú(&U)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_REDO, _T("ÖØ×ö(&R)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_UNDO, _T("é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·(&U)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_REDO, _T("é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·(&R)"));
 			AppendMenu(hPopMenu, MF_SEPARATOR, 0, _T(""));
-			AppendMenu(hPopMenu, 0, ID_RICH_CUT, _T("¼ôÇĞ(&X)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_COPY, _T("¸´ÖÆ(&C)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_PASTE, _T("Õ³Ìû(&V)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_CLEAR, _T("Çå¿Õ(&L)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_CUT, _T("é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·(&X)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_COPY, _T("é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·(&C)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_PASTE, _T("ç²˜é”Ÿæ–¤æ‹·(&V)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_CLEAR, _T("é”Ÿæ–¤æ‹·é”Ÿ?&L)"));
 			AppendMenu(hPopMenu, MF_SEPARATOR, 0, _T(""));
-			AppendMenu(hPopMenu, 0, ID_RICH_SELECTALL, _T("È«Ñ¡(&A)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_SELECTALL, _T("å…¨é€‰(&A)"));
 
-			//³õÊ¼»¯²Ëµ¥Ïî
+			//é”Ÿæ–¤æ‹·å§‹é”Ÿæ–¤æ‹·é”Ÿå‰¿ç¢‰æ‹·é”Ÿæ–¤æ‹·
 			UINT uUndo = (CanUndo() ? 0 : MF_GRAYED);
 			EnableMenuItem(hPopMenu, ID_RICH_UNDO, MF_BYCOMMAND | uUndo);
 			UINT uRedo = (CanRedo() ? 0 : MF_GRAYED);

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 
 namespace DuiLib {
 
@@ -10,8 +10,8 @@ namespace DuiLib {
 	CControlUI* CDialogBuilder::Create(STRINGorID xml, LPCTSTR type, IDialogBuilderCallback* pCallback, 
 		CPaintManagerUI* pManager, CControlUI* pParent)
 	{
-		//��ԴIDΪ0-65535�������ֽڣ��ַ���ָ��Ϊ4���ֽ�
-		//�ַ�����<��ͷ��Ϊ��XML�ַ�����������Ϊ��XML�ļ�
+		//锟斤拷源ID为0-65535锟斤拷锟斤拷锟斤拷锟街节ｏ拷锟街凤拷锟斤拷指锟斤拷为4锟斤拷锟街斤拷
+		//锟街凤拷锟斤拷锟斤拷<锟斤拷头锟斤拷为锟斤拷XML锟街凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷为锟斤拷XML锟侥硷拷
 		if(HIWORD(xml.m_lpstr) != NULL && *(xml.m_lpstr) != _T('<')) {
 			LPCTSTR xmlpath = CResourceManager::GetInstance()->GetXmlPath(xml.m_lpstr);
 			if (xmlpath != NULL) {
@@ -384,12 +384,12 @@ namespace DuiLib {
 				if ( !node.GetAttributeValue(_T("source"), szValue, cchLen) ) continue;
 				for ( int i = 0; i < count; i++ ) {
 					CDialogBuilder builder;
-					if( m_pstrtype != NULL ) { // ʹ����Դdll������Դ�ж�ȡ
+					if( m_pstrtype != NULL ) { // 使锟斤拷锟斤拷源dll锟斤拷锟斤拷锟斤拷源锟叫讹拷取
 						WORD id = (WORD)_tcstol(szValue, &pstr, 10); 
 						pControl = builder.Create((UINT)id, m_pstrtype, m_pCallback, pManager, pParent);
 					}
 					else {
-						pControl = builder.Create((LPCTSTR)szValue, (UINT)0, m_pCallback, pManager, pParent);
+						pControl = builder.Create((LPCTSTR)szValue, NULL, m_pCallback, pManager, pParent);
 					}
 				}
 				continue;
@@ -399,7 +399,7 @@ namespace DuiLib {
 				strClass.Format(_T("C%sUI"), pstrClass);
 				pControl = dynamic_cast<CControlUI*>(CControlFactory::GetInstance()->CreateControl(strClass));
 
-				// �����
+				// 锟斤拷锟斤拷锟?
 				if( pControl == NULL ) {
 					CStdPtrArray* pPlugins = CPaintManagerUI::GetPlugins();
 					LPCREATECONTROL lpCreateControl = NULL;
@@ -411,7 +411,7 @@ namespace DuiLib {
 						}
 					}
 				}
-				// �ص�����
+				// 锟截碉拷锟斤拷锟斤拷
 				if( pControl == NULL && m_pCallback != NULL ) {
 					pControl = m_pCallback->CreateControl(pstrClass);
 				}
@@ -419,7 +419,7 @@ namespace DuiLib {
 
 			if( pControl == NULL ) {
 #ifdef _DEBUG
-				DUITRACE(_T("δ֪�ؼ�:%s"), pstrClass);
+				DUITRACE(_T("未知锟截硷拷:%s"), pstrClass);
 #else
 				continue;
 #endif
@@ -430,13 +430,13 @@ namespace DuiLib {
 				_Parse(&node, pControl, pManager);
 			}
 			// Attach to parent
-			// ��ΪĳЩ���Ժ͸�������أ�����selected��������Add��������
+			// 锟斤拷为某些锟斤拷锟皆和革拷锟斤拷锟斤拷锟斤拷兀锟斤拷锟斤拷锟絪elected锟斤拷锟斤拷锟斤拷锟斤拷Add锟斤拷锟斤拷锟斤拷锟斤拷
 			CTreeViewUI* pTreeView = NULL;
 			if( pParent != NULL && pControl != NULL ) {
 				CTreeNodeUI* pParentTreeNode = static_cast<CTreeNodeUI*>(pParent->GetInterface(_T("TreeNode")));
 				CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode")));
 				pTreeView = static_cast<CTreeViewUI*>(pParent->GetInterface(_T("TreeView")));
-				// TreeNode�ӽڵ�
+				// TreeNode锟接节碉拷
 				if(pTreeNode != NULL) {
 					if(pParentTreeNode) {
 						pTreeView = pParentTreeNode->GetTreeView();
@@ -456,11 +456,11 @@ namespace DuiLib {
 						}
 					}
 				}
-				// TreeNode�ӿؼ�
+				// TreeNode锟接控硷拷
 				else if(pParentTreeNode != NULL) {
 					pParentTreeNode->GetTreeNodeHoriznotal()->Add(pControl);
 				}
-				// ��ͨ�ؼ�
+				// 锟斤拷通锟截硷拷
 				else {
 					if( pContainer == NULL ) pContainer = static_cast<IContainerUI*>(pParent->GetInterface(_T("IContainer")));
 					ASSERT(pContainer);

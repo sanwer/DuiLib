@@ -1,4 +1,4 @@
-#ifndef __UIPageControl_H
+ï»¿#ifndef __UIPageControl_H
 #define __UIPageControl_H
 
 #pragma once
@@ -13,32 +13,32 @@ namespace DuiLib
         //maxpage="20,6"
         void SetMaxPages(int nPages, int nShowNum = 6);
         void SetMaxChar(int nNum = 2);
-        //ÉèÖÃ×ÖÌå[font="1"]
+        //è®¾ç½®å­—ä½“[font="1"]
         void SetFont(int nFont);
 
-        //ÉèÖÃÒ³ÂëÑ¡ÖĞµÄÑÕÉ«[pageselectedtextcolor]
+        //è®¾ç½®é¡µç é€‰ä¸­çš„é¢œè‰²[pageselectedtextcolor]
         void SetPageSelectedTextColor(DWORD cr = 0xFF4EB857);
-        //ÉèÖÃÑ¡ÖĞµÄÒ³°´Å¥±³¾°É«[pageselectedbkcolor]
+        //è®¾ç½®é€‰ä¸­çš„é¡µæŒ‰é’®èƒŒæ™¯è‰²[pageselectedbkcolor]
         void SetPageSelectedBkColor(DWORD cr = 0x00000000);
 
-        //ÉèÖÃÒ³ÂëÎÄ×ÖÑÕÉ«[pagetextcolor]
+        //è®¾ç½®é¡µç æ–‡å­—é¢œè‰²[pagetextcolor]
         void SetPageNormalTextColor(DWORD cr = 0xff000000);
-        //ÉèÖÃ°´Å¥±³¾°ÑÕÉ«[pagebkcolor]
+        //è®¾ç½®æŒ‰é’®èƒŒæ™¯é¢œè‰²[pagebkcolor]
         void SetPageBkColor(DWORD cr = 0x00000000);
 
-        //ÉèÖÃhot°´Å¥±³¾°É«[pagehotbkcolor]
+        //è®¾ç½®hotæŒ‰é’®èƒŒæ™¯è‰²[pagehotbkcolor]
         void SetPageHotBkColor(DWORD cr = 0x00000000);
-        //ÉèÖÃhot×ÖÌåÑÕÉ«[pagehottextcolor]
+        //è®¾ç½®hotå­—ä½“é¢œè‰²[pagehottextcolor]
         void SetPageHotTextColor(DWORD cr = 0x00000000);
 
 
-        //ÉèÖÃÒ³Âë°´Å¥µÄ´óĞ¡[pagesize="30,30"]
+        //è®¾ç½®é¡µç æŒ‰é’®çš„å¤§å°[pagesize="30,30"]
         void SetPageNoSize(int w = 30, int h = 30);
-        //ÉèÖÃgoto°´Å¥µÄ´óĞ¡[gotoeditsize="1,1"]
+        //è®¾ç½®gotoæŒ‰é’®çš„å¤§å°[gotoeditsize="1,1"]
         void SetGotoEditSize(int w = 30, int h = 26);
-        //ÉèÖÃGotoEdit±ß¿òÑÕÉ«[gotoeditbordercolor="0x00000000"]
+        //è®¾ç½®GotoEditè¾¹æ¡†é¢œè‰²[gotoeditbordercolor="0x00000000"]
         void SetGotoEditBorderColor(DWORD cr = 0x00000000);
-        //ÉèÖÃGotoEdit±ß¿òµÄ´óĞ¡[gotoeditbordersize="1"]
+        //è®¾ç½®GotoEditè¾¹æ¡†çš„å¤§å°[gotoeditbordersize="1"]
         void SetGotoEditBorderSize(int size = 1);
 
     public:
@@ -87,7 +87,7 @@ namespace DuiLib
         CButtonUI* m_BtnGoto;
         CEditUI* m_EdtPageNo;
 
-        COptionUI* m_ConCurSel;    //µ±Ç°ÊÇµÚ¼¸Ò³
+        COptionUI* m_ConCurSel;    //å½“å‰æ˜¯ç¬¬å‡ é¡µ
     };
 }
 #endif //__UIPageControl_H

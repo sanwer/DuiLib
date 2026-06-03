@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "UILoading.h"
 #include <Gdiplus.h>
 
@@ -148,10 +148,10 @@ void CLoadingUI::PaintBkImage(HDC hDC)
 				m_Colors[intCounter], m_SpokeThickness);
 			intPosition++;
 		}
-		// »ñµÃ´°¿ÚµÄGraphics¶ÔÏó
+		// é”Ÿæ–¤æ‹·ä¹ˆé”Ÿæ–¤æ‹·è¯˜é”Ÿç´¾raphicsé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		Graphics gh(hDC);
-		// ½«Ãè»­ºÃµÄCacheImage»­µ½´°¿ÚÉÏ
-		gh.DrawImage(img, m_rcItem.left, m_rcItem.top);
+		// é”Ÿæ–¤æ‹·é”Ÿå€Ÿç”»é”ŸçŸ«ç¢‰æ‹·CacheImageé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		gh.DrawImage(img, (INT)m_rcItem.left, (INT)m_rcItem.top);
 		delete img;
 	}
 }

@@ -1,4 +1,4 @@
-#ifndef __WIN_IMPL_BASE_H__
+ï»¿#ifndef __WIN_IMPL_BASE_H__
 #define __WIN_IMPL_BASE_H__
 #pragma once
 
@@ -15,9 +15,9 @@ namespace DuiLib
 	public:
 		WindowImplBase(){};
 		virtual ~WindowImplBase(){};
-		// Ö»ĞèÖ÷´°¿ÚÖØĞ´£¨³õÊ¼»¯×ÊÔ´Óë¶àÓïÑÔ½Ó¿Ú£©
+		// åªéœ€ä¸»çª—å£é‡å†™ï¼ˆåˆå§‹åŒ–èµ„æºä¸å¤šè¯­è¨€æ¥å£ï¼‰
 		virtual void InitResource(){};
-		// Ã¿¸ö´°¿Ú¶¼¿ÉÒÔÖØĞ´
+		// æ¯ä¸ªçª—å£éƒ½å¯ä»¥é‡å†™
 		virtual void InitWindow(){};
 		virtual void OnFinalMessage( HWND hWnd );
 		virtual void Notify(TNotifyUI& msg);

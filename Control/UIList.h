@@ -1,4 +1,4 @@
-#ifndef __UILIST_H__
+ï»¿#ifndef __UILIST_H__
 #define __UILIST_H__
 
 namespace DuiLib {
@@ -51,7 +51,7 @@ namespace DuiLib {
 	{
 	public:
 		virtual LPCTSTR GetItemText(CControlUI* pList, int iItem, int iSubItem) = 0;
-		virtual DWORD GetItemTextColor(CControlUI* pList, int iItem, int iSubItem, int iState) = 0;// iState£º0-Õı³£¡¢1-¼¤»î¡¢2-Ñ¡Ôñ¡¢3-½ûÓÃ
+		virtual DWORD GetItemTextColor(CControlUI* pList, int iItem, int iSubItem, int iState) = 0;// iStateï¼š0-æ­£å¸¸ã€1-æ¿€æ´»ã€2-é€‰æ‹©ã€3-ç¦ç”¨
 	};
 
 	class IListOwnerUI
@@ -123,7 +123,7 @@ namespace DuiLib {
 		int GetCurSel() const;
 		int GetCurSelActivate() const;
 		bool SelectItem(int iIndex, bool bTakeFocus = false);
-		bool SelectItemActivate(int iIndex);    // Ë«»÷Ñ¡ÖĞ
+		bool SelectItemActivate(int iIndex);    // åŒå‡»é€‰ä¸­
 
 		bool SelectMultiItem(int iIndex, bool bTakeFocus = false);
 		void SetMultiSelect(bool bMultiSel);
@@ -243,7 +243,7 @@ namespace DuiLib {
 		int m_iCurSel;
 		int m_iFirstSel;
 		CStdPtrArray m_aSelItems;
-		int m_iCurSelActivate;  // Ë«»÷µÄÁĞ
+		int m_iCurSelActivate;  // åŒå‡»çš„åˆ—
 		int m_iExpandedItem;
 		IListCallbackUI* m_pCallback;
 		CListBodyUI* m_pList;
@@ -398,7 +398,7 @@ namespace DuiLib {
 		bool IsExpanded() const;
 		bool Expand(bool bExpand = true);
 
-		void Invalidate(); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+		void Invalidate(); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
 		bool Activate();
 
 		void DoEvent(TEventUI& event);
@@ -500,7 +500,7 @@ namespace DuiLib {
 		bool IsExpanded() const;
 		bool Expand(bool bExpand = true);
 
-		void Invalidate(); // Ö±½ÓCControl::Invalidate»áµ¼ÖÂ¹ö¶¯ÌõË¢ĞÂ£¬ÖØĞ´¼õÉÙË¢ĞÂÇøÓò
+		void Invalidate(); // ç›´æ¥CControl::Invalidateä¼šå¯¼è‡´æ»šåŠ¨æ¡åˆ·æ–°ï¼Œé‡å†™å‡å°‘åˆ·æ–°åŒºåŸŸ
 		bool Activate();
 
 		void DoEvent(TEventUI& event);

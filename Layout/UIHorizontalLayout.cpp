@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UIHorizontalLayout.h"
 
 namespace DuiLib
@@ -99,12 +99,12 @@ namespace DuiLib
 		SIZE szRemaining = szAvailable;
 		int iPosX = rc.left;
 		
-		// ¹ö¶¯Ìõ
+		// æ»šåŠ¨æ¡
 		if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) {
 			iPosX -= m_pHorizontalScrollBar->GetScrollPos();
 		}
 		else {
-			// ×Ó¿Ø¼şºáÏò¶ÔÆä·½Ê½
+			// å­æ§ä»¶æ¨ªå‘å¯¹å…¶æ–¹å¼
 			if(nAdjustables <= 0) {
 				UINT iChildAlign = GetChildAlign(); 
 				if (iChildAlign == DT_CENTER) {

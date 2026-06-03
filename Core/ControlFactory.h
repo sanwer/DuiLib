@@ -1,4 +1,4 @@
-#ifndef __CONTROL_FACTORY_H__
+﻿#ifndef __CONTROL_FACTORY_H__
 #define __CONTROL_FACTORY_H__
 #pragma once
 

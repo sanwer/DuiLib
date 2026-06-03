@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include <algorithm>
 namespace DuiLib
 {
@@ -299,17 +299,17 @@ namespace DuiLib
 
 	LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
-		// µ÷Õû´°¿ÚÑùÊ½
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å¼
 		LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);
 		styleValue &= ~WS_CAPTION;
 		::SetWindowLong(*this, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
-		// ¹ØÁªUI¹ÜÀíÆ÷
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·UIé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		m_pm.Init(m_hWnd, GetManagerName());
-		// ×¢²áPreMessage»Øµ÷
+		// æ³¨é”Ÿæ–¤æ‹·PreMessageé”Ÿæˆªç¢‰æ‹·
 		m_pm.AddPreMessageFilter(this);
 
-		// ´´½¨Ö÷´°¿Ú
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		CControlUI* pRoot=NULL;
 		CDialogBuilder builder;
 		CDuiString sSkinType = GetSkinType();
@@ -318,20 +318,20 @@ namespace DuiLib
 			pRoot = builder.Create(xml, sSkinType, this, &m_pm);
 		}
 		else {
-			pRoot = builder.Create(GetSkinFile().GetData(), (UINT)0, this, &m_pm);
+			pRoot = builder.Create(GetSkinFile().GetData(), NULL, this, &m_pm);
 		}
 
 		if (pRoot == NULL) {
-			CDuiString sError = _T("¼ÓÔØ×ÊÔ´ÎÄ¼şÊ§°Ü£º");
+			CDuiString sError = _T("é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æºé”Ÿä¾¥ç¡·æ‹·å¤±é”Ÿæ°ï½æ‹·");
 			sError += GetSkinFile();
 			MessageBox(NULL, sError, _T("Duilib") ,MB_OK|MB_ICONERROR);
 			ExitProcess(1);
 			return 0;
 		}
 		m_pm.AttachDialog(pRoot);
-		// Ìí¼ÓNotifyÊÂ¼ş½Ó¿Ú
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·Notifyé”Ÿé“°ç¡·æ‹·é”Ÿæ¥åŒ¡æ‹·
 		m_pm.AddNotifier(this);
-		// ´°¿Ú³õÊ¼»¯Íê±Ï
+		// é”Ÿæ–¤æ‹·é”ŸèŠ‚ç­¹æ‹·å§‹é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 		InitWindow();
 		return 0;
 	}

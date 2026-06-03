@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "UILabel.h"
 
 #include <atlconv.h>
@@ -127,14 +127,14 @@ namespace DuiLib
 			m_bNeedEstimateSize = false;
 			m_szAvailableLast = szAvailable;
 			m_cxyFixedLast = GetFixedSize();
-			// ×Ô¶¯¼ÆËã¿í¶È
+			// è‡ªåŠ¨è®¡ç®—å®½åº¦
 			if ((m_uTextStyle & DT_SINGLELINE) != 0) {
-				// ¸ß¶È
+				// é«˜åº¦
 				if (m_cxyFixedLast.cy == 0) {
 					m_cxyFixedLast.cy = m_pManager->GetFontInfo(m_iFont)->tm.tmHeight + 8;
 					m_cxyFixedLast.cy += rcTextPadding.top + rcTextPadding.bottom;
 				}
-				// ¿í¶È
+				// å®½åº¦
 				if (m_cxyFixedLast.cx == 0) {
 					if(m_bAutoCalcWidth) {
 						RECT rcText = { 0, 0, 9999, m_cxyFixedLast.cy };
@@ -149,7 +149,7 @@ namespace DuiLib
 					}
 				}
 			}
-			// ×Ô¶¯¼ÆËã¸ß¶È
+			// è‡ªåŠ¨è®¡ç®—é«˜åº¦
 			else if(m_cxyFixedLast.cy == 0) {
 				if(m_bAutoCalcHeight) {
 					RECT rcText = { 0, 0, m_cxyFixedLast.cx, 9999 };

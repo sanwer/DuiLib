@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "..\Utils\stb_image.h"
@@ -411,7 +411,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//¶Á²»µ½Í¼Æ¬, ÔòÖ±½ÓÈ¥¶ÁÈ¡bitmap.m_lpstrÖ¸ÏòµÄÂ·¾¶
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å›¾ç‰‡, é”Ÿæ–¤æ‹·ç›´é”Ÿæ–¤æ‹·å»é”Ÿæ–¤æ‹·å–bitmap.m_lpstræŒ‡é”Ÿæ–¤æ‹·é”Ÿé“°å‡¤æ‹·é”Ÿ?
 			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
 				FILE_ATTRIBUTE_NORMAL, NULL);
 			if( hFile == INVALID_HANDLE_VALUE ) break;
@@ -543,7 +543,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//¶Á²»µ½Í¼Æ¬, ÔòÖ±½ÓÈ¥¶ÁÈ¡bitmap.m_lpstrÖ¸ÏòµÄÂ·¾¶
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å›¾ç‰‡, é”Ÿæ–¤æ‹·ç›´é”Ÿæ–¤æ‹·å»é”Ÿæ–¤æ‹·å–bitmap.m_lpstræŒ‡é”Ÿæ–¤æ‹·é”Ÿé“°å‡¤æ‹·é”Ÿ?
 			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
 				FILE_ATTRIBUTE_NORMAL, NULL);
 			if( hFile == INVALID_HANDLE_VALUE ) break;
@@ -1127,7 +1127,7 @@ namespace DuiLib {
 	{
 		if( pManager == NULL || hDC == NULL || pDrawInfo == NULL ) return false;
 		RECT rcDest = rcItem;
-		// ¼ÆËã»æÖÆÄ¿±êÇøÓò
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿä¾¥åŒ¡æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 		if( pDrawInfo->rcDest.left != 0 || pDrawInfo->rcDest.top != 0 ||
 			pDrawInfo->rcDest.right != 0 || pDrawInfo->rcDest.bottom != 0 ) {
 				rcDest.left = rcItem.left + pDrawInfo->rcDest.left;
@@ -1137,7 +1137,7 @@ namespace DuiLib {
 				rcDest.bottom = rcItem.top + pDrawInfo->rcDest.bottom;
 				if( rcDest.bottom > rcItem.bottom ) rcDest.bottom = rcItem.bottom;
 		}
-		// ¸ù¾İ¶ÔÆë·½Ê½¼ÆËãÄ¿±êÇøÓò
+		// é”Ÿæ–¤æ‹·é”Ÿæ·è®¹æ‹·é”Ÿè¯«æ–¹å¼é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç›®é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		if(pDrawInfo->szImage.cx > 0 && pDrawInfo->szImage.cy > 0) {
 			SIZE szImage = pManager->GetDPIObj()->Scale(pDrawInfo->szImage);
 			RECT rcPadding = pManager->GetDPIObj()->Scale(pDrawInfo->rcPadding);
@@ -1247,7 +1247,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//¶Á²»µ½Í¼Æ¬, ÔòÖ±½ÓÈ¥¶ÁÈ¡bitmap.m_lpstrÖ¸ÏòµÄÂ·¾¶
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å›¾ç‰‡, é”Ÿæ–¤æ‹·ç›´é”Ÿæ–¤æ‹·å»é”Ÿæ–¤æ‹·å–bitmap.m_lpstræŒ‡é”Ÿæ–¤æ‹·é”Ÿé“°å‡¤æ‹·é”Ÿ?
 			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
 				FILE_ATTRIBUTE_NORMAL, NULL);
 			if( hFile == INVALID_HANDLE_VALUE ) break;
@@ -1356,7 +1356,7 @@ namespace DuiLib {
 	{
 		Gdiplus::Graphics g(hDC);
 
-		//ÉèÖÃ»­Í¼Ê±µÄÂË²¨Ä£Ê½ÎªÏû³ı¾â³İÏÖÏó
+		//é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·å›¾æ—¶é”Ÿæ–¤æ‹·é”Ÿå‰¿è¯§æ‹·æ¨¡å¼ä¸ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 		g.SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
 		Gdiplus::ImageAttributes imageAtt;
@@ -1471,7 +1471,7 @@ namespace DuiLib {
 
 			graphics.MeasureString(pstrText, -1, &font, rectF, &stringFormat, &bounds);
 
-			// MeasureString´æÔÚ¼ÆËãÎó²î£¬ÕâÀï¼ÓÒ»ÏñËØ
+			// MeasureStringé”Ÿæ–¤æ‹·é”ŸèŠ‚ç¡·æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç¿î„Šæ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 			rc.bottom = rc.top + (long)bounds.Height + 1;
 			rc.right = rc.left + (long)bounds.Width + 1;
 		}
@@ -1504,47 +1504,47 @@ namespace DuiLib {
 	}
 
 
-	// »æÖÆ¼°Ìî³äÔ²½Ç¾ØĞÎ
+	// é”Ÿæ–¤æ‹·é”Ÿç‹¡ç¡·æ‹·é”Ÿæ–¤æ‹·é”Ÿçš†è¯§æ‹·è”·é”Ÿæ–¤æ‹·é”Ÿ?
 	void GdiplusDrawRoundRect(HDC hDC, float x, float y, float width, float height, float arcSize, float lineWidth, Gdiplus::Color lineColor, bool fillPath, Gdiplus::Color fillColor, int nStyle)
 	{
 		float arcDiameter = arcSize * 2;
-		// ´´½¨GDI+¶ÔÏó
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·GDI+é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		Gdiplus::Graphics  g(hDC);
-		//ÉèÖÃ»­Í¼Ê±µÄÂË²¨Ä£Ê½ÎªÏû³ı¾â³İÏÖÏó
+		//é”Ÿæ–¤æ‹·é”ŸçŸ«ä¼™æ‹·å›¾æ—¶é”Ÿæ–¤æ‹·é”Ÿå‰¿è¯§æ‹·æ¨¡å¼ä¸ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 		g.SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-		// »æÍ¼Â·¾¶
+		// é”Ÿæ–¤æ‹·å›¾è·¯é”Ÿæ–¤æ‹·
 		Gdiplus::GraphicsPath roundRectPath;
 
-		// ±£´æ»æÍ¼Â·¾¶
-		roundRectPath.AddLine(x + arcSize, y, x + width - arcSize, y);  // ¶¥²¿ºáÏß
-		roundRectPath.AddArc(x + width - arcDiameter, y, arcDiameter, arcDiameter, 270, 90); // ÓÒÉÏÔ²½Ç
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿé…µæ‚¸å‡¤æ‹·é”Ÿ?
+		roundRectPath.AddLine(x + arcSize, y, x + width - arcSize, y);  // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		roundRectPath.AddArc(x + width - arcDiameter, y, arcDiameter, arcDiameter, 270, 90); // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åœ†é”Ÿæ–¤æ‹·
 
-		roundRectPath.AddLine(x + width, y + arcSize, x + width, y + height - arcSize);  // ÓÒ²àÊúÏß
-		roundRectPath.AddArc(x + width - arcDiameter, y + height - arcDiameter, arcDiameter, arcDiameter, 0, 90); // ÓÒÏÂÔ²½Ç
+		roundRectPath.AddLine(x + width, y + arcSize, x + width, y + height - arcSize);  // é”Ÿæ­è¯§æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		roundRectPath.AddArc(x + width - arcDiameter, y + height - arcDiameter, arcDiameter, arcDiameter, 0, 90); // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åœ†é”Ÿæ–¤æ‹·
 
-		roundRectPath.AddLine(x + width - arcSize, y + height, x + arcSize, y + height);  // µ×²¿ºáÏß
-		roundRectPath.AddArc(x, y + height - arcDiameter, arcDiameter, arcDiameter, 90, 90); // ×óÏÂÔ²½Ç
+		roundRectPath.AddLine(x + width - arcSize, y + height, x + arcSize, y + height);  // é”Ÿé˜¶è¯§æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
+		roundRectPath.AddArc(x, y + height - arcDiameter, arcDiameter, arcDiameter, 90, 90); // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åœ†é”Ÿæ–¤æ‹·
 
-		roundRectPath.AddLine(x, y + height - arcSize, x, y + arcSize);  // ×ó²àÊúÏß
-		roundRectPath.AddArc(x, y, arcDiameter, arcDiameter, 180, 90); // ×óÉÏÔ²½Ç
+		roundRectPath.AddLine(x, y + height - arcSize, x, y + arcSize);  // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
+		roundRectPath.AddArc(x, y, arcDiameter, arcDiameter, 180, 90); // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åœ†é”Ÿæ–¤æ‹·
 
-		//´´½¨»­±Ê
+		//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		Gdiplus::Pen pen(lineColor, lineWidth);
 		pen.SetDashStyle((Gdiplus::DashStyle)nStyle);
-		// »æÖÆ¾ØĞÎ
+		// é”Ÿæ–¤æ‹·é”Ÿç‹¡æ’…æ‹·é”Ÿæ–¤æ‹·
 		g.DrawPath(&pen, &roundRectPath);
 
-		// ÊÇ·ñÌî³ä
+		// é”Ÿè§’å‡¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ?
 		if(fillPath) {
 			if(fillColor.GetAlpha() == 0) {
-				fillColor = lineColor; // ÈôÎ´Ö¸¶¨Ìî³äÉ«£¬ÔòÓÃÏßÌõÉ«Ìî³ä
+				fillColor = lineColor; // é”Ÿæ–¤æ‹·æœªæŒ‡é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿç¼´î‚¬æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿç¼´î‚¬æ‹·é”Ÿæ–¤æ‹·
 			}
 
-			// ´´½¨»­Ë¢
+			// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åˆ·
 			Gdiplus::SolidBrush brush(fillColor);
 
-			// Ìî³ä
+			// é”Ÿæ–¤æ‹·é”Ÿ?
 			g.FillPath(&brush, &roundRectPath);
 		}
 	}
@@ -1558,7 +1558,7 @@ namespace DuiLib {
 
 		Gdiplus::Graphics graphics( hDC );
 		Gdiplus::SolidBrush brush(Gdiplus::Color((LOBYTE((color)>>24)), GetBValue(color), GetGValue(color), GetRValue(color)));
-		graphics.FillRectangle(&brush, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
+		graphics.FillRectangle(&brush, (INT)rc.left, (INT)rc.top, (INT)(rc.right - rc.left), (INT)(rc.bottom - rc.top));
 	}
 
 	void CRenderEngine::DrawGradient(HDC hDC, const RECT& rc, DWORD dwFirst, DWORD dwSecond, bool bVertical, int nSteps)
@@ -1677,7 +1677,7 @@ namespace DuiLib {
 		pen.SetAlignment(Gdiplus::PenAlignmentInset);
 		pen.SetDashStyle((Gdiplus::DashStyle)nStyle);
 
-		graphics.DrawRectangle(&pen, rc.left, rc.top, rc.right - rc.left - 1, rc.bottom - rc.top - 1);
+		graphics.DrawRectangle(&pen, (INT)rc.left, (INT)rc.top, (INT)(rc.right - rc.left - 1), (INT)(rc.bottom - rc.top - 1));
 #endif
 	}
 
@@ -1744,8 +1744,8 @@ namespace DuiLib {
 
 	void CRenderEngine::DrawHtmlText(HDC hDC, CPaintManagerUI* pManager, RECT& rc, LPCTSTR pstrText, DWORD dwTextColor, RECT* prcLinks, CDuiString* sLinks, int& nLinkRects, int iFont, UINT uStyle)
 	{
-		// ¿¼ÂÇµ½ÔÚxml±à¼­Æ÷ÖĞÊ¹ÓÃ<>·ûºÅ²»·½±ã£¬¿ÉÒÔÊ¹ÓÃ{}·ûºÅ´úÌæ
-		// Ö§³Ö±êÇ©Ç¶Ì×£¨Èç<l><b>text</b></l>£©£¬µ«ÊÇ½»²æÇ¶Ì×ÊÇÓ¦¸Ã±ÜÃâµÄ£¨Èç<l><b>text</l></b>£©
+		// é”Ÿæ–¤æ‹·é”Ÿè§’ç¢‰æ‹·é”Ÿæ–¤æ‹·xmlé”Ÿæ´è¾‘é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä½¿é”Ÿæ–¤æ‹·<>é”Ÿæ–¤æ‹·é”Ÿè„šè¯§æ‹·é”Ÿæ–¤æ‹·é”Ÿå§ï¼Œé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä½¿é”Ÿæ–¤æ‹·{}é”Ÿæ–¤æ‹·é”Ÿè„šè¾¾æ‹·é”Ÿæ–¤æ‹·
+		// æ”¯é”Ÿè¡—æ†‹æ‹·ç­¾åµŒé”Ÿé˜¶ï½æ‹·é”Ÿæ–¤æ‹·<l><b>text</b></l>é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿè§’æ–¤æ‹·é”Ÿæ–¤æ‹·åµŒé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åº”é”ŸçŸ«æ†‹æ‹·é”Ÿæ–¤æ‹·æ¨¡é”Ÿæ–¤æ‹·é”Ÿ?l><b>text</l></b>é”Ÿæ–¤æ‹·
 		// The string formatter supports a kind of "mini-html" that consists of various short tags:
 		//
 		//   Bold:             <b>text</b>
@@ -1835,7 +1835,7 @@ namespace DuiLib {
 		bool bInSelected = false;
 		int iLineLinkIndex = 0;
 
-		// ÅÅ°æÏ°¹ßÊÇÍ¼ÎÄµ×²¿¶ÔÆë£¬ËùÒÔÃ¿ĞĞ»æÖÆ¶¼Òª·ÖÁ½²½£¬ÏÈ¼ÆËã¸ß¶È£¬ÔÙ»æÖÆ
+		// é”Ÿè„šå¸®æ‹·ä¹ é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å›¾é”Ÿä¾¥åº•è¯§æ‹·é”Ÿæ–¤æ‹·é”Ÿè¯«ï¼Œé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ¯é”Ÿå«ä¼™æ‹·é”Ÿç‹¡è®¹æ‹·è¦é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿé¥ºç¡·æ‹·é”Ÿæ–¤æ‹·å¨é¾‹é”Ÿæ–¤æ‹·å€©é”Ÿæ–¤æ‹·é”Ÿ?
 		CStdPtrArray aLineFontArray;
 		CStdPtrArray aLineColorArray;
 		CStdPtrArray aLinePIndentArray;
@@ -1844,7 +1844,7 @@ namespace DuiLib {
 		bool bLineInLink = false;
 		bool bLineInSelected = false;
 		int cyLineHeight = 0;
-		bool bLineDraw = false; // ĞĞµÄµÚ¶ş½×¶Î£º»æÖÆ
+		bool bLineDraw = false; // é”Ÿå«çš„ç¬¬è®¹æ‹·é”Ÿé˜¶æ®µï½æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		while( *pstrText != _T('\0') ) {
 			if( pt.x >= rc.right || *pstrText == _T('\n') || bLineEnd ) {
 				if( *pstrText == _T('\n') ) pstrText++;
@@ -2244,7 +2244,7 @@ namespace DuiLib {
 						if( pTm->tmItalic && pFontInfo->bItalic == false ) {
 							ABC abc;
 							::GetCharABCWidths(hDC, _T(' '), _T(' '), &abc);
-							pt.x += abc.abcC / 2; // ¼òµ¥ĞŞÕıÒ»ÏÂĞ±Ìå»ìÅÅµÄÎÊÌâ, ÕıÈ·×ö·¨Ó¦¸ÃÊÇhttp://support.microsoft.com/kb/244798/en-us
+							pt.x += abc.abcC / 2; // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä¸€é”Ÿæ–¤æ‹·æ–œé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·è¯ºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿ? é”Ÿæ–¤æ‹·ç¡®é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·åº”é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·http://support.microsoft.com/kb/244798/en-us
 						}
 						pTm = &pFontInfo->tm;
 						::SelectObject(hDC, pFontInfo->hFont);
@@ -2539,9 +2539,9 @@ namespace DuiLib {
 
 	void CRenderEngine::CheckAlphaColor(DWORD& dwColor)
 	{
-		//RestoreAlphaColorÈÏÎª0x00000000ÊÇÕæÕıµÄÍ¸Ã÷£¬ÆäËü¶¼ÊÇGDI»æÖÆµ¼ÖÂµÄ
-		//ËùÒÔÔÚGDI»æÖÆÖĞ²»ÄÜÓÃ0xFF000000Õâ¸öÑÕÉ«Öµ£¬ÏÖÔÚ´¦ÀíÊÇÈÃËü±ä³ÉRGB(0,0,1)
-		//RGB(0,0,1)ÓëRGB(0,0,0)ºÜÄÑ·Ö³öÀ´
+		//RestoreAlphaColoré”Ÿæ–¤æ‹·ä¸º0x00000000é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é€é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·GDIé”Ÿæ–¤æ‹·é”Ÿç‹¡ç¢‰æ‹·é”Ÿé“°ç¢‰æ‹·
+		//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·GDIé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿå«è¯§æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·0xFF000000é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿç¼´î‚“ç¢‰æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·è¯–é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·RGB(0,0,1)
+		//RGB(0,0,1)é”Ÿæ–¤æ‹·RGB(0,0,0)é”Ÿæ–¤æ‹·é”Ÿçª–åˆ†ç­¹æ‹·é”Ÿæ–¤æ‹·
 		if((0x00FFFFFF & dwColor) == 0)
 		{
 			dwColor += 1;

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "Utils.h"
 
 namespace DuiLib
@@ -918,7 +918,7 @@ namespace DuiLib
 					pItem->pPrev = NULL;
 					pItem->pNext = m_aT[slot];
 					pItem->pNext->pPrev = pItem;
-					//½«itemÒÆ¶¯ÖÁÁ´ÌõÍ·²¿
+					//é”Ÿæ–¤æ‹·itemé”Ÿç‹¡è®¹æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å¤´é”Ÿæ–¤æ‹·
 					m_aT[slot] = pItem;
 				}
 				return pItem->Data;
@@ -969,7 +969,7 @@ namespace DuiLib
 
 	bool CStdStringPtrMap::Remove(LPCTSTR key)
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return NULL;
 
 		UINT slot = HashKey(key) % m_nBuckets;
 		TITEM** ppItem = &m_aT[slot];
@@ -1004,7 +1004,7 @@ namespace DuiLib
 
 	LPCTSTR CStdStringPtrMap::GetAt(int iIndex) const
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return NULL;
 
 		int pos = 0;
 		int len = m_nBuckets;

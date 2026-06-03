@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include <zmouse.h>
 
 #pragma warning(push)
@@ -83,8 +83,8 @@ namespace DuiLib {
 
 	void tagTDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify,CPaintManagerUI *pManager)
 	{
-		// 1¡¢aaa.jpg
-		// 2¡¢file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
+		// 1é”Ÿæ–¤æ‹·aaa.jpg
+		// 2é”Ÿæ–¤æ‹·file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
 		// mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false'
 		sDrawString = pStrImage;
 		sDrawModify = pStrModify;
@@ -190,7 +190,7 @@ namespace DuiLib {
 			}
 		}
 
-		// µ÷ÕûDPI×ÊÔ´
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·DPIé”Ÿæ–¤æ‹·æº
 		if (pManager != NULL && pManager->GetDPIObj()->GetScale() != 100) {
 			CDuiString sScale;
 			sScale.Format(_T("@%d."), pManager->GetDPIObj()->GetScale());
@@ -230,7 +230,7 @@ namespace DuiLib {
 	HINSTANCE CPaintManagerUI::m_hResourceInstance = NULL;
 	CDuiString CPaintManagerUI::m_pStrResourcePath;
 	CDuiString CPaintManagerUI::m_pStrResourceZip;
-	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 ´øÃÜÂëzip°ü½âÃÜ
+	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·zipé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	HANDLE CPaintManagerUI::m_hResourceZip = NULL;
 	bool CPaintManagerUI::m_bCachedResourceZip = true;
 	BYTE* CPaintManagerUI::m_cbZipBuf = nullptr;
@@ -330,7 +330,7 @@ namespace DuiLib {
 		m_ptLastMousePos.x = m_ptLastMousePos.y = -1;
 
 		m_pGdiplusStartupInput = new Gdiplus::GdiplusStartupInput;
-		Gdiplus::GdiplusStartup( &m_gdiplusToken, m_pGdiplusStartupInput, NULL); // ¼ÓÔØGDI½Ó¿Ú
+		Gdiplus::GdiplusStartup( &m_gdiplusToken, m_pGdiplusStartupInput, NULL); // é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·GDIé”Ÿæ¥åŒ¡æ‹·
 
 		CShadowUI::Initialize(m_hInstance);
 
@@ -375,12 +375,12 @@ namespace DuiLib {
 		if( m_hbmpBackground != NULL ) ::DeleteObject(m_hbmpBackground);
 		if( m_hDcPaint != NULL ) ::ReleaseDC(m_hWndPaint, m_hDcPaint);
 		m_aPreMessages.Remove(m_aPreMessages.Find(this));
-		// Ïú»ÙÍÏ×§Í¼Æ¬
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ‹½å›¾ç‰‡
 		if( m_hDragBitmap != NULL ) ::DeleteObject(m_hDragBitmap);
-		//Ğ¶ÔØGDIPlus
+		//å¸é”Ÿæ–¤æ‹·GDIPlus
 		Gdiplus::GdiplusShutdown(m_gdiplusToken);
 		delete m_pGdiplusStartupInput;
-		// DPI¹ÜÀí¶ÔÏó
+		// DPIé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		if (m_pDPI != NULL) {
 			delete m_pDPI;
 			m_pDPI = NULL;
@@ -513,7 +513,7 @@ namespace DuiLib {
         }
 
 		m_bCachedResourceZip = true;
-		m_pStrResourceZipPwd = password;  //Garfield 20160325 ´øÃÜÂëzip°ü½âÃÜ
+		m_pStrResourceZipPwd = password;  //Garfield 20160325 é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·zipé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		if( m_bCachedResourceZip ) 
 		{
 #ifdef UNICODE
@@ -1157,7 +1157,7 @@ namespace DuiLib {
 								SetPainting(false);
 								return true;
 							}
-							// ¸üĞÂÒõÓ°´°¿ÚÏÔÊ¾
+							// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å½±é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ç¤º
 							m_shadow.Update(m_hWndPaint);
 						}
 					}
@@ -1340,12 +1340,12 @@ namespace DuiLib {
 				// All Done!
 				::EndPaint(m_hWndPaint, &ps);
 
-				// »æÖÆ½áÊø
+				// é”Ÿæ–¤æ‹·é”Ÿç‹¡æ–¤æ‹·é”Ÿæ–¤æ‹·
 				SetPainting(false);
 				m_bLayeredChanged = false;
 				if( m_bUpdateNeeded ) Invalidate();
 
-				// ·¢ËÍ´°¿Ú´óĞ¡¸Ä±äÏûÏ¢
+				// é”Ÿæ–¤æ‹·é”Ÿé…µè¾¾æ‹·é”ŸèŠ‚è¾¾æ‹·å°é”Ÿä¾¥æ†‹æ‹·é”Ÿæ–¤æ‹·æ¯
 				if(bNeedSizeMsg) {
 					this->SendNotify(m_pRoot, DUI_MSGTYPE_WINDOWSIZE, 0, 0, true);
 				}
@@ -1504,22 +1504,22 @@ namespace DuiLib {
 
 				// Generate the appropriate mouse messages
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-				// ÊÇ·ñÒÆ¶¯
+				// é”Ÿè§’å‡¤æ‹·é”Ÿç‹¡è®¹æ‹·
 				bool bNeedDrag = true;
 				if(m_ptLastMousePos.x == pt.x && m_ptLastMousePos.y == pt.y) {
 					bNeedDrag = false;
 				}
-				// ¼ÇÂ¼Êó±êÎ»ÖÃ
+				// é”Ÿæ–¤æ‹·å½•é”Ÿæ–¤æ‹·é”Ÿè½¿ä¼™æ‹·é”Ÿ?
 				m_ptLastMousePos = pt;
 				CControlUI* pNewHover = FindControl(pt);
 				if( pNewHover != NULL && pNewHover->GetManager() != this ) break;
 
-				// ÍÏ×§ÊÂ¼ş
+				// é”Ÿæ–¤æ‹·æ‹½é”Ÿé“°ç¡·æ‹·
 				if(bNeedDrag && m_bDragMode && wParam == MK_LBUTTON)
 				{
-					// ÊÍ·ÅCapture
+					// é”Ÿé…µå‡¤æ‹·Capture
 					::ReleaseCapture();
-					// ½Ó¿Ú
+					// é”Ÿæ¥åŒ¡æ‹·
 					if(m_pDragDrop != NULL && m_pDragDrop->OnDragDrop(m_pEventClick)) {
 
 						m_bDragMode = false;
@@ -1626,14 +1626,14 @@ namespace DuiLib {
 				// and we need to remove them on focus change).
 				if (!m_bNoActivate) ::SetFocus(m_hWndPaint);
 				if( m_pRoot == NULL ) break;
-				// ²éÕÒ¿Ø¼ş
+				// é”Ÿæ–¤æ‹·é”Ÿæ­æ§ç¡·æ‹·
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 				m_ptLastMousePos = pt;
 				CControlUI* pControl = FindControl(pt);
 				if( pControl == NULL ) break;
 				if( pControl->GetManager() != this ) break;
 
-				// ×¼±¸ÍÏ×§
+				// å‡†é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æ‹½
 				if(m_bDragDrop && pControl->IsDragEnabled()) {
 					m_bDragMode = true;
 					if( m_hDragBitmap != NULL ) {
@@ -1643,9 +1643,9 @@ namespace DuiLib {
 					m_hDragBitmap = CRenderEngine::GenerateBitmap(this, pControl, pControl->GetPos());
 				}
 
-				// ¿ªÆô²¶»ñ
+				// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 				SetCapture();
-				// ÊÂ¼ş´¦Àí
+				// é”Ÿé“°ç¡·æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 				m_pEventClick = pControl;
 				pControl->SetFocus();
 
@@ -1990,7 +1990,7 @@ namespace DuiLib {
 	bool CPaintManagerUI::AttachDialog(CControlUI* pControl)
 	{
 		ASSERT(::IsWindow(m_hWndPaint));
-		// ´´½¨ÒõÓ°´°¿Ú
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å½±é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		m_shadow.Create(this);
 
 		// Reset any previous attachment
@@ -2121,12 +2121,12 @@ namespace DuiLib {
 
 	void CPaintManagerUI::Term()
 	{
-		// Ïú»Ù×ÊÔ´¹ÜÀíÆ÷
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æºé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		CResourceManager::GetInstance()->Release();
 		CControlFactory::GetInstance()->Release();
 
-		// ÇåÀí¹²Ïí×ÊÔ´
-		// Í¼Æ¬
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·æº
+		// å›¾ç‰‡
 		TImageInfo* data;
 		for( int i = 0; i< m_SharedResInfo.m_ImageHash.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_ImageHash.GetAt(i)) {
@@ -2138,7 +2138,7 @@ namespace DuiLib {
 			}
 		}
 		m_SharedResInfo.m_ImageHash.RemoveAll();
-		// ×ÖÌå
+		// é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		TFontInfo* pFontInfo;
 		for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
@@ -2151,11 +2151,11 @@ namespace DuiLib {
 			}
 		}
 		m_SharedResInfo.m_CustomFonts.RemoveAll();
-		// Ä¬ÈÏ×ÖÌå
+		// é»˜é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		if(m_SharedResInfo.m_DefaultFontInfo.hFont != NULL) {
 			::DeleteObject(m_SharedResInfo.m_DefaultFontInfo.hFont);
 		}
-		// ÑùÊ½
+		// é”Ÿæ–¤æ‹·å¼
 		CDuiString* pStyle;
 		for( int i = 0; i< m_SharedResInfo.m_StyleHash.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_StyleHash.GetAt(i)) {
@@ -2168,7 +2168,7 @@ namespace DuiLib {
 		}
 		m_SharedResInfo.m_StyleHash.RemoveAll();
 
-		// ÑùÊ½
+		// é”Ÿæ–¤æ‹·å¼
 		CDuiString* pAttr;
 		for( int i = 0; i< m_SharedResInfo.m_AttrHash.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i)) {
@@ -2181,7 +2181,7 @@ namespace DuiLib {
 		}
 		m_SharedResInfo.m_AttrHash.RemoveAll();
 
-		// ¹Ø±ÕZIP
+		// é”Ÿæˆªæ†‹æ‹·ZIP
 		if( m_bCachedResourceZip && m_hResourceZip != NULL ) {
 			CloseZip((HZIP)m_hResourceZip);
 			m_hResourceZip = NULL;
@@ -2359,7 +2359,7 @@ namespace DuiLib {
 			}
 		}
 
-		m_uTimerID = (++m_uTimerID) % 0xF0; //0xf1-0xfeÌØÊâÓÃÍ¾
+		m_uTimerID = (++m_uTimerID) % 0xF0; //0xf1-0xfeé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é€”
 		if( !::SetTimer(m_hWndPaint, m_uTimerID, uElapse, NULL) ) return FALSE;
 		TIMERINFO* pTimer = new TIMERINFO;
 		if( pTimer == NULL ) return FALSE;
@@ -2882,7 +2882,7 @@ namespace DuiLib {
 		if( hFont == NULL ) return NULL;
 
 		TFontInfo* pFontInfo = new TFontInfo;
-		if( !pFontInfo ) return false;
+		if( !pFontInfo ) return NULL;
 		::ZeroMemory(pFontInfo, sizeof(TFontInfo));
 		pFontInfo->hFont = hFont;
 		pFontInfo->sFontName = lf.lfFaceName;
@@ -2997,7 +2997,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//¶Á²»µ½Í¼Æ¬, ÔòÖ±½ÓÈ¥¶ÁÈ¡bitmap.m_lpstrÖ¸ÏòµÄÂ·¾¶
+			//é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·å›¾ç‰‡, é”Ÿæ–¤æ‹·ç›´é”Ÿæ–¤æ‹·å»é”Ÿæ–¤æ‹·å–bitmap.m_lpstræŒ‡é”Ÿæ–¤æ‹·é”Ÿé“°å‡¤æ‹·é”Ÿ?
 			HANDLE hFile = ::CreateFile(pstrPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) break;
 			dwSize = ::GetFileSize(hFile, NULL);
@@ -3356,7 +3356,7 @@ namespace DuiLib {
 
 	const TImageInfo* CPaintManagerUI::AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, bool bAlpha, bool bShared)
 	{
-		// ÒòÎŞ·¨È·¶¨Íâ²¿HBITMAP¸ñÊ½£¬²»ÄÜÊ¹ÓÃhslµ÷Õû
+		// é”Ÿæ–¤æ‹·é”Ÿç«å‡¤æ‹·ç¡®é”Ÿæ–¤æ‹·é”Ÿè§£éƒ¨HBITMAPé”Ÿæ–¤æ‹·å¼é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·ä½¿é”Ÿæ–¤æ‹·hslé”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 		if( bitmap == NULL || bitmap[0] == _T('\0') ) return NULL;
 		if( hBitmap == NULL || iWidth <= 0 || iHeight <= 0 ) return NULL;
 
@@ -3946,7 +3946,7 @@ namespace DuiLib {
 		m_bUsedVirtualWnd = bUsed;
 	}
 
-	// ÑùÊ½¹ÜÀí
+	// é”Ÿæ–¤æ‹·å¼é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	void CPaintManagerUI::AddStyle(LPCTSTR pName, LPCTSTR pDeclarationList, bool bShared)
 	{
 		CDuiString* pStyle = new CDuiString(pDeclarationList);
