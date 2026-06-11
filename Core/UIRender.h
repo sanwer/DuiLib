@@ -3,9 +3,6 @@
 
 #pragma once
 
-#ifdef USE_XIMAGE_EFFECT
-class CxImage;
-#endif
 
 namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -33,9 +30,6 @@ namespace DuiLib {
 	{
 	public:
 		// 图片加载
-#ifdef USE_XIMAGE_EFFECT
-		static CxImage *LoadGifImageX(STRINGorID bitmap, LPCTSTR type = NULL, DWORD mask = 0);
-#endif
 		static TImageInfo* LoadImage(STRINGorID bitmap, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);
 		static void FreeImage(TImageInfo* pImageInfo, bool bDelete = true);
 		static TImageInfo* LoadImage(LPCTSTR pStrImage, LPCTSTR type = NULL, DWORD mask = 0, HINSTANCE instance = NULL);

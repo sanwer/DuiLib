@@ -131,7 +131,7 @@ namespace DuiLib {
 		if( m_sText == pstrText ) return;
 
 		m_sText = pstrText;
-		// 瑙ｆ瀽xml鎹㈣绗?
+		// 解析xml换行符
 		m_sText.Replace(_T("{\\n}"), _T("\n"));
 		Invalidate();
 	}
@@ -939,7 +939,7 @@ namespace DuiLib {
 
 	void CControlUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
-		// 鏍峰紡琛?
+		// 样式表
 		if(m_pManager != NULL &&  _tcsicmp(pstrName, _T("style")) == 0) {
 			LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
 			if( pStyle != NULL) {
@@ -947,7 +947,7 @@ namespace DuiLib {
 				return;
 			}
 		}
-		// 灞炴€?
+		// 属性
 		if( _tcsicmp(pstrName, _T("innerstyle")) == 0 ) {
 			ApplyAttributeList(pstrValue);
 		}
@@ -965,7 +965,7 @@ namespace DuiLib {
 		}
 		else if( _tcsicmp(pstrName, _T("float")) == 0 ) {
 			CDuiString nValue = pstrValue;
-			// 鍔ㄦ€佽绠楃浉瀵规瘮渚?
+			// 动态计算相对比例
 			if(nValue.Find(',') < 0) {
 				SetFloat(_tcsicmp(pstrValue, _T("true")) == 0);
 			}
@@ -982,7 +982,7 @@ namespace DuiLib {
 		}
 		else if( _tcsicmp(pstrName, _T("floatalign")) == 0) {
 			UINT uAlign = GetFloatAlign();
-			// 瑙ｆ瀽鏂囧瓧灞炴€?
+			// 解析文字属性
 			while( *pstrValue != _T('\0') ) {
 				CDuiString sValue;
 				while( *pstrValue == _T(',') || *pstrValue == _T(' ') ) pstrValue = ::CharNext(pstrValue);
@@ -1150,7 +1150,7 @@ namespace DuiLib {
 
 	CControlUI* CControlUI::ApplyAttributeList(LPCTSTR pstrValue)
 	{
-		// 瑙ｆ瀽鏍峰紡琛?
+		// 解析样式表
 		if(m_pManager != NULL) {
 			LPCTSTR pStyle = m_pManager->GetStyle(pstrValue);
 			if( pStyle != NULL) {
@@ -1158,29 +1158,29 @@ namespace DuiLib {
 			}
 		}
 		CDuiString sXmlData = pstrValue;
-		sXmlData.Replace(_T("&quot;"), _T("\""));
-		sXmlData.Replace(_T("\r"), _T(" "));
-		sXmlData.Replace(_T("\n"), _T(" "));
-		sXmlData.Replace(_T("\t"), _T(" "));
-		sXmlData.Trim();
+        sXmlData.Replace(_T("&quot;"), _T("\""));
+        sXmlData.Replace(_T("\r"), _T(" "));
+        sXmlData.Replace(_T("\n"), _T(" "));
+        sXmlData.Replace(_T("\t"), _T(" "));
+        sXmlData.Trim();
 
 		LPCTSTR pstrList = sXmlData.GetData();
-		// 瑙ｆ瀽鏍峰紡灞炴€?
+		// 解析样式属性
 		CDuiString sItem;
 		CDuiString sValue;
 		while( *pstrList != _T('\0') ) {
 			sItem.Empty();
 			sValue.Empty();
-			while (*pstrList != _T('\0')  && (*pstrList == _T(' ')) )
-			{
+            while (*pstrList != _T('\0')  && (*pstrList == _T(' ')) )
+            {
 				pstrList++;
-			}
+            }
 			while( *pstrList != _T('\0') && *pstrList != _T('=') ) {
 				LPTSTR pstrTemp = ::CharNext(pstrList);
 				while( pstrList < pstrTemp) {
 					sItem += *pstrList++;
 				}
-			}
+			}			
 			ASSERT( *pstrList == _T('=') );
 			if( *pstrList++ != _T('=') ) return this;
 			ASSERT( *pstrList == _T('\"') );
@@ -1199,7 +1199,7 @@ namespace DuiLib {
 				return this;
 			}else
 			{
-				++pstrList;
+                ++pstrList;
 			}
 		}
 		return this;
@@ -1222,7 +1222,7 @@ namespace DuiLib {
 
 	bool CControlUI::DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl)
 	{
-		// 缁樺埗寰簭锛氳儗鏅鑹?>鑳屾櫙鍥?>鐘舵€佸浘->鏂囨湰->杈规
+		// 绘制循序：背景颜色->背景图->状态图->文本->边框
 		SIZE cxyBorderRound = GetBorderRound();
 		RECT rcBorderSize = GetBorderRectSize();
 
@@ -1305,7 +1305,7 @@ namespace DuiLib {
 		RECT rcBorderSize = GetBorderRectSize();
 		
 		if(m_dwBorderColor != 0 || m_dwFocusBorderColor != 0) {
-			//鐢诲渾瑙掕竟妗?
+			//画圆角边框
 			if(nBorderSize > 0 && ( cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0 )) {
 				if (IsFocused() && m_dwFocusBorderColor != 0)
 					CRenderEngine::DrawRoundRect(hDC, m_rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(m_dwFocusBorderColor), m_nBorderStyle);

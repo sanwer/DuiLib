@@ -240,7 +240,7 @@ namespace DuiLib {
 		m_xml = xml;
 		m_dwAlignment = dwAlignment;
 
-		// 锟斤拷锟斤拷锟揭伙拷锟斤拷说锟斤拷拇锟斤拷锟?
+		// 如果是一级菜单的创建
 		if (pOwner == NULL)
 		{
 			ASSERT(pMainPaintManager != NULL);
@@ -308,7 +308,7 @@ namespace DuiLib {
 			m_pOwner->m_uButtonState &= ~ UISTATE_PUSHED;
 			m_pOwner->Invalidate();
 
-			// 锟节诧拷锟斤拷锟斤拷锟斤拷锟节诧拷删锟斤拷
+			// 内部创建的内部删除
 			delete this;
 		}
 	}
@@ -397,7 +397,7 @@ namespace DuiLib {
 		szAvailable = pRoot->EstimateSize(szAvailable);
 		m_pm.SetInitSize(szAvailable.cx, szAvailable.cy);
 
-		//锟斤拷锟斤拷锟斤拷Menu锟斤拷签锟斤拷为xml锟侥革拷锟节碉拷
+		//必须是Menu标签作为xml的根节点
 		CMenuUI *pMenuRoot = static_cast<CMenuUI*>(pRoot);
 		ASSERT(pMenuRoot);
 

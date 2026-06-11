@@ -68,9 +68,6 @@
     <ClCompile Include="Control\UIGifAnim.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Control\UIGifAnimEx.cpp">
-      <Filter>Source Files\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Control\UIGroupBox.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
@@ -239,9 +236,6 @@
       <Filter>Header Files\Control</Filter>
     </ClInclude>
     <ClInclude Include="Control\UIGifAnim.h">
-      <Filter>Header Files\Control</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\UIGifAnimEx.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
     <ClInclude Include="Control\UIGroupBox.h">

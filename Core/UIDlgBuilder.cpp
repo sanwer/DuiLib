@@ -10,8 +10,8 @@ namespace DuiLib {
 	CControlUI* CDialogBuilder::Create(STRINGorID xml, LPCTSTR type, IDialogBuilderCallback* pCallback, 
 		CPaintManagerUI* pManager, CControlUI* pParent)
 	{
-		//锟斤拷源ID为0-65535锟斤拷锟斤拷锟斤拷锟街节ｏ拷锟街凤拷锟斤拷指锟斤拷为4锟斤拷锟街斤拷
-		//锟街凤拷锟斤拷锟斤拷<锟斤拷头锟斤拷为锟斤拷XML锟街凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷为锟斤拷XML锟侥硷拷
+		//资源ID为0-65535，两个字节；字符串指针为4个字节
+		//字符串以<开头认为是XML字符串，否则认为是XML文件
 		if(HIWORD(xml.m_lpstr) != NULL && *(xml.m_lpstr) != _T('<')) {
 			LPCTSTR xmlpath = CResourceManager::GetInstance()->GetXmlPath(xml.m_lpstr);
 			if (xmlpath != NULL) {
@@ -103,6 +103,7 @@ namespace DuiLib {
 					bool italic = false;
 					bool defaultfont = false;
 					bool shared = false;
+					bool strikeout = false;
 					for( int i = 0; i < nAttributes; i++ ) {
 						pstrName = node.GetAttributeName(i);
 						pstrValue = node.GetAttributeValue(i);
@@ -124,6 +125,9 @@ namespace DuiLib {
 						else if( _tcsicmp(pstrName, _T("italic")) == 0 ) {
 							italic = (_tcsicmp(pstrValue, _T("true")) == 0);
 						}
+						else if (_tcsicmp(pstrName, _T("strikeout")) == 0) {
+							strikeout = (_tcsicmp(pstrValue, _T("true")) == 0);
+						}
 						else if( _tcsicmp(pstrName, _T("default")) == 0 ) {
 							defaultfont = (_tcsicmp(pstrValue, _T("true")) == 0);
 						}
@@ -132,8 +136,8 @@ namespace DuiLib {
 						}
 					}
 					if( id >= 0 ) {
-						pManager->AddFont(id, pFontName, size, bold, underline, italic, shared);
-						if( defaultfont ) pManager->SetDefaultFont(pFontName, size, bold, underline, italic, shared);
+						pManager->AddFont(id, pFontName, size, bold, underline, italic, strikeout, shared);
+						if( defaultfont ) pManager->SetDefaultFont(pFontName, size, bold, underline, italic, strikeout, shared);
 					}
 				}
 				else if( _tcsicmp(pstrClass, _T("Default")) == 0 ) {
@@ -384,7 +388,7 @@ namespace DuiLib {
 				if ( !node.GetAttributeValue(_T("source"), szValue, cchLen) ) continue;
 				for ( int i = 0; i < count; i++ ) {
 					CDialogBuilder builder;
-					if( m_pstrtype != NULL ) { // 使锟斤拷锟斤拷源dll锟斤拷锟斤拷锟斤拷源锟叫讹拷取
+					if( m_pstrtype != NULL ) { // 使用资源dll，从资源中读取
 						WORD id = (WORD)_tcstol(szValue, &pstr, 10); 
 						pControl = builder.Create((UINT)id, m_pstrtype, m_pCallback, pManager, pParent);
 					}
@@ -399,7 +403,7 @@ namespace DuiLib {
 				strClass.Format(_T("C%sUI"), pstrClass);
 				pControl = dynamic_cast<CControlUI*>(CControlFactory::GetInstance()->CreateControl(strClass));
 
-				// 锟斤拷锟斤拷锟?
+				// 检查插件
 				if( pControl == NULL ) {
 					CStdPtrArray* pPlugins = CPaintManagerUI::GetPlugins();
 					LPCREATECONTROL lpCreateControl = NULL;
@@ -411,7 +415,7 @@ namespace DuiLib {
 						}
 					}
 				}
-				// 锟截碉拷锟斤拷锟斤拷
+				// 回掉创建
 				if( pControl == NULL && m_pCallback != NULL ) {
 					pControl = m_pCallback->CreateControl(pstrClass);
 				}
@@ -419,7 +423,7 @@ namespace DuiLib {
 
 			if( pControl == NULL ) {
 #ifdef _DEBUG
-				DUITRACE(_T("未知锟截硷拷:%s"), pstrClass);
+				DUITRACE(_T("未知控件:%s"), pstrClass);
 #else
 				continue;
 #endif
@@ -430,13 +434,13 @@ namespace DuiLib {
 				_Parse(&node, pControl, pManager);
 			}
 			// Attach to parent
-			// 锟斤拷为某些锟斤拷锟皆和革拷锟斤拷锟斤拷锟斤拷兀锟斤拷锟斤拷锟絪elected锟斤拷锟斤拷锟斤拷锟斤拷Add锟斤拷锟斤拷锟斤拷锟斤拷
+			// 因为某些属性和父窗口相关，比如selected，必须先Add到父窗口
 			CTreeViewUI* pTreeView = NULL;
 			if( pParent != NULL && pControl != NULL ) {
 				CTreeNodeUI* pParentTreeNode = static_cast<CTreeNodeUI*>(pParent->GetInterface(_T("TreeNode")));
 				CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode")));
 				pTreeView = static_cast<CTreeViewUI*>(pParent->GetInterface(_T("TreeView")));
-				// TreeNode锟接节碉拷
+				// TreeNode子节点
 				if(pTreeNode != NULL) {
 					if(pParentTreeNode) {
 						pTreeView = pParentTreeNode->GetTreeView();
@@ -456,11 +460,11 @@ namespace DuiLib {
 						}
 					}
 				}
-				// TreeNode锟接控硷拷
+				// TreeNode子控件
 				else if(pParentTreeNode != NULL) {
 					pParentTreeNode->GetTreeNodeHoriznotal()->Add(pControl);
 				}
-				// 锟斤拷通锟截硷拷
+				// 普通控件
 				else {
 					if( pContainer == NULL ) pContainer = static_cast<IContainerUI*>(pParent->GetInterface(_T("IContainer")));
 					ASSERT(pContainer);

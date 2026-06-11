@@ -918,7 +918,7 @@ namespace DuiLib
 					pItem->pPrev = NULL;
 					pItem->pNext = m_aT[slot];
 					pItem->pNext->pPrev = pItem;
-					//锟斤拷item锟狡讹拷锟斤拷锟斤拷锟斤拷头锟斤拷
+					//将item移动至链条头部
 					m_aT[slot] = pItem;
 				}
 				return pItem->Data;
@@ -969,7 +969,7 @@ namespace DuiLib
 
 	bool CStdStringPtrMap::Remove(LPCTSTR key)
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return NULL;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
 
 		UINT slot = HashKey(key) % m_nBuckets;
 		TITEM** ppItem = &m_aT[slot];
@@ -1004,7 +1004,7 @@ namespace DuiLib
 
 	LPCTSTR CStdStringPtrMap::GetAt(int iIndex) const
 	{
-		if( m_nBuckets == 0 || GetSize() == 0 ) return NULL;
+		if( m_nBuckets == 0 || GetSize() == 0 ) return false;
 
 		int pos = 0;
 		int len = m_nBuckets;

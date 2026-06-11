@@ -82,7 +82,7 @@ namespace DuiLib {
 	{
 		if( event.Type == UIEVENT_TIMER ) 
 		{
-			OnTimer(event.wParam);
+			OnTimer(  event.wParam );
 		}
 		__super::DoEvent( event );
 	}

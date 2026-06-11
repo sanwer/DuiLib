@@ -3,19 +3,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "..\Utils\stb_image.h"
 
-#ifdef USE_XIMAGE_EFFECT
-#	include "../../3rd/CxImage/ximage.h"
-#	include "../../3rd/CxImage/ximage.cpp"
-#	include "../../3rd/CxImage/ximaenc.cpp"
-#	include "../../3rd/CxImage/ximagif.cpp"
-#	include "../../3rd/CxImage/ximainfo.cpp"
-#	include "../../3rd/CxImage/ximalpha.cpp"
-#	include "../../3rd/CxImage/ximapal.cpp"
-#	include "../../3rd/CxImage/ximatran.cpp"
-#	include "../../3rd/CxImage/ximawnd.cpp"
-#	include "../../3rd/CxImage/xmemfile.cpp"
-#endif
-
 ///////////////////////////////////////////////////////////////////////////////////////
 namespace DuiLib {
 	static int g_iFontID = MAX_FONT_ID;
@@ -316,146 +303,6 @@ namespace DuiLib {
 	//
 	//
 
-#ifdef USE_XIMAGE_EFFECT
-	static DWORD LoadImage2Memory(const STRINGorID &bitmap, LPCTSTR type,LPBYTE &pData)
-	{
-		assert(pData == NULL);
-		pData = NULL;
-		DWORD dwSize(0U);
-		do 
-		{
-			if( type == NULL )
-			{
-				CDuiString sFile = CPaintManagerUI::GetResourcePath();
-				if( CPaintManagerUI::GetResourceZip().IsEmpty() )
-				{
-					sFile += bitmap.m_lpstr;
-					HANDLE hFile = ::CreateFile(sFile.GetData(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
-						FILE_ATTRIBUTE_NORMAL, NULL);
-					if( hFile == INVALID_HANDLE_VALUE ) break;
-					dwSize = ::GetFileSize(hFile, NULL);
-					if( dwSize == 0 ) break;
-
-					DWORD dwRead = 0;
-					pData = new BYTE[ dwSize + 1 ];
-					memset(pData,0,dwSize+1);
-					::ReadFile( hFile, pData, dwSize, &dwRead, NULL );
-					::CloseHandle( hFile );
-
-					if( dwRead != dwSize ) 
-					{
-						delete[] pData;
-						pData = NULL;
-						dwSize = 0U;
-						break;
-					}
-				}
-				else 
-				{
-					sFile += CPaintManagerUI::GetResourceZip();
-					HZIP hz = NULL;
-					if( CPaintManagerUI::IsCachedResourceZip() ) 
-						hz = (HZIP)CPaintManagerUI::GetResourceZipHandle();
-					else {
-						CDuiString sFilePwd = CPaintManagerUI::GetResourceZipPwd();
-#ifdef UNICODE
-						char* pwd = w2a((wchar_t*)sFilePwd.GetData());
-						hz = OpenZip((void*)sFile.GetData(), pwd);
-						if(pwd) delete[] pwd;
-#else
-						hz = OpenZip((void*)sFile.GetData(), sFilePwd.GetData());
-#endif
-					}
-					if( hz == NULL ) break;
-					ZIPENTRY ze; 
-					int i = 0; 
-					CDuiString key = bitmap.m_lpstr;
-					key.Replace(_T("\\"), _T("/")); 
-					if( FindZipItem(hz, key, true, &i, &ze) != 0 ) break;
-					dwSize = ze.unc_size;
-					if( dwSize == 0 ) break;
-					pData = new BYTE[ dwSize ];
-					int res = UnzipItem(hz, i, pData, dwSize, 3);
-					if( res != 0x00000000 && res != 0x00000600)
-					{
-						delete[] pData;
-						pData = NULL;
-						dwSize = 0U;
-						if( !CPaintManagerUI::IsCachedResourceZip() )
-							CloseZip(hz);
-						break;
-					}
-					if( !CPaintManagerUI::IsCachedResourceZip() )
-						CloseZip(hz);
-				}
-			}
-			else 
-			{
-				HINSTANCE hDll = CPaintManagerUI::GetResourceDll();
-				HRSRC hResource = ::FindResource(hDll, bitmap.m_lpstr, type);
-				if( hResource == NULL ) break;
-				HGLOBAL hGlobal = ::LoadResource(hDll, hResource);
-				if( hGlobal == NULL ) 
-				{
-					FreeResource(hResource);
-					break;
-				}
-
-				dwSize = ::SizeofResource(hDll, hResource);
-				if( dwSize == 0 ) break;
-				pData = new BYTE[ dwSize ];
-				::CopyMemory(pData, (LPBYTE)::LockResource(hGlobal), dwSize);
-				::FreeResource(hGlobal);
-			}
-		} while (0);
-
-		while (!pData)
-		{
-			//锟斤拷锟斤拷锟斤拷图片, 锟斤拷直锟斤拷去锟斤拷取bitmap.m_lpstr指锟斤拷锟铰凤拷锟?
-			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
-				FILE_ATTRIBUTE_NORMAL, NULL);
-			if( hFile == INVALID_HANDLE_VALUE ) break;
-			dwSize = ::GetFileSize(hFile, NULL);
-			if( dwSize == 0 ) break;
-
-			DWORD dwRead = 0;
-			pData = new BYTE[ dwSize ];
-			::ReadFile( hFile, pData, dwSize, &dwRead, NULL );
-			::CloseHandle( hFile );
-
-			if( dwRead != dwSize ) 
-			{
-				delete[] pData;
-				pData = NULL;
-				dwSize = 0U;
-			}
-			break;
-		}
-		return dwSize;
-	}
-	CxImage* CRenderEngine::LoadGifImageX(STRINGorID bitmap, LPCTSTR type , DWORD mask)
-	{
-		//write by wangji
-		LPBYTE pData = NULL;
-		DWORD dwSize = LoadImage2Memory(bitmap,type,pData);
-		if(dwSize == 0U || !pData)
-			return NULL;
-		CxImage * pImg = NULL;
-		if(pImg = new CxImage())
-		{
-			pImg->SetRetreiveAllFrames(TRUE);
-			if(!pImg->Decode(pData,dwSize,CXIMAGE_FORMAT_GIF))
-			{
-				delete pImg;
-				pImg = nullptr;
-			}
-		}
-		delete[] pData;
-		pData = NULL;
-		return pImg;
-	}
-#endif//USE_XIMAGE_EFFECT
-
 	TImageInfo* CRenderEngine::LoadImage(STRINGorID bitmap, LPCTSTR type, DWORD mask, HINSTANCE instance)
 	{
 		LPBYTE pData = NULL;
@@ -543,7 +390,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//锟斤拷锟斤拷锟斤拷图片, 锟斤拷直锟斤拷去锟斤拷取bitmap.m_lpstr指锟斤拷锟铰凤拷锟?
+			//读不到图片, 则直接去读取bitmap.m_lpstr指向的路径
 			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
 				FILE_ATTRIBUTE_NORMAL, NULL);
 			if( hFile == INVALID_HANDLE_VALUE ) break;
@@ -1127,7 +974,7 @@ namespace DuiLib {
 	{
 		if( pManager == NULL || hDC == NULL || pDrawInfo == NULL ) return false;
 		RECT rcDest = rcItem;
-		// 锟斤拷锟斤拷锟斤拷锟侥匡拷锟斤拷锟斤拷锟?
+		// 计算绘制目标区域
 		if( pDrawInfo->rcDest.left != 0 || pDrawInfo->rcDest.top != 0 ||
 			pDrawInfo->rcDest.right != 0 || pDrawInfo->rcDest.bottom != 0 ) {
 				rcDest.left = rcItem.left + pDrawInfo->rcDest.left;
@@ -1137,7 +984,7 @@ namespace DuiLib {
 				rcDest.bottom = rcItem.top + pDrawInfo->rcDest.bottom;
 				if( rcDest.bottom > rcItem.bottom ) rcDest.bottom = rcItem.bottom;
 		}
-		// 锟斤拷锟捷讹拷锟诫方式锟斤拷锟斤拷目锟斤拷锟斤拷锟斤拷
+		// 根据对齐方式计算目标区域
 		if(pDrawInfo->szImage.cx > 0 && pDrawInfo->szImage.cy > 0) {
 			SIZE szImage = pManager->GetDPIObj()->Scale(pDrawInfo->szImage);
 			RECT rcPadding = pManager->GetDPIObj()->Scale(pDrawInfo->rcPadding);
@@ -1247,7 +1094,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//锟斤拷锟斤拷锟斤拷图片, 锟斤拷直锟斤拷去锟斤拷取bitmap.m_lpstr指锟斤拷锟铰凤拷锟?
+			//读不到图片, 则直接去读取bitmap.m_lpstr指向的路径
 			HANDLE hFile = ::CreateFile(bitmap.m_lpstr, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, \
 				FILE_ATTRIBUTE_NORMAL, NULL);
 			if( hFile == INVALID_HANDLE_VALUE ) break;
@@ -1356,7 +1203,7 @@ namespace DuiLib {
 	{
 		Gdiplus::Graphics g(hDC);
 
-		//锟斤拷锟矫伙拷图时锟斤拷锟剿诧拷模式为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟?
+		//设置画图时的滤波模式为消除锯齿现象
 		g.SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
 		Gdiplus::ImageAttributes imageAtt;
@@ -1471,7 +1318,7 @@ namespace DuiLib {
 
 			graphics.MeasureString(pstrText, -1, &font, rectF, &stringFormat, &bounds);
 
-			// MeasureString锟斤拷锟节硷拷锟斤拷锟斤拷睿拷锟斤拷锟斤拷一锟斤拷锟斤拷
+			// MeasureString存在计算误差，这里加一像素
 			rc.bottom = rc.top + (long)bounds.Height + 1;
 			rc.right = rc.left + (long)bounds.Width + 1;
 		}
@@ -1504,47 +1351,47 @@ namespace DuiLib {
 	}
 
 
-	// 锟斤拷锟狡硷拷锟斤拷锟皆诧拷蔷锟斤拷锟?
+	// 绘制及填充圆角矩形
 	void GdiplusDrawRoundRect(HDC hDC, float x, float y, float width, float height, float arcSize, float lineWidth, Gdiplus::Color lineColor, bool fillPath, Gdiplus::Color fillColor, int nStyle)
 	{
 		float arcDiameter = arcSize * 2;
-		// 锟斤拷锟斤拷GDI+锟斤拷锟斤拷
+		// 创建GDI+对象
 		Gdiplus::Graphics  g(hDC);
-		//锟斤拷锟矫伙拷图时锟斤拷锟剿诧拷模式为锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟?
+		//设置画图时的滤波模式为消除锯齿现象
 		g.SetSmoothingMode(Gdiplus::SmoothingModeHighQuality);
 
-		// 锟斤拷图路锟斤拷
+		// 绘图路径
 		Gdiplus::GraphicsPath roundRectPath;
 
-		// 锟斤拷锟斤拷锟酵悸凤拷锟?
-		roundRectPath.AddLine(x + arcSize, y, x + width - arcSize, y);  // 锟斤拷锟斤拷锟斤拷锟斤拷
-		roundRectPath.AddArc(x + width - arcDiameter, y, arcDiameter, arcDiameter, 270, 90); // 锟斤拷锟斤拷圆锟斤拷
+		// 保存绘图路径
+		roundRectPath.AddLine(x + arcSize, y, x + width - arcSize, y);  // 顶部横线
+		roundRectPath.AddArc(x + width - arcDiameter, y, arcDiameter, arcDiameter, 270, 90); // 右上圆角
 
-		roundRectPath.AddLine(x + width, y + arcSize, x + width, y + height - arcSize);  // 锟揭诧拷锟斤拷锟斤拷
-		roundRectPath.AddArc(x + width - arcDiameter, y + height - arcDiameter, arcDiameter, arcDiameter, 0, 90); // 锟斤拷锟斤拷圆锟斤拷
+		roundRectPath.AddLine(x + width, y + arcSize, x + width, y + height - arcSize);  // 右侧竖线
+		roundRectPath.AddArc(x + width - arcDiameter, y + height - arcDiameter, arcDiameter, arcDiameter, 0, 90); // 右下圆角
 
-		roundRectPath.AddLine(x + width - arcSize, y + height, x + arcSize, y + height);  // 锟阶诧拷锟斤拷锟斤拷
-		roundRectPath.AddArc(x, y + height - arcDiameter, arcDiameter, arcDiameter, 90, 90); // 锟斤拷锟斤拷圆锟斤拷
+		roundRectPath.AddLine(x + width - arcSize, y + height, x + arcSize, y + height);  // 底部横线
+		roundRectPath.AddArc(x, y + height - arcDiameter, arcDiameter, arcDiameter, 90, 90); // 左下圆角
 
-		roundRectPath.AddLine(x, y + height - arcSize, x, y + arcSize);  // 锟斤拷锟斤拷锟斤拷锟?
-		roundRectPath.AddArc(x, y, arcDiameter, arcDiameter, 180, 90); // 锟斤拷锟斤拷圆锟斤拷
+		roundRectPath.AddLine(x, y + height - arcSize, x, y + arcSize);  // 左侧竖线
+		roundRectPath.AddArc(x, y, arcDiameter, arcDiameter, 180, 90); // 左上圆角
 
-		//锟斤拷锟斤拷锟斤拷锟斤拷
+		//创建画笔
 		Gdiplus::Pen pen(lineColor, lineWidth);
 		pen.SetDashStyle((Gdiplus::DashStyle)nStyle);
-		// 锟斤拷锟狡撅拷锟斤拷
+		// 绘制矩形
 		g.DrawPath(&pen, &roundRectPath);
 
-		// 锟角凤拷锟斤拷锟?
+		// 是否填充
 		if(fillPath) {
 			if(fillColor.GetAlpha() == 0) {
-				fillColor = lineColor; // 锟斤拷未指锟斤拷锟斤拷锟缴拷锟斤拷锟斤拷锟斤拷锟斤拷锟缴拷锟斤拷
+				fillColor = lineColor; // 若未指定填充色，则用线条色填充
 			}
 
-			// 锟斤拷锟斤拷锟斤拷刷
+			// 创建画刷
 			Gdiplus::SolidBrush brush(fillColor);
 
-			// 锟斤拷锟?
+			// 填充
 			g.FillPath(&brush, &roundRectPath);
 		}
 	}
@@ -1744,8 +1591,8 @@ namespace DuiLib {
 
 	void CRenderEngine::DrawHtmlText(HDC hDC, CPaintManagerUI* pManager, RECT& rc, LPCTSTR pstrText, DWORD dwTextColor, RECT* prcLinks, CDuiString* sLinks, int& nLinkRects, int iFont, UINT uStyle)
 	{
-		// 锟斤拷锟角碉拷锟斤拷xml锟洁辑锟斤拷锟斤拷使锟斤拷<>锟斤拷锟脚诧拷锟斤拷锟姐，锟斤拷锟斤拷使锟斤拷{}锟斤拷锟脚达拷锟斤拷
-		// 支锟街憋拷签嵌锟阶ｏ拷锟斤拷<l><b>text</b></l>锟斤拷锟斤拷锟斤拷锟角斤拷锟斤拷嵌锟斤拷锟斤拷应锟矫憋拷锟斤拷模锟斤拷锟?l><b>text</l></b>锟斤拷
+		// 考虑到在xml编辑器中使用<>符号不方便，可以使用{}符号代替
+		// 支持标签嵌套（如<l><b>text</b></l>），但是交叉嵌套是应该避免的（如<l><b>text</l></b>）
 		// The string formatter supports a kind of "mini-html" that consists of various short tags:
 		//
 		//   Bold:             <b>text</b>
@@ -1835,7 +1682,7 @@ namespace DuiLib {
 		bool bInSelected = false;
 		int iLineLinkIndex = 0;
 
-		// 锟脚帮拷习锟斤拷锟斤拷图锟侥底诧拷锟斤拷锟诫，锟斤拷锟斤拷每锟叫伙拷锟狡讹拷要锟斤拷锟斤拷锟斤拷锟斤拷锟饺硷拷锟斤拷叨龋锟斤拷倩锟斤拷锟?
+		// 排版习惯是图文底部对齐，所以每行绘制都要分两步，先计算高度，再绘制
 		CStdPtrArray aLineFontArray;
 		CStdPtrArray aLineColorArray;
 		CStdPtrArray aLinePIndentArray;
@@ -1844,7 +1691,7 @@ namespace DuiLib {
 		bool bLineInLink = false;
 		bool bLineInSelected = false;
 		int cyLineHeight = 0;
-		bool bLineDraw = false; // 锟叫的第讹拷锟阶段ｏ拷锟斤拷锟斤拷
+		bool bLineDraw = false; // 行的第二阶段：绘制
 		while( *pstrText != _T('\0') ) {
 			if( pt.x >= rc.right || *pstrText == _T('\n') || bLineEnd ) {
 				if( *pstrText == _T('\n') ) pstrText++;
@@ -1914,8 +1761,8 @@ namespace DuiLib {
 							TFontInfo* pFontInfo = pDefFontInfo;
 							if( aFontArray.GetSize() > 0 ) pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
 							if( pFontInfo->bUnderline == false ) {
-								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic);
-								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic);
+								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic, pFontInfo->bStrikeout);
+								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic, pFontInfo->bStrikeout);
 								pFontInfo = pManager->GetFontInfo(hFont);
 								aFontArray.Add(pFontInfo);
 								pTm = &pFontInfo->tm;
@@ -1932,8 +1779,8 @@ namespace DuiLib {
 							TFontInfo* pFontInfo = pDefFontInfo;
 							if( aFontArray.GetSize() > 0 ) pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
 							if( pFontInfo->bBold == false ) {
-								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, true, pFontInfo->bUnderline, pFontInfo->bItalic);
-								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, true, pFontInfo->bUnderline, pFontInfo->bItalic);
+								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, true, pFontInfo->bUnderline, pFontInfo->bItalic, pFontInfo->bStrikeout);
+								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, true, pFontInfo->bUnderline, pFontInfo->bItalic, pFontInfo->bStrikeout);
 								pFontInfo = pManager->GetFontInfo(hFont);
 								aFontArray.Add(pFontInfo);
 								pTm = &pFontInfo->tm;
@@ -1971,6 +1818,7 @@ namespace DuiLib {
 								bool bBold = false;
 								bool bUnderline = false;
 								bool bItalic = false;
+								bool bStrikeout = false;
 								while( *pstrText != _T('\0') && *pstrText != _T('>') && *pstrText != _T('}') && *pstrText != _T(' ') ) {
 									pstrTemp = ::CharNext(pstrText);
 									while( pstrText < pstrTemp) {
@@ -1992,8 +1840,9 @@ namespace DuiLib {
 								if( sFontAttr.Find(_T("bold")) >= 0 ) bBold = true;
 								if( sFontAttr.Find(_T("underline")) >= 0 ) bUnderline = true;
 								if( sFontAttr.Find(_T("italic")) >= 0 ) bItalic = true;
-								HFONT hFont = pManager->GetFont(sFontName, iFontSize, bBold, bUnderline, bItalic);
-								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, sFontName, iFontSize, bBold, bUnderline, bItalic);
+								if( sFontAttr.Find(_T("strikeout")) >= 0 ) bStrikeout = true;
+								HFONT hFont = pManager->GetFont(sFontName, iFontSize, bBold, bUnderline, bItalic, bStrikeout);
+								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, sFontName, iFontSize, bBold, bUnderline, bItalic, bStrikeout);
 								TFontInfo* pFontInfo = pManager->GetFontInfo(hFont);
 								aFontArray.Add(pFontInfo);
 								pTm = &pFontInfo->tm;
@@ -2023,8 +1872,8 @@ namespace DuiLib {
 								TFontInfo* pFontInfo = pDefFontInfo;
 								if( aFontArray.GetSize() > 0 ) pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
 								if( pFontInfo->bItalic == false ) {
-									HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, pFontInfo->bUnderline, true);
-									if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, pFontInfo->bUnderline, true);
+									HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, pFontInfo->bUnderline, true, pFontInfo->bStrikeout);
+									if (hFont == NULL) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, pFontInfo->bUnderline, true, pFontInfo->bStrikeout);
 									pFontInfo = pManager->GetFontInfo(hFont);
 									aFontArray.Add(pFontInfo);
 									pTm = &pFontInfo->tm;
@@ -2156,8 +2005,8 @@ namespace DuiLib {
 							TFontInfo* pFontInfo = pDefFontInfo;
 							if( aFontArray.GetSize() > 0 ) pFontInfo = (TFontInfo*)aFontArray.GetAt(aFontArray.GetSize() - 1);
 							if( pFontInfo->bUnderline == false ) {
-								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic);
-								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic);
+								HFONT hFont = pManager->GetFont(pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic, pFontInfo->bStrikeout);
+								if( hFont == NULL ) hFont = pManager->AddFont(g_iFontID, pFontInfo->sFontName, pFontInfo->iSize, pFontInfo->bBold, true, pFontInfo->bItalic, pFontInfo->bStrikeout);
 								pFontInfo = pManager->GetFontInfo(hFont);
 								aFontArray.Add(pFontInfo);
 								pTm = &pFontInfo->tm;
@@ -2244,7 +2093,7 @@ namespace DuiLib {
 						if( pTm->tmItalic && pFontInfo->bItalic == false ) {
 							ABC abc;
 							::GetCharABCWidths(hDC, _T(' '), _T(' '), &abc);
-							pt.x += abc.abcC / 2; // 锟斤拷锟斤拷锟斤拷一锟斤拷斜锟斤拷锟斤拷诺锟斤拷锟斤拷锟? 锟斤拷确锟斤拷锟斤拷应锟斤拷锟斤拷http://support.microsoft.com/kb/244798/en-us
+							pt.x += abc.abcC / 2; // 简单修正一下斜体混排的问题, 正确做法应该是http://support.microsoft.com/kb/244798/en-us
 						}
 						pTm = &pFontInfo->tm;
 						::SelectObject(hDC, pFontInfo->hFont);
@@ -2539,9 +2388,9 @@ namespace DuiLib {
 
 	void CRenderEngine::CheckAlphaColor(DWORD& dwColor)
 	{
-		//RestoreAlphaColor锟斤拷为0x00000000锟斤拷锟斤拷锟斤拷锟斤拷透锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷GDI锟斤拷锟狡碉拷锟铰碉拷
-		//锟斤拷锟斤拷锟斤拷GDI锟斤拷锟斤拷锟叫诧拷锟斤拷锟斤拷0xFF000000锟斤拷锟斤拷锟缴碉拷锟斤拷锟斤拷诖锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷RGB(0,0,1)
-		//RGB(0,0,1)锟斤拷RGB(0,0,0)锟斤拷锟窖分筹拷锟斤拷
+		//RestoreAlphaColor认为0x00000000是真正的透明，其它都是GDI绘制导致的
+		//所以在GDI绘制中不能用0xFF000000这个颜色值，现在处理是让它变成RGB(0,0,1)
+		//RGB(0,0,1)与RGB(0,0,0)很难分出来
 		if((0x00FFFFFF & dwColor) == 0)
 		{
 			dwColor += 1;

@@ -9,7 +9,7 @@
 #pragma once
 
 #ifdef __GNUC__
-// 怎么都没找到min，max的头文件-_-
+// not find the header files for min and max.
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
@@ -52,7 +52,6 @@
 #define _WIN32_WINNT _WIN32_WINNT_WINXP//0x0501
 #endif
 
-//#define USE_XIMAGE_EFFECT //使用ximage的gif控件CGifAnimExUI开关，提升性能,默认不使用
 
 #include "UIlib.h"
 

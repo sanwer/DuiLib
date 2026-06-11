@@ -299,17 +299,17 @@ namespace DuiLib
 
 	LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
-		// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷式
+		// 调整窗口样式
 		LONG styleValue = ::GetWindowLong(*this, GWL_STYLE);
 		styleValue &= ~WS_CAPTION;
 		::SetWindowLong(*this, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
-		// 锟斤拷锟斤拷UI锟斤拷锟斤拷锟斤拷
+		// 关联UI管理器
 		m_pm.Init(m_hWnd, GetManagerName());
-		// 注锟斤拷PreMessage锟截碉拷
+		// 注册PreMessage回调
 		m_pm.AddPreMessageFilter(this);
 
-		// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+		// 创建主窗口
 		CControlUI* pRoot=NULL;
 		CDialogBuilder builder;
 		CDuiString sSkinType = GetSkinType();
@@ -322,16 +322,16 @@ namespace DuiLib
 		}
 
 		if (pRoot == NULL) {
-			CDuiString sError = _T("锟斤拷锟斤拷锟斤拷源锟侥硷拷失锟杰ｏ拷");
+			CDuiString sError = _T("加载资源文件失败：");
 			sError += GetSkinFile();
 			MessageBox(NULL, sError, _T("Duilib") ,MB_OK|MB_ICONERROR);
 			ExitProcess(1);
 			return 0;
 		}
 		m_pm.AttachDialog(pRoot);
-		// 锟斤拷锟斤拷Notify锟铰硷拷锟接匡拷
+		// 添加Notify事件接口
 		m_pm.AddNotifier(this);
-		// 锟斤拷锟节筹拷始锟斤拷锟斤拷锟?
+		// 窗口初始化完毕
 		InitWindow();
 		return 0;
 	}

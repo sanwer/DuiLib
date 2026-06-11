@@ -226,7 +226,6 @@
     <ClCompile Include="Control\UIFadeButton.cpp" />
     <ClCompile Include="Control\UIFlash.cpp" />
     <ClCompile Include="Control\UIGifAnim.cpp" />
-    <ClCompile Include="Control\UIGifAnimEx.cpp" />
     <ClCompile Include="Control\UIGroupBox.cpp" />
     <ClCompile Include="Control\UIHotKey.cpp" />
     <ClCompile Include="Control\UIIPAddress.cpp" />
@@ -299,7 +298,6 @@
     <ClInclude Include="Control\UIFadeButton.h" />
     <ClInclude Include="Control\UIFlash.h" />
     <ClInclude Include="Control\UIGifAnim.h" />
-    <ClInclude Include="Control\UIGifAnimEx.h" />
     <ClInclude Include="Control\UIGroupBox.h" />
     <ClInclude Include="Control\UIHotKey.h" />
     <ClInclude Include="Control\UIIPAddress.h" />
@@ -335,7 +333,7 @@
     <ClInclude Include="Layout\UIHorizontalLayout.h" />
     <ClInclude Include="Layout\UITabLayout.h" />
     <ClInclude Include="Layout\UITileLayout.h" />
-    <ClInclude Include="Layout\UIverticallayout.h" />
+    <ClInclude Include="Layout\UIVerticalLayout.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="UIlib.h" />
     <ClInclude Include="Utils\DownloadMgr.h" />

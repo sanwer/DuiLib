@@ -162,7 +162,7 @@ namespace DuiLib {
 		unsigned	fTimer				:1;	// A timer is set
 		unsigned    fCaptured           :1;
 		unsigned    fShowCaret          :1;
-		unsigned    fNeedFreshCaret     :1; // 锟斤拷锟斤拷锟侥憋拷锟叫★拷锟斤拷锟斤拷锟斤拷锟轿伙拷锟皆拷锟斤拷锟疥不锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+		unsigned    fNeedFreshCaret     :1; // 修正改变大小后点击其他位置原来光标不能消除的问题
 
 		INT         iCaretWidth;
 		INT         iCaretHeight;
@@ -437,12 +437,18 @@ err:
 		CScrollBarUI* pVerticalScrollBar = m_re->GetVerticalScrollBar();
 		CScrollBarUI* pHorizontalScrollBar = m_re->GetHorizontalScrollBar();
 		if( fnBar == SB_VERT && pVerticalScrollBar ) {
+			dwStyle |= ES_AUTOVSCROLL;
+			pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
 			pVerticalScrollBar->SetVisible(fShow == TRUE);
 		}
 		else if( fnBar == SB_HORZ && pHorizontalScrollBar ) {
+			dwStyle |= ES_AUTOHSCROLL;
+			pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
 			pHorizontalScrollBar->SetVisible(fShow == TRUE);
 		}
 		else if( fnBar == SB_BOTH ) {
+			dwStyle |= ES_AUTOVSCROLL | ES_AUTOHSCROLL;
+			pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
 			if( pVerticalScrollBar ) pVerticalScrollBar->SetVisible(fShow == TRUE);
 			if( pHorizontalScrollBar ) pHorizontalScrollBar->SetVisible(fShow == TRUE);
 		}
@@ -452,14 +458,23 @@ err:
 	BOOL CTxtWinHost::TxEnableScrollBar (INT fuSBFlags, INT fuArrowflags)
 	{
 		if( fuSBFlags == SB_VERT ) {
+			dwStyle |= ES_AUTOVSCROLL | WS_VSCROLL;
+			if(pserv) pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
+
 			m_re->EnableScrollBar(true, m_re->GetHorizontalScrollBar() != NULL);
 			m_re->GetVerticalScrollBar()->SetVisible(fuArrowflags != ESB_DISABLE_BOTH);
 		}
 		else if( fuSBFlags == SB_HORZ ) {
+			dwStyle |= ES_AUTOHSCROLL | WS_VSCROLL;
+			if(pserv) pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
+
 			m_re->EnableScrollBar(m_re->GetVerticalScrollBar() != NULL, true);
 			m_re->GetHorizontalScrollBar()->SetVisible(fuArrowflags != ESB_DISABLE_BOTH);
 		}
 		else if( fuSBFlags == SB_BOTH ) {
+			dwStyle |= ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL | ES_AUTOHSCROLL;
+			if(pserv) pserv->OnTxPropertyBitsChange(TXTBIT_SCROLLBARCHANGE, dwStyle);
+
 			m_re->EnableScrollBar(true, true);
 			m_re->GetVerticalScrollBar()->SetVisible(fuArrowflags != ESB_DISABLE_BOTH);
 			m_re->GetHorizontalScrollBar()->SetVisible(fuArrowflags != ESB_DISABLE_BOTH);
@@ -1893,8 +1908,8 @@ err:
         sz.cy = (int)lHeight;
         return sz;
     }
-	// 锟斤拷锟叫凤拷rich锟斤拷式锟斤拷richedit锟斤拷一锟斤拷锟斤拷锟斤拷锟斤拷bug锟斤拷锟斤拷锟斤拷锟揭伙拷锟斤拷强锟斤拷锟绞憋拷锟絃ineDown锟斤拷SetScrollPos锟睫凤拷锟斤拷锟斤拷锟斤拷锟斤拷锟?
-	// 锟斤拷锟斤拷iPos锟斤拷锟斤拷为锟斤拷锟斤拷锟斤拷锟斤拷锟絙ug
+	// 多行非rich格式的richedit有一个滚动条bug，在最后一行是空行时，LineDown和SetScrollPos无法滚动到最后
+	// 引入iPos就是为了修正这个bug
 	void CRichEditUI::SetScrollPos(SIZE szPos, bool bMsg)
 	{
 		int cx = 0;
@@ -2330,7 +2345,7 @@ err:
 				}
 			}
 		}
-		// 锟斤拷锟斤拷锟斤拷示锟斤拷锟斤拷
+		// 绘制提示文字
 		CDuiString sDrawText = GetText();
 		if(sDrawText.IsEmpty() && !m_bFocused) {
 			DWORD dwTextColor = GetTipValueColor();
@@ -2479,15 +2494,19 @@ err:
 	{
 		if( _tcscmp(pstrName, _T("vscrollbar")) == 0 ) {
 			if( _tcscmp(pstrValue, _T("true")) == 0 ) m_lTwhStyle |= ES_DISABLENOSCROLL | WS_VSCROLL;
+			if(m_pTwh) m_pTwh->TxEnableScrollBar(SB_VERT, ESB_ENABLE_BOTH);
 		}
 		if( _tcscmp(pstrName, _T("autovscroll")) == 0 ) {
 			if( _tcscmp(pstrValue, _T("true")) == 0 ) m_lTwhStyle |= ES_AUTOVSCROLL;
+			if(m_pTwh) m_pTwh->TxShowScrollBar(SB_VERT, true);
 		}
 		else if( _tcscmp(pstrName, _T("hscrollbar")) == 0 ) {
 			if( _tcscmp(pstrValue, _T("true")) == 0 ) m_lTwhStyle |= ES_DISABLENOSCROLL | WS_HSCROLL;
+			if(m_pTwh) m_pTwh->TxEnableScrollBar(SB_HORZ, ESB_ENABLE_BOTH);
 		}
 		if( _tcscmp(pstrName, _T("autohscroll")) == 0 ) {
 			if( _tcscmp(pstrValue, _T("true")) == 0 ) m_lTwhStyle |= ES_AUTOHSCROLL;
+			if(m_pTwh) m_pTwh->TxShowScrollBar(SB_HORZ, true);
 		}
 		else if( _tcsicmp(pstrName, _T("multiline")) == 0 ) {
 			SetMultiLine(_tcscmp(pstrValue, _T("true")) == 0);
@@ -2508,7 +2527,10 @@ err:
 			SetRich(_tcscmp(pstrValue, _T("true")) == 0);
 		}
 		else if( _tcscmp(pstrName, _T("readonly")) == 0 ) {
-			if( _tcscmp(pstrValue, _T("true")) == 0 ) { m_lTwhStyle |= ES_READONLY; m_bReadOnly = true; }
+			if( _tcscmp(pstrValue, _T("true")) == 0 ) { 
+				m_lTwhStyle |= ES_READONLY; 
+				m_bReadOnly = true; 
+			}
 		}
 		else if( _tcscmp(pstrName, _T("password")) == 0 ) {
 			if( _tcscmp(pstrValue, _T("true")) == 0 ) m_lTwhStyle |= ES_PASSWORD;
@@ -2572,7 +2594,7 @@ err:
 		if( uMsg == WM_MOUSEWHEEL && (LOWORD(wParam) & MK_CONTROL) == 0 ) return 0;
 
 		if (uMsg == WM_IME_COMPOSITION) {
-			// 锟斤拷锟轿拷锟斤拷锟斤拷敕ㄎ伙拷锟斤拷斐ｏ拷锟斤拷锟斤拷锟?
+			// 解决微软输入法位置异常的问题
 			HIMC hIMC = ImmGetContext(GetManager()->GetPaintWindow());
 			if (hIMC)  {
 				POINT point;
@@ -2666,7 +2688,7 @@ err:
 		}
 #endif
 		else if( uMsg == WM_CONTEXTMENU ) {
-			// RichEdit锟角凤拷支锟斤拷锟揭硷拷锟剿碉拷锟斤拷使锟斤拷menu锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+			// RichEdit是否支持右键菜单，使用menu属性来控制
 			if(!IsContextMenuUsed()) {
 				bWasHandled = false;
 				return 0;
@@ -2678,19 +2700,19 @@ err:
 				bWasHandled = false;
 				return 0;
 			}
-			//锟斤拷锟斤拷一锟斤拷锟斤拷锟斤拷式锟剿碉拷
+			//创建一个弹出式菜单
 			HMENU hPopMenu = CreatePopupMenu();
-			AppendMenu(hPopMenu, 0, ID_RICH_UNDO, _T("锟斤拷锟斤拷(&U)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_REDO, _T("锟斤拷锟斤拷(&R)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_UNDO, _T("撤销(&U)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_REDO, _T("重做(&R)"));
 			AppendMenu(hPopMenu, MF_SEPARATOR, 0, _T(""));
-			AppendMenu(hPopMenu, 0, ID_RICH_CUT, _T("锟斤拷锟斤拷(&X)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_COPY, _T("锟斤拷锟斤拷(&C)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_PASTE, _T("粘锟斤拷(&V)"));
-			AppendMenu(hPopMenu, 0, ID_RICH_CLEAR, _T("锟斤拷锟?&L)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_CUT, _T("剪切(&X)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_COPY, _T("复制(&C)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_PASTE, _T("粘帖(&V)"));
+			AppendMenu(hPopMenu, 0, ID_RICH_CLEAR, _T("清空(&L)"));
 			AppendMenu(hPopMenu, MF_SEPARATOR, 0, _T(""));
 			AppendMenu(hPopMenu, 0, ID_RICH_SELECTALL, _T("全选(&A)"));
 
-			//锟斤拷始锟斤拷锟剿碉拷锟斤拷
+			//初始化菜单项
 			UINT uUndo = (CanUndo() ? 0 : MF_GRAYED);
 			EnableMenuItem(hPopMenu, ID_RICH_UNDO, MF_BYCOMMAND | uUndo);
 			UINT uRedo = (CanRedo() ? 0 : MF_GRAYED);

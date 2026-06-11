@@ -53,14 +53,14 @@ namespace DuiLib
 			int iHeight = rcItem.bottom - rcItem.top;
 			Gdiplus::PointF centerPos(rcItem.left + iWidth/2, rcItem.top + iHeight/2);
 
-			// 瑙ｅ喅鍋舵暟鏃舵姈鍔ㄩ棶棰?
+			// 解决偶数时抖动问题
 			if ((iWidth % 2) == 0) centerPos.X -= 0.5;
 			if ((iHeight % 2) == 0) centerPos.Y -= 0.5;
 
 			Gdiplus::Graphics graphics(hDC);
 			graphics.TranslateTransform(centerPos.X,centerPos.Y);
 			graphics.RotateTransform(m_fCurAngle);
-			graphics.TranslateTransform(-centerPos.X, -centerPos.Y);//杩樺師婧愮偣
+			graphics.TranslateTransform(-centerPos.X, -centerPos.Y);//还原源点
 			graphics.DrawImage(m_pBkimage,rcItem.left,rcItem.top,iWidth,iHeight);
 		}
 	}

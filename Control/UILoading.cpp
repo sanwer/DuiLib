@@ -148,9 +148,9 @@ void CLoadingUI::PaintBkImage(HDC hDC)
 				m_Colors[intCounter], m_SpokeThickness);
 			intPosition++;
 		}
-		// 锟斤拷么锟斤拷诘锟紾raphics锟斤拷锟斤拷
+		// 获得窗口的Graphics对象
 		Graphics gh(hDC);
-		// 锟斤拷锟借画锟矫碉拷CacheImage锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
+		// 将描画好的CacheImage画到窗口上
 		gh.DrawImage(img, (INT)m_rcItem.left, (INT)m_rcItem.top);
 		delete img;
 	}

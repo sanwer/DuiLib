@@ -20,7 +20,6 @@
 #endif
 #endif
 #define UILIB_COMDAT __declspec(selectany)
-#define Dui_Version  TEXT("2024.4.9.2136")
 
 #pragma warning(disable:4505)
 #pragma warning(disable:4251)
@@ -88,7 +87,6 @@
 #include "Control/UIText.h"
 #include "Control/UIEdit.h"
 #include "Control/UIGifAnim.h"
-#include "Control/UIGifAnimEx.h"
 
 #include "Control/UIAnimation.h"
 #include "Layout/UIAnimationTabLayout.h"

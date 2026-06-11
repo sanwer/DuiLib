@@ -83,8 +83,8 @@ namespace DuiLib {
 
 	void tagTDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify,CPaintManagerUI *pManager)
 	{
-		// 1锟斤拷aaa.jpg
-		// 2锟斤拷file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
+		// 1、aaa.jpg
+		// 2、file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
 		// mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false'
 		sDrawString = pStrImage;
 		sDrawModify = pStrModify;
@@ -190,7 +190,7 @@ namespace DuiLib {
 			}
 		}
 
-		// 锟斤拷锟斤拷DPI锟斤拷源
+		// 调整DPI资源
 		if (pManager != NULL && pManager->GetDPIObj()->GetScale() != 100) {
 			CDuiString sScale;
 			sScale.Format(_T("@%d."), pManager->GetDPIObj()->GetScale());
@@ -230,7 +230,7 @@ namespace DuiLib {
 	HINSTANCE CPaintManagerUI::m_hResourceInstance = NULL;
 	CDuiString CPaintManagerUI::m_pStrResourcePath;
 	CDuiString CPaintManagerUI::m_pStrResourceZip;
-	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 锟斤拷锟斤拷锟斤拷zip锟斤拷锟斤拷锟斤拷
+	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 带密码zip包解密
 	HANDLE CPaintManagerUI::m_hResourceZip = NULL;
 	bool CPaintManagerUI::m_bCachedResourceZip = true;
 	BYTE* CPaintManagerUI::m_cbZipBuf = nullptr;
@@ -330,7 +330,7 @@ namespace DuiLib {
 		m_ptLastMousePos.x = m_ptLastMousePos.y = -1;
 
 		m_pGdiplusStartupInput = new Gdiplus::GdiplusStartupInput;
-		Gdiplus::GdiplusStartup( &m_gdiplusToken, m_pGdiplusStartupInput, NULL); // 锟斤拷锟斤拷GDI锟接匡拷
+		Gdiplus::GdiplusStartup( &m_gdiplusToken, m_pGdiplusStartupInput, NULL); // 加载GDI接口
 
 		CShadowUI::Initialize(m_hInstance);
 
@@ -375,12 +375,12 @@ namespace DuiLib {
 		if( m_hbmpBackground != NULL ) ::DeleteObject(m_hbmpBackground);
 		if( m_hDcPaint != NULL ) ::ReleaseDC(m_hWndPaint, m_hDcPaint);
 		m_aPreMessages.Remove(m_aPreMessages.Find(this));
-		// 锟斤拷锟斤拷锟斤拷拽图片
+		// 销毁拖拽图片
 		if( m_hDragBitmap != NULL ) ::DeleteObject(m_hDragBitmap);
-		//卸锟斤拷GDIPlus
+		//卸载GDIPlus
 		Gdiplus::GdiplusShutdown(m_gdiplusToken);
 		delete m_pGdiplusStartupInput;
-		// DPI锟斤拷锟斤拷锟斤拷锟斤拷
+		// DPI管理对象
 		if (m_pDPI != NULL) {
 			delete m_pDPI;
 			m_pDPI = NULL;
@@ -513,7 +513,7 @@ namespace DuiLib {
         }
 
 		m_bCachedResourceZip = true;
-		m_pStrResourceZipPwd = password;  //Garfield 20160325 锟斤拷锟斤拷锟斤拷zip锟斤拷锟斤拷锟斤拷
+		m_pStrResourceZipPwd = password;  //Garfield 20160325 带密码zip包解密
 		if( m_bCachedResourceZip ) 
 		{
 #ifdef UNICODE
@@ -1141,8 +1141,7 @@ namespace DuiLib {
 							m_pRoot->FindControl(__FindControlsFromUpdate, NULL, UIFIND_VISIBLE | UIFIND_ME_FIRST | UIFIND_UPDATETEST);
 							for( int it = 0; it < m_aFoundControls.GetSize(); it++ ) {
 								pControl = static_cast<CControlUI*>(m_aFoundControls[it]);
-								if( !pControl->IsFloat() ) pControl->SetPos(pControl->GetPos(), true);
-								else pControl->SetPos(pControl->GetRelativePos(), true);
+								pControl->SetPos(pControl->GetPos(), true);
 							}
 							bNeedSizeMsg = true;
 						}
@@ -1157,7 +1156,7 @@ namespace DuiLib {
 								SetPainting(false);
 								return true;
 							}
-							// 锟斤拷锟斤拷锟斤拷影锟斤拷锟斤拷锟斤拷示
+							// 更新阴影窗口显示
 							m_shadow.Update(m_hWndPaint);
 						}
 					}
@@ -1340,12 +1339,12 @@ namespace DuiLib {
 				// All Done!
 				::EndPaint(m_hWndPaint, &ps);
 
-				// 锟斤拷锟狡斤拷锟斤拷
+				// 绘制结束
 				SetPainting(false);
 				m_bLayeredChanged = false;
 				if( m_bUpdateNeeded ) Invalidate();
 
-				// 锟斤拷锟酵达拷锟节达拷小锟侥憋拷锟斤拷息
+				// 发送窗口大小改变消息
 				if(bNeedSizeMsg) {
 					this->SendNotify(m_pRoot, DUI_MSGTYPE_WINDOWSIZE, 0, 0, true);
 				}
@@ -1504,22 +1503,22 @@ namespace DuiLib {
 
 				// Generate the appropriate mouse messages
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
-				// 锟角凤拷锟狡讹拷
+				// 是否移动
 				bool bNeedDrag = true;
 				if(m_ptLastMousePos.x == pt.x && m_ptLastMousePos.y == pt.y) {
 					bNeedDrag = false;
 				}
-				// 锟斤拷录锟斤拷锟轿伙拷锟?
+				// 记录鼠标位置
 				m_ptLastMousePos = pt;
 				CControlUI* pNewHover = FindControl(pt);
 				if( pNewHover != NULL && pNewHover->GetManager() != this ) break;
 
-				// 锟斤拷拽锟铰硷拷
+				// 拖拽事件
 				if(bNeedDrag && m_bDragMode && wParam == MK_LBUTTON)
 				{
-					// 锟酵凤拷Capture
+					// 释放Capture
 					::ReleaseCapture();
-					// 锟接匡拷
+					// 接口
 					if(m_pDragDrop != NULL && m_pDragDrop->OnDragDrop(m_pEventClick)) {
 
 						m_bDragMode = false;
@@ -1626,14 +1625,14 @@ namespace DuiLib {
 				// and we need to remove them on focus change).
 				if (!m_bNoActivate) ::SetFocus(m_hWndPaint);
 				if( m_pRoot == NULL ) break;
-				// 锟斤拷锟揭控硷拷
+				// 查找控件
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 				m_ptLastMousePos = pt;
 				CControlUI* pControl = FindControl(pt);
 				if( pControl == NULL ) break;
 				if( pControl->GetManager() != this ) break;
 
-				// 准锟斤拷锟斤拷拽
+				// 准备拖拽
 				if(m_bDragDrop && pControl->IsDragEnabled()) {
 					m_bDragMode = true;
 					if( m_hDragBitmap != NULL ) {
@@ -1643,9 +1642,9 @@ namespace DuiLib {
 					m_hDragBitmap = CRenderEngine::GenerateBitmap(this, pControl, pControl->GetPos());
 				}
 
-				// 锟斤拷锟斤拷锟斤拷锟斤拷
+				// 开启捕获
 				SetCapture();
-				// 锟铰硷拷锟斤拷锟斤拷
+				// 事件处理
 				m_pEventClick = pControl;
 				pControl->SetFocus();
 
@@ -1990,7 +1989,7 @@ namespace DuiLib {
 	bool CPaintManagerUI::AttachDialog(CControlUI* pControl)
 	{
 		ASSERT(::IsWindow(m_hWndPaint));
-		// 锟斤拷锟斤拷锟斤拷影锟斤拷锟斤拷
+		// 创建阴影窗口
 		m_shadow.Create(this);
 
 		// Reset any previous attachment
@@ -2121,11 +2120,11 @@ namespace DuiLib {
 
 	void CPaintManagerUI::Term()
 	{
-		// 锟斤拷锟斤拷锟斤拷源锟斤拷锟斤拷锟斤拷
+		// 销毁资源管理器
 		CResourceManager::GetInstance()->Release();
 		CControlFactory::GetInstance()->Release();
 
-		// 锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷源
+		// 清理共享资源
 		// 图片
 		TImageInfo* data;
 		for( int i = 0; i< m_SharedResInfo.m_ImageHash.GetSize(); i++ ) {
@@ -2138,7 +2137,7 @@ namespace DuiLib {
 			}
 		}
 		m_SharedResInfo.m_ImageHash.RemoveAll();
-		// 锟斤拷锟斤拷
+		// 字体
 		TFontInfo* pFontInfo;
 		for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
@@ -2151,11 +2150,11 @@ namespace DuiLib {
 			}
 		}
 		m_SharedResInfo.m_CustomFonts.RemoveAll();
-		// 默锟斤拷锟斤拷锟斤拷
+		// 默认字体
 		if(m_SharedResInfo.m_DefaultFontInfo.hFont != NULL) {
 			::DeleteObject(m_SharedResInfo.m_DefaultFontInfo.hFont);
 		}
-		// 锟斤拷式
+		// 样式
 		CDuiString* pStyle;
 		for( int i = 0; i< m_SharedResInfo.m_StyleHash.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_StyleHash.GetAt(i)) {
@@ -2168,7 +2167,7 @@ namespace DuiLib {
 		}
 		m_SharedResInfo.m_StyleHash.RemoveAll();
 
-		// 锟斤拷式
+		// 样式
 		CDuiString* pAttr;
 		for( int i = 0; i< m_SharedResInfo.m_AttrHash.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_AttrHash.GetAt(i)) {
@@ -2181,7 +2180,7 @@ namespace DuiLib {
 		}
 		m_SharedResInfo.m_AttrHash.RemoveAll();
 
-		// 锟截憋拷ZIP
+		// 关闭ZIP
 		if( m_bCachedResourceZip && m_hResourceZip != NULL ) {
 			CloseZip((HZIP)m_hResourceZip);
 			m_hResourceZip = NULL;
@@ -2359,7 +2358,7 @@ namespace DuiLib {
 			}
 		}
 
-		m_uTimerID = (++m_uTimerID) % 0xF0; //0xf1-0xfe锟斤拷锟斤拷锟斤拷途
+		m_uTimerID = (++m_uTimerID) % 0xF0; //0xf1-0xfe特殊用途
 		if( !::SetTimer(m_hWndPaint, m_uTimerID, uElapse, NULL) ) return FALSE;
 		TIMERINFO* pTimer = new TIMERINFO;
 		if( pTimer == NULL ) return FALSE;
@@ -2804,7 +2803,7 @@ namespace DuiLib {
 		}
 	}
 
-	void CPaintManagerUI::SetDefaultFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bShared)
+	void CPaintManagerUI::SetDefaultFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bStrikeout, bool bShared)
 	{
 		LOGFONT lf = { 0 };
 		::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
@@ -2818,6 +2817,7 @@ namespace DuiLib {
 		if( bBold ) lf.lfWeight += FW_BOLD;
 		if( bUnderline ) lf.lfUnderline = TRUE;
 		if( bItalic ) lf.lfItalic = TRUE;
+		if( bStrikeout ) lf.lfStrikeOut = TRUE;
 
 		HFONT hFont = ::CreateFontIndirect(&lf);
 		if( hFont == NULL ) return;
@@ -2831,6 +2831,7 @@ namespace DuiLib {
 			m_SharedResInfo.m_DefaultFontInfo.bBold = bBold;
 			m_SharedResInfo.m_DefaultFontInfo.bUnderline = bUnderline;
 			m_SharedResInfo.m_DefaultFontInfo.bItalic = bItalic;
+			m_SharedResInfo.m_DefaultFontInfo.bStrikeout = bStrikeout;
 			::ZeroMemory(&m_SharedResInfo.m_DefaultFontInfo.tm, sizeof(m_SharedResInfo.m_DefaultFontInfo.tm));
 			if( m_hDcPaint ) {
 				HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, hFont);
@@ -2847,6 +2848,7 @@ namespace DuiLib {
 			m_ResInfo.m_DefaultFontInfo.bBold = bBold;
 			m_ResInfo.m_DefaultFontInfo.bUnderline = bUnderline;
 			m_ResInfo.m_DefaultFontInfo.bItalic = bItalic;
+			m_ResInfo.m_DefaultFontInfo.bStrikeout = bStrikeout;
 			::ZeroMemory(&m_ResInfo.m_DefaultFontInfo.tm, sizeof(m_ResInfo.m_DefaultFontInfo.tm));
 			if( m_hDcPaint ) {
 				HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, hFont);
@@ -2864,7 +2866,7 @@ namespace DuiLib {
 			return m_ResInfo.m_CustomFonts.GetSize();
 	}
 
-	HFONT CPaintManagerUI::AddFont(int id, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bShared)
+	HFONT CPaintManagerUI::AddFont(int id, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bStrikeout, bool bShared)
 	{
 		LOGFONT lf = { 0 };
 		::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
@@ -2878,11 +2880,12 @@ namespace DuiLib {
 		if( bBold ) lf.lfWeight = FW_BOLD;
 		if( bUnderline ) lf.lfUnderline = TRUE;
 		if( bItalic ) lf.lfItalic = TRUE;
+		if( bStrikeout ) lf.lfStrikeOut = TRUE;
 		HFONT hFont = ::CreateFontIndirect(&lf);
 		if( hFont == NULL ) return NULL;
 
 		TFontInfo* pFontInfo = new TFontInfo;
-		if( !pFontInfo ) return NULL;
+		if( !pFontInfo ) return false;
 		::ZeroMemory(pFontInfo, sizeof(TFontInfo));
 		pFontInfo->hFont = hFont;
 		pFontInfo->sFontName = lf.lfFaceName;
@@ -2890,6 +2893,7 @@ namespace DuiLib {
 		pFontInfo->bBold = bBold;
 		pFontInfo->bUnderline = bUnderline;
 		pFontInfo->bItalic = bItalic;
+		pFontInfo->bStrikeout = bStrikeout;
 		if( m_hDcPaint ) {
 			HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, hFont);
 			::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
@@ -2997,7 +3001,7 @@ namespace DuiLib {
 
 		while (!pData)
 		{
-			//锟斤拷锟斤拷锟斤拷图片, 锟斤拷直锟斤拷去锟斤拷取bitmap.m_lpstr指锟斤拷锟铰凤拷锟?
+			//读不到图片, 则直接去读取bitmap.m_lpstr指向的路径
 			HANDLE hFile = ::CreateFile(pstrPath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 			if (hFile == INVALID_HANDLE_VALUE) break;
 			dwSize = ::GetFileSize(hFile, NULL);
@@ -3033,14 +3037,15 @@ namespace DuiLib {
 		return pFontInfo->hFont;
 	}
 
-	HFONT CPaintManagerUI::GetFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
+	HFONT CPaintManagerUI::GetFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bStrikeout)
 	{
 		TFontInfo* pFontInfo = NULL;
 		for( int i = 0; i< m_ResInfo.m_CustomFonts.GetSize(); i++ ) {
 			if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) {
 				pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
 				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
+					&& pFontInfo->bStrikeout == bStrikeout)
 					return pFontInfo->hFont;
 			}
 		}
@@ -3048,7 +3053,8 @@ namespace DuiLib {
 			if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
 				pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
 				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
+					&& pFontInfo->bStrikeout == bStrikeout)
 					return pFontInfo->hFont;
 			}
 		}
@@ -3081,7 +3087,7 @@ namespace DuiLib {
 		return -1;
 	}
 
-	int CPaintManagerUI::GetFontIndex(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bShared)
+	int CPaintManagerUI::GetFontIndex(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic, bool bStrikeout, bool bShared)
 	{
 		TFontInfo* pFontInfo = NULL;
 		if (bShared)
@@ -3090,7 +3096,8 @@ namespace DuiLib {
 				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
 					pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
 					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
+						&& pFontInfo->bStrikeout == bStrikeout)
 						return _ttoi(key);
 				}
 			}
@@ -3101,7 +3108,8 @@ namespace DuiLib {
 				if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) {
 					pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
 					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
+						&& pFontInfo->bStrikeout == bStrikeout)
 						return _ttoi(key);
 				}
 			}
@@ -3356,7 +3364,7 @@ namespace DuiLib {
 
 	const TImageInfo* CPaintManagerUI::AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int iWidth, int iHeight, bool bAlpha, bool bShared)
 	{
-		// 锟斤拷锟睫凤拷确锟斤拷锟解部HBITMAP锟斤拷式锟斤拷锟斤拷锟斤拷使锟斤拷hsl锟斤拷锟斤拷
+		// 因无法确定外部HBITMAP格式，不能使用hsl调整
 		if( bitmap == NULL || bitmap[0] == _T('\0') ) return NULL;
 		if( hBitmap == NULL || iWidth <= 0 || iHeight <= 0 ) return NULL;
 
@@ -3946,7 +3954,7 @@ namespace DuiLib {
 		m_bUsedVirtualWnd = bUsed;
 	}
 
-	// 锟斤拷式锟斤拷锟斤拷
+	// 样式管理
 	void CPaintManagerUI::AddStyle(LPCTSTR pName, LPCTSTR pDeclarationList, bool bShared)
 	{
 		CDuiString* pStyle = new CDuiString(pDeclarationList);
