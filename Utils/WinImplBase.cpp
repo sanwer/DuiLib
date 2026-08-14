@@ -46,17 +46,17 @@ namespace DuiLib
 
 	LRESULT WindowImplBase::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM /*lParam*/, bool& /*bHandled*/)
 	{
-        if (uMsg == WM_KEYDOWN)
-        {
-            switch (wParam)
-            {
-            case VK_RETURN:
-            case VK_ESCAPE:
-                return ResponseDefaultKeyEvent(wParam);
-            default:
-                break;
-            }
-        }
+		if (uMsg == WM_KEYDOWN)
+		{
+			switch (wParam)
+			{
+			case VK_RETURN:
+			case VK_ESCAPE:
+				return ResponseDefaultKeyEvent(wParam);
+			default:
+				break;
+			}
+		}
 		return FALSE;
 	}
 
@@ -318,15 +318,14 @@ namespace DuiLib
 			pRoot = builder.Create(xml, sSkinType, this, &m_pm);
 		}
 		else {
-			pRoot = builder.Create(GetSkinFile().GetData(), NULL, this, &m_pm);
+			pRoot = builder.Create(GetSkinFile().GetData(), (UINT)0, this, &m_pm);
 		}
 
 		if (pRoot == NULL) {
 			CDuiString sError = _T("加载资源文件失败：");
 			sError += GetSkinFile();
 			MessageBox(NULL, sError, _T("Duilib") ,MB_OK|MB_ICONERROR);
-			ExitProcess(1);
-			return 0;
+			return -1;	//fail CreateWindowEx, let exit normally
 		}
 		m_pm.AttachDialog(pRoot);
 		// 添加Notify事件接口
