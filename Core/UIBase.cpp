@@ -313,9 +313,12 @@ UINT CWindowWnd::ShowModal()
     ::ShowWindow(m_hWnd, SW_SHOWNORMAL);
     ::EnableWindow(hWndParent, FALSE);
     MSG msg = { 0 };
-    while( ::IsWindow(m_hWnd) && ::GetMessage(&msg, NULL, 0, 0) ) {
-        if( msg.message == WM_CLOSE && msg.hwnd == m_hWnd ) {
-            nRet = (int)msg.wParam;
+    // Cache handle: DispatchMessage may destroy window and delete this object
+    // (OnFinalMessage), accessing member m_hWnd after that is undefined behavior
+    HWND hWndCached = m_hWnd;
+    while( ::IsWindow(hWndCached) && ::GetMessage(&msg, NULL, 0, 0) ) {
+        if( msg.message == WM_CLOSE && msg.hwnd == hWndCached ) {
+            nRet = (UINT)msg.wParam;
             ::EnableWindow(hWndParent, TRUE);
             ::SetFocus(hWndParent);
         }
