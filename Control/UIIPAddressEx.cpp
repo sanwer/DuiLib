@@ -28,7 +28,7 @@ namespace DuiLib
 
 	LPVOID CIPAddressExUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcscmp(pstrName, DUI_CTR_IPADDRESS) == 0 )
+		if( _tcsicmp(pstrName, DUI_CTR_IPADDRESS) == 0 )
 		{
 			return static_cast<CIPAddressExUI*>(this);
 		}

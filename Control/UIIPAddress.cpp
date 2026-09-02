@@ -185,7 +185,7 @@ namespace DuiLib
 
 	LPVOID CIPAddressUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcscmp(pstrName, DUI_CTR_IPADDRESS) == 0 ) return static_cast<CIPAddressUI*>(this);
+		if( _tcsicmp(pstrName, DUI_CTR_IPADDRESS) == 0 ) return static_cast<CIPAddressUI*>(this);
 		return CLabelUI::GetInterface(pstrName);
 	}
 

@@ -779,15 +779,15 @@ namespace DuiLib
 			}
 		}
 		else if( _tcsicmp(pstrName, _T("childpadding")) == 0 ) SetChildPadding(_ttoi(pstrValue));
-		else if( _tcscmp(pstrName, _T("childalign")) == 0 ) {
-			if( _tcscmp(pstrValue, _T("left")) == 0 ) m_iChildAlign = DT_LEFT;
-			else if( _tcscmp(pstrValue, _T("center")) == 0 ) m_iChildAlign = DT_CENTER;
-			else if( _tcscmp(pstrValue, _T("right")) == 0 ) m_iChildAlign = DT_RIGHT;
+		else if( _tcsicmp(pstrName, _T("childalign")) == 0 ) {
+			if( _tcsicmp(pstrValue, _T("left")) == 0 ) m_iChildAlign = DT_LEFT;
+			else if( _tcsicmp(pstrValue, _T("center")) == 0 ) m_iChildAlign = DT_CENTER;
+			else if( _tcsicmp(pstrValue, _T("right")) == 0 ) m_iChildAlign = DT_RIGHT;
 		}
-		else if( _tcscmp(pstrName, _T("childvalign")) == 0 ) {
-			if( _tcscmp(pstrValue, _T("top")) == 0 ) m_iChildVAlign = DT_TOP;
-			else if( _tcscmp(pstrValue, _T("vcenter")) == 0 ) m_iChildVAlign = DT_VCENTER;
-			else if( _tcscmp(pstrValue, _T("bottom")) == 0 ) m_iChildVAlign = DT_BOTTOM;
+		else if( _tcsicmp(pstrName, _T("childvalign")) == 0 ) {
+			if( _tcsicmp(pstrValue, _T("top")) == 0 ) m_iChildVAlign = DT_TOP;
+			else if( _tcsicmp(pstrValue, _T("vcenter")) == 0 ) m_iChildVAlign = DT_VCENTER;
+			else if( _tcsicmp(pstrValue, _T("bottom")) == 0 ) m_iChildVAlign = DT_BOTTOM;
 		}
 		else if( _tcsicmp(pstrName, _T("scrollstepsize")) == 0 ) SetScrollStepSize(_ttoi(pstrValue));
 		else if (_tcsicmp(pstrName, _T("fixedscrollbar")) == 0) SetFixedScrollbar(_tcsicmp(pstrValue, _T("true")) == 0);

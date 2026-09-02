@@ -22,7 +22,7 @@ namespace DuiLib {
 
 	LPVOID CFadeButtonUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcscmp(pstrName, _T("FadeButton")) == 0 )
+		if( _tcsicmp(pstrName, _T("FadeButton")) == 0 )
 			return static_cast<CFadeButtonUI*>(this);
 		return CButtonUI::GetInterface(pstrName);
 	}

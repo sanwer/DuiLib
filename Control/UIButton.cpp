@@ -476,21 +476,21 @@ namespace DuiLib
 			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
 			SetFocusedTextColor(clrColor);
 		}
-		else if (_tcscmp(pstrName, _T("hotbordercolor")) == 0)
+		else if (_tcsicmp(pstrName, _T("hotbordercolor")) == 0)
 		{
 			if (*pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
 			LPTSTR pstr = NULL;
 			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
 			SetHotBorderColor(clrColor);
 		}
-		else if (_tcscmp(pstrName, _T("pushedbordercolor")) == 0)
+		else if (_tcsicmp(pstrName, _T("pushedbordercolor")) == 0)
 		{
 			if (*pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
 			LPTSTR pstr = NULL;
 			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
 			SetPushedBorderColor(clrColor);
 		}
-		else if (_tcscmp(pstrName, _T("disabledbordercolor")) == 0)
+		else if (_tcsicmp(pstrName, _T("disabledbordercolor")) == 0)
 		{
 			if (*pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
 			LPTSTR pstr = NULL;

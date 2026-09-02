@@ -255,17 +255,17 @@ namespace DuiLib {
 						else if( _tcsicmp(pstrName, _T("opacity")) == 0 || _tcsicmp(pstrName, _T("alpha")) == 0 ) {
 							pManager->SetOpacity(_ttoi(pstrValue));
 						}
-						else if( _tcscmp(pstrName, _T("layeredopacity")) == 0 ) {
+						else if( _tcsicmp(pstrName, _T("layeredopacity")) == 0 ) {
 							pManager->SetLayeredOpacity(_ttoi(pstrValue));
 						}
-						else if( _tcscmp(pstrName, _T("layered")) == 0 || _tcscmp(pstrName, _T("bktrans")) == 0) {
+						else if( _tcsicmp(pstrName, _T("layered")) == 0 || _tcsicmp(pstrName, _T("bktrans")) == 0) {
 							pManager->SetLayered(_tcsicmp(pstrValue, _T("true")) == 0);
 						}
-						else if( _tcscmp(pstrName, _T("layeredimage")) == 0 ) {
+						else if( _tcsicmp(pstrName, _T("layeredimage")) == 0 ) {
 							pManager->SetLayered(true);
 							pManager->SetLayeredImage(pstrValue);
 						}
-						else if( _tcscmp(pstrName, _T("noactivate")) == 0 ) {
+						else if( _tcsicmp(pstrName, _T("noactivate")) == 0 ) {
 							pManager->SetNoActivate(_tcsicmp(pstrValue, _T("true")) == 0);
 						}
 						else if( _tcsicmp(pstrName, _T("disabledfontcolor")) == 0 ) {

@@ -1124,8 +1124,8 @@ namespace DuiLib {
 		else if (_tcsicmp(pstrName, _T("itemshowrowline")) == 0) SetItemShowRowLine(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if (_tcsicmp(pstrName, _T("itemshowcolumnline")) == 0) SetItemShowColumnLine(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if (_tcsicmp(pstrName, _T("itemshowhtml")) == 0) SetItemShowHtml(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if (_tcscmp(pstrName, _T("multiselect")) == 0) SetMultiSelect(_tcscmp(pstrValue, _T("true")) == 0);
-		else if (_tcscmp(pstrName, _T("itemrselected")) == 0) SetItemRSelected(_tcscmp(pstrValue, _T("true")) == 0);
+		else if (_tcsicmp(pstrName, _T("multiselect")) == 0) SetMultiSelect(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if (_tcsicmp(pstrName, _T("itemrselected")) == 0) SetItemRSelected(_tcsicmp(pstrValue, _T("true")) == 0);
 
 		else CVerticalLayoutUI::SetAttribute(pstrName, pstrValue);
 	}
@@ -3021,7 +3021,7 @@ namespace DuiLib {
 	void CListContainerElementUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if (_tcsicmp(pstrName, _T("selected")) == 0) Select();
-		//else if( _tcscmp(pstrName, _T("expandable")) == 0 ) SetExpandable(_tcscmp(pstrValue, _T("true")) == 0);
+		//else if( _tcsicmp(pstrName, _T("expandable")) == 0 ) SetExpandable(_tcsicmp(pstrValue, _T("true")) == 0);
 		else CContainerUI::SetAttribute(pstrName, pstrValue);
 	}
 

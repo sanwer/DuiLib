@@ -24,13 +24,13 @@ namespace DuiLib
 
 	LPVOID CRingUI::GetInterface( LPCTSTR pstrName )
 	{
-		if( _tcscmp(pstrName, _T("Ring")) == 0 ) return static_cast<CRingUI*>(this);
+		if( _tcsicmp(pstrName, _T("Ring")) == 0 ) return static_cast<CRingUI*>(this);
 		return CLabelUI::GetInterface(pstrName);
 	}
 
 	void CRingUI::SetAttribute( LPCTSTR pstrName, LPCTSTR pstrValue )
 	{
-		if( _tcscmp(pstrName, _T("bkimage")) == 0 ) SetBkImage(pstrValue);
+		if( _tcsicmp(pstrName, _T("bkimage")) == 0 ) SetBkImage(pstrValue);
 		else CLabelUI::SetAttribute(pstrName, pstrValue);
 	}
 

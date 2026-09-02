@@ -165,7 +165,7 @@ namespace DuiLib {
 
 	LPVOID CColorPaletteUI::GetInterface(LPCTSTR pstrName)
 	{
-		if (_tcscmp(pstrName, DUI_CTR_COLORPALETTE) == 0) return static_cast<CColorPaletteUI*>(this);
+		if (_tcsicmp(pstrName, DUI_CTR_COLORPALETTE) == 0) return static_cast<CColorPaletteUI*>(this);
 		return CControlUI::GetInterface(pstrName);
 	}
 
@@ -205,9 +205,9 @@ namespace DuiLib {
 
 	void CColorPaletteUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
-		if (_tcscmp(pstrName, _T("palletheight")) == 0) SetPalletHeight(_ttoi(pstrValue));
-		else if (_tcscmp(pstrName, _T("barheight")) == 0) SetBarHeight(_ttoi(pstrValue));
-		else if (_tcscmp(pstrName, _T("thumbimage")) == 0) SetThumbImage(pstrValue);
+		if (_tcsicmp(pstrName, _T("palletheight")) == 0) SetPalletHeight(_ttoi(pstrValue));
+		else if (_tcsicmp(pstrName, _T("barheight")) == 0) SetBarHeight(_ttoi(pstrValue));
+		else if (_tcsicmp(pstrName, _T("thumbimage")) == 0) SetThumbImage(pstrValue);
 		else CControlUI::SetAttribute(pstrName, pstrValue);
 	}
 
