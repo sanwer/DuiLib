@@ -40,20 +40,20 @@ namespace DuiLib
 		virtual bool GetAutoCalcHeight() const;
 		virtual void SetAutoCalcHeight(bool bAutoCalcHeight);
 		virtual void SetText(LPCTSTR pstrText);
-		
-	protected:
-		DWORD	m_dwTextColor;
-		DWORD	m_dwDisabledTextColor;
-		int		m_iFont;
-		UINT	m_uTextStyle;
-		RECT	m_rcTextPadding;
-		bool	m_bShowHtml;
-		bool	m_bAutoCalcWidth;
-		bool	m_bAutoCalcHeight;
 
-		SIZE    m_szAvailableLast;
-		SIZE    m_cxyFixedLast;
-		bool    m_bNeedEstimateSize;
+	protected:
+		DWORD m_dwTextColor;
+		DWORD m_dwDisabledTextColor;
+		int m_iFont;
+		UINT m_uTextStyle;
+		RECT m_rcTextPadding;
+		bool m_bShowHtml;
+		bool m_bAutoCalcWidth;
+		bool m_bAutoCalcHeight;
+
+		SIZE m_szAvailableLast;
+		SIZE m_cxyFixedLast;
+		bool m_bNeedEstimateSize;
 	};
 }
 

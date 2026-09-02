@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_TRAYICON
 #include "TrayIcon.h"
 
 namespace DuiLib
@@ -25,8 +26,8 @@ namespace DuiLib
 		if(_Message != 0) m_uMessage = _Message;
 		m_hIcon = LoadIcon(CPaintManagerUI::GetInstance(), MAKEINTRESOURCE(_IconIDResource));
 		m_trayData.cbSize = sizeof(NOTIFYICONDATA);
-		m_trayData.hWnd	 = _RecvHwnd;
-		m_trayData.uID	 = _IconIDResource;
+		m_trayData.hWnd = _RecvHwnd;
+		m_trayData.uID = _IconIDResource;
 		m_trayData.hIcon = m_hIcon;
 		m_trayData.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
 		m_trayData.uCallbackMessage = m_uMessage;
@@ -59,7 +60,7 @@ namespace DuiLib
 		return SetTooltipText(mbuf);
 	}
 
-	DuiLib::CDuiString CTrayIcon::GetTooltipText() const
+	CDuiString CTrayIcon::GetTooltipText() const
 	{
 		return m_trayData.szTip;
 	}
@@ -69,7 +70,7 @@ namespace DuiLib
 		if(_Hicon) m_hIcon = _Hicon;
 		m_trayData.uFlags = NIF_ICON;
 		m_trayData.hIcon = _Hicon;
-		
+
 		if (!m_bEnabled) return FALSE;
 		return Shell_NotifyIcon(NIM_MODIFY, &m_trayData) == TRUE;
 
@@ -118,3 +119,4 @@ namespace DuiLib
 		m_bEnabled = FALSE;
 	}
 }
+#endif // DUIMOD_TRAYICON

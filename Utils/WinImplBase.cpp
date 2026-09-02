@@ -143,7 +143,7 @@ namespace DuiLib
 
 		RECT rcClient;
 		::GetClientRect(*this, &rcClient);
-		
+
 		CControlUI* pMaxBtn = static_cast<CControlUI*>(m_pm.FindControl(_T("maxbtn")));
 		CControlUI* pRestoreBtn = static_cast<CControlUI*>(m_pm.FindControl(_T("restorebtn")));
 		if (pMaxBtn && pMaxBtn->IsVisible()) {
@@ -209,8 +209,8 @@ namespace DuiLib
 		}
 
 		LPMINMAXINFO lpMMI = (LPMINMAXINFO) lParam;
-		lpMMI->ptMaxPosition.x	= rcWork.left;
-		lpMMI->ptMaxPosition.y	= rcWork.top;
+		lpMMI->ptMaxPosition.x = rcWork.left;
+		lpMMI->ptMaxPosition.y = rcWork.top;
 		lpMMI->ptMaxSize.x = rcWork.right - rcWork.left;
 		lpMMI->ptMaxSize.y = rcWork.bottom - rcWork.top;
 		lpMMI->ptMaxTrackSize.x = m_pm.GetMaxInfo().cx == 0?rcWork.right - rcWork.left:m_pm.GetMaxInfo().cx;
@@ -324,8 +324,8 @@ namespace DuiLib
 		if (pRoot == NULL) {
 			CDuiString sError = _T("加载资源文件失败：");
 			sError += GetSkinFile();
-			MessageBox(NULL, sError, _T("Duilib") ,MB_OK|MB_ICONERROR);
-			return -1;	//fail CreateWindowEx, let exit normally
+			MessageBox(NULL, sError, _T("DuiLib") ,MB_OK|MB_ICONERROR);
+			return -1; //fail CreateWindowEx, let exit normally
 		}
 		m_pm.AttachDialog(pRoot);
 		// 添加Notify事件接口
@@ -377,14 +377,14 @@ namespace DuiLib
 		BOOL bHandled = TRUE;
 		switch (uMsg)
 		{
-		case WM_CREATE:			lRes = OnCreate(uMsg, wParam, lParam, bHandled); break;
-		case WM_CLOSE:			lRes = OnClose(uMsg, wParam, lParam, bHandled); break;
-		case WM_DESTROY:		lRes = OnDestroy(uMsg, wParam, lParam, bHandled); break;
+		case WM_CREATE:         lRes = OnCreate(uMsg, wParam, lParam, bHandled); break;
+		case WM_CLOSE:          lRes = OnClose(uMsg, wParam, lParam, bHandled); break;
+		case WM_DESTROY:        lRes = OnDestroy(uMsg, wParam, lParam, bHandled); break;
 #if defined(WIN32) && !defined(UNDER_CE)
-		case WM_NCACTIVATE:		lRes = OnNcActivate(uMsg, wParam, lParam, bHandled); break;
-		case WM_NCCALCSIZE:		lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled); break;
-		case WM_NCPAINT:		lRes = OnNcPaint(uMsg, wParam, lParam, bHandled); break;
-		case WM_NCHITTEST:		lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled); break;
+		case WM_NCACTIVATE:     lRes = OnNcActivate(uMsg, wParam, lParam, bHandled); break;
+		case WM_NCCALCSIZE:     lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled); break;
+		case WM_NCPAINT:        lRes = OnNcPaint(uMsg, wParam, lParam, bHandled); break;
+		case WM_NCHITTEST:      lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled); break;
 		case WM_NCLBUTTONDOWN:
 		case WM_NCLBUTTONUP:
 		case WM_NCLBUTTONDBLCLK: {
@@ -424,20 +424,20 @@ namespace DuiLib
 			bHandled = FALSE;
 			break;
 		}
-		case WM_GETMINMAXINFO:	lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled); break;
-		case WM_MOUSEWHEEL:		lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled); break;
+		case WM_GETMINMAXINFO:  lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled); break;
+		case WM_MOUSEWHEEL:     lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled); break;
 #endif
-		case WM_SIZE:			lRes = OnSize(uMsg, wParam, lParam, bHandled); break;
-		case WM_CHAR:		lRes = OnChar(uMsg, wParam, lParam, bHandled); break;
-		case WM_SYSCOMMAND:		lRes = OnSysCommand(uMsg, wParam, lParam, bHandled); break;
-		case WM_KEYDOWN:		lRes = OnKeyDown(uMsg, wParam, lParam, bHandled); break;
-		case WM_KILLFOCUS:		lRes = OnKillFocus(uMsg, wParam, lParam, bHandled); break;
-		case WM_SETFOCUS:		lRes = OnSetFocus(uMsg, wParam, lParam, bHandled); break;
-		case WM_LBUTTONUP:		lRes = OnLButtonUp(uMsg, wParam, lParam, bHandled); break;
-		case WM_LBUTTONDOWN:	lRes = OnLButtonDown(uMsg, wParam, lParam, bHandled); break;
-		case WM_MOUSEMOVE:		lRes = OnMouseMove(uMsg, wParam, lParam, bHandled); break;
-		case WM_MOUSEHOVER:	lRes = OnMouseHover(uMsg, wParam, lParam, bHandled); break;
-		default:				bHandled = FALSE; break;
+		case WM_SIZE:           lRes = OnSize(uMsg, wParam, lParam, bHandled); break;
+		case WM_CHAR:           lRes = OnChar(uMsg, wParam, lParam, bHandled); break;
+		case WM_SYSCOMMAND:     lRes = OnSysCommand(uMsg, wParam, lParam, bHandled); break;
+		case WM_KEYDOWN:        lRes = OnKeyDown(uMsg, wParam, lParam, bHandled); break;
+		case WM_KILLFOCUS:      lRes = OnKillFocus(uMsg, wParam, lParam, bHandled); break;
+		case WM_SETFOCUS:       lRes = OnSetFocus(uMsg, wParam, lParam, bHandled); break;
+		case WM_LBUTTONUP:      lRes = OnLButtonUp(uMsg, wParam, lParam, bHandled); break;
+		case WM_LBUTTONDOWN:    lRes = OnLButtonDown(uMsg, wParam, lParam, bHandled); break;
+		case WM_MOUSEMOVE:      lRes = OnMouseMove(uMsg, wParam, lParam, bHandled); break;
+		case WM_MOUSEHOVER:     lRes = OnMouseHover(uMsg, wParam, lParam, bHandled); break;
+		default:                bHandled = FALSE; break;
 		}
 		if (bHandled) return lRes;
 
@@ -468,19 +468,19 @@ namespace DuiLib
 		CDuiString sCtrlName = msg.pSender->GetName();
 		if( sCtrlName == _T("closebtn") ) {
 			Close();
-			return; 
+			return;
 		}
-		else if( sCtrlName == _T("minbtn")) { 
-			SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0); 
-			return; 
+		else if( sCtrlName == _T("minbtn")) {
+			SendMessage(WM_SYSCOMMAND, SC_MINIMIZE, 0);
+			return;
 		}
-		else if( sCtrlName == _T("maxbtn")) { 
-			SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0); 
-			return; 
+		else if( sCtrlName == _T("maxbtn")) {
+			SendMessage(WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+			return;
 		}
-		else if( sCtrlName == _T("restorebtn")) { 
-			SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0); 
-			return; 
+		else if( sCtrlName == _T("restorebtn")) {
+			SendMessage(WM_SYSCOMMAND, SC_RESTORE, 0);
+			return;
 		}
 		return;
 	}

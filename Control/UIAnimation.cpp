@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_ANIMATION
 #include "UIAnimation.h"
 #include <vector>
 #include <algorithm>
@@ -31,7 +32,7 @@ namespace DuiLib {
 	BOOL CUIAnimation::StartAnimation(int nElapse, int nTotalFrame, int nAnimationID /*= 0*/, BOOL bLoop/* = FALSE*/)
 	{
 		CAnimationData* pData = GetAnimationDataByID(nAnimationID);
-		if( NULL != pData 
+		if( NULL != pData
 			|| nElapse <= 0
 			|| nTotalFrame <= 0
 			|| NULL == m_pControl )
@@ -42,7 +43,7 @@ namespace DuiLib {
 
 		CAnimationData* pAnimation = new CAnimationData(nElapse, nTotalFrame, nAnimationID, bLoop);
 		if( NULL == pAnimation ) return FALSE;
-		
+
 		if(m_pControl->GetManager()->SetTimer( m_pControl, nAnimationID, nElapse ))
 		{
 			m_pImp->m_arAnimations.push_back(pAnimation);
@@ -71,8 +72,8 @@ namespace DuiLib {
 		}
 		else
 		{
-			int nCount = m_pImp->m_arAnimations.size();
-			for(int i=0; i<nCount; ++i)
+			size_t nCount = m_pImp->m_arAnimations.size();
+			for(size_t i=0; i<nCount; ++i)
 			{
 				CAnimationData* pData = m_pImp->m_arAnimations[i];
 				if(pData) {
@@ -166,8 +167,8 @@ namespace DuiLib {
 	CAnimationData* CUIAnimation::GetAnimationDataByID(int nAnimationID)
 	{
 		CAnimationData* pRet = NULL;
-		int nCount = m_pImp->m_arAnimations.size();
-		for(int i=0; i<nCount; ++i)
+		size_t nCount = m_pImp->m_arAnimations.size();
+		for(size_t i=0; i<nCount; ++i)
 		{
 			if(m_pImp->m_arAnimations[i]->m_nAnimationID == nAnimationID)
 			{
@@ -180,3 +181,4 @@ namespace DuiLib {
 	}
 
 } // namespace DuiLib
+#endif // DUIMOD_ANIMATION

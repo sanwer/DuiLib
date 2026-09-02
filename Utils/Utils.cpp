@@ -102,7 +102,7 @@ namespace DuiLib
 
 	bool CDuiRect::IsNull() const
 	{
-		return (left == 0 && right == 0 && top == 0 && bottom == 0); 
+		return (left == 0 && right == 0 && top == 0 && bottom == 0);
 	}
 
 	void CDuiRect::Join(const RECT& rc)
@@ -275,10 +275,10 @@ namespace DuiLib
 	//
 	//
 
-	CStdValArray::CStdValArray(int iElementSize, int iPreallocSize /*= 0*/) : 
-	m_pVoid(NULL), 
-		m_nCount(0), 
-		m_iElementSize(iElementSize), 
+	CStdValArray::CStdValArray(int iElementSize, int iPreallocSize /*= 0*/) :
+	m_pVoid(NULL),
+		m_nCount(0),
+		m_iElementSize(iElementSize),
 		m_nAllocated(iPreallocSize)
 	{
 		ASSERT(iElementSize>0);
@@ -292,7 +292,7 @@ namespace DuiLib
 	}
 
 	void CStdValArray::Empty()
-	{   
+	{
 		m_nCount = 0;  // NOTE: We keep the memory in place
 	}
 
@@ -366,7 +366,7 @@ namespace DuiLib
 	}
 
 	CDuiString::CDuiString(LPCTSTR lpsz, int nLen) : m_pstr(m_szBuffer)
-	{      
+	{
 		ASSERT(!::IsBadStringPtr(lpsz,-1) || lpsz==NULL);
 		m_szBuffer[0] = '\0';
 		Assign(lpsz, nLen);
@@ -384,13 +384,13 @@ namespace DuiLib
 	}
 
 	int CDuiString::GetLength() const
-	{ 
-		return (int) _tcslen(m_pstr); 
+	{
+		return (int) _tcslen(m_pstr);
 	}
 
-	CDuiString::operator LPCTSTR() const 
-	{ 
-		return m_pstr; 
+	CDuiString::operator LPCTSTR() const
+	{
+		return m_pstr;
 	}
 
 	void CDuiString::Append(LPCTSTR pstr)
@@ -434,16 +434,16 @@ namespace DuiLib
 		m_pstr[cchMax] = '\0';
 	}
 
-	bool CDuiString::IsEmpty() const 
-	{ 
-		return m_pstr[0] == '\0'; 
+	bool CDuiString::IsEmpty() const
+	{
+		return m_pstr[0] == '\0';
 	}
 
-	void CDuiString::Empty() 
-	{ 
+	void CDuiString::Empty()
+	{
 		if( m_pstr != m_szBuffer ) free(m_pstr);
 		m_pstr = m_szBuffer;
-		m_szBuffer[0] = '\0'; 
+		m_szBuffer[0] = '\0';
 	}
 
 	LPCTSTR CDuiString::GetData() const
@@ -457,18 +457,18 @@ namespace DuiLib
 	}
 
 	TCHAR CDuiString::operator[] (int nIndex) const
-	{ 
+	{
 		return m_pstr[nIndex];
-	}   
+	}
 
 	const CDuiString& CDuiString::operator=(const CDuiString& src)
-	{      
+	{
 		Assign(src);
 		return *this;
 	}
 
 	const CDuiString& CDuiString::operator=(LPCTSTR lpStr)
-	{      
+	{
 		if ( lpStr )
 		{
 			ASSERT(!::IsBadStringPtr(lpStr,-1));
@@ -510,14 +510,14 @@ namespace DuiLib
 			if( pwstr != NULL ) ::MultiByteToWideChar(::GetACP(), 0, lpStr, -1, pwstr, cchStr) ;
 			Append(pwstr);
 		}
-		
+
 		return *this;
 	}
 
 #else
 
 	const CDuiString& CDuiString::operator=(LPCWSTR lpwStr)
-	{      
+	{
 		if ( lpwStr )
 		{
 			ASSERT(!::IsBadStringPtrW(lpwStr,-1));
@@ -530,7 +530,7 @@ namespace DuiLib
 		{
 			Empty();
 		}
-		
+
 		return *this;
 	}
 
@@ -544,7 +544,7 @@ namespace DuiLib
 			if( pstr != NULL ) ::WideCharToMultiByte(::GetACP(), 0, lpwStr, -1, pstr, cchStr, NULL, NULL);
 			Append(pstr);
 		}
-		
+
 		return *this;
 	}
 
@@ -579,24 +579,24 @@ namespace DuiLib
 	}
 
 	const CDuiString& CDuiString::operator+=(const CDuiString& src)
-	{      
+	{
 		Append(src);
 		return *this;
 	}
 
 	const CDuiString& CDuiString::operator+=(LPCTSTR lpStr)
-	{      
+	{
 		if ( lpStr )
 		{
 			ASSERT(!::IsBadStringPtr(lpStr,-1));
 			Append(lpStr);
 		}
-		
+
 		return *this;
 	}
 
 	const CDuiString& CDuiString::operator+=(const TCHAR ch)
-	{      
+	{
 		TCHAR str[] = { ch, '\0' };
 		Append(str);
 		return *this;
@@ -615,24 +615,24 @@ namespace DuiLib
 		m_pstr[nIndex] = ch;
 	}
 
-	int CDuiString::Compare(LPCTSTR lpsz) const 
-	{ 
-		return _tcscmp(m_pstr, lpsz); 
+	int CDuiString::Compare(LPCTSTR lpsz) const
+	{
+		return _tcscmp(m_pstr, lpsz);
 	}
 
-	int CDuiString::CompareNoCase(LPCTSTR lpsz) const 
-	{ 
-		return _tcsicmp(m_pstr, lpsz); 
+	int CDuiString::CompareNoCase(LPCTSTR lpsz) const
+	{
+		return _tcsicmp(m_pstr, lpsz);
 	}
 
-	void CDuiString::MakeUpper() 
-	{ 
-		_tcsupr(m_pstr); 
+	void CDuiString::MakeUpper()
+	{
+		_tcsupr(m_pstr);
 	}
 
-	void CDuiString::MakeLower() 
-	{ 
-		_tcslwr(m_pstr); 
+	void CDuiString::MakeLower()
+	{
+		_tcslwr(m_pstr);
 	}
 
 	CDuiString CDuiString::Left(int iLength) const
@@ -661,63 +661,63 @@ namespace DuiLib
 	}
 
 	CDuiString& CDuiString::TrimLeft()
-    {
-        // find first non-space character
+	{
+		// find first non-space character
 
-        LPTSTR psz = this->m_pstr;
+		LPTSTR psz = this->m_pstr;
 
-        while (::_istspace(*psz))
-        {
-            psz = ::CharNext(psz);
-        }
+		while (::_istspace(*psz))
+		{
+			psz = ::CharNext(psz);
+		}
 
-        if (psz != this->m_pstr)
-        {
-            int iFirst = int(psz - this->m_pstr);
+		if (psz != this->m_pstr)
+		{
+			int iFirst = int(psz - this->m_pstr);
 			Assign(psz, this->GetLength() - iFirst);
-        }
+		}
 
-        return(*this);
-    }
+		return(*this);
+	}
 
-    CDuiString& CDuiString::TrimRight()
-    {
-        LPTSTR psz = this->m_pstr;
+	CDuiString& CDuiString::TrimRight()
+	{
+		LPTSTR psz = this->m_pstr;
 		LPTSTR pszLast = NULL;
 
-        while (*psz != 0)
-        {
-            if (::_istspace(*psz))
-            {
-                if (pszLast == NULL)
-                    pszLast = psz;
-            }
-            else
-            {
-                pszLast = NULL;
-            }
-            psz = ::CharNext(psz);
-        }
+		while (*psz != 0)
+		{
+			if (::_istspace(*psz))
+			{
+				if (pszLast == NULL)
+					pszLast = psz;
+			}
+			else
+			{
+				pszLast = NULL;
+			}
+			psz = ::CharNext(psz);
+		}
 
-        if (pszLast != NULL)
-        {
-            // truncate at trailing space start
-            int iLast = int(pszLast - this->GetData());
+		if (pszLast != NULL)
+		{
+			// truncate at trailing space start
+			int iLast = int(pszLast - this->GetData());
 
-            this->SetAt(iLast, 0);
-        }
+			this->SetAt(iLast, 0);
+		}
 
-        return(*this);
-    }
+		return(*this);
+	}
 
 	CDuiString& CDuiString::Trim()
-    {
+	{
 		TrimLeft();
 		TrimRight();
 		return(*this);
-    }
+	}
 
-    int CDuiString::Find(TCHAR ch, int iPos /*= 0*/) const
+	int CDuiString::Find(TCHAR ch, int iPos /*= 0*/) const
 	{
 		ASSERT(iPos>=0 && iPos<=GetLength());
 		if( iPos != 0 && (iPos < 0 || iPos >= GetLength()) ) return -1;
@@ -761,19 +761,19 @@ namespace DuiLib
 		}
 		return nCount;
 	}
-    
-    int CDuiString::Format(LPCTSTR pstrFormat, ...)
-    {
-        int nRet;
-        va_list Args;
 
-        va_start(Args, pstrFormat);
-        nRet = InnerFormat(pstrFormat, Args);
-        va_end(Args);
+	int CDuiString::Format(LPCTSTR pstrFormat, ...)
+	{
+		int nRet;
+		va_list Args;
 
-        return nRet;
+		va_start(Args, pstrFormat);
+		nRet = InnerFormat(pstrFormat, Args);
+		va_end(Args);
 
-    }
+		return nRet;
+
+	}
 
 	int CDuiString::SmallFormat(LPCTSTR pstrFormat, ...)
 	{
@@ -786,50 +786,50 @@ namespace DuiLib
 		Assign(szBuffer);
 		return iRet;
 	}
-	
-    int CDuiString::InnerFormat(LPCTSTR pstrFormat, va_list Args)
-    {
+
+	int CDuiString::InnerFormat(LPCTSTR pstrFormat, va_list Args)
+	{
 #if _MSC_VER <= 1400
-        TCHAR *szBuffer = NULL;
-        int size = 512, nLen, counts;
-        szBuffer = (TCHAR*)malloc(size);
-        ZeroMemory(szBuffer, size);
-        while (TRUE){
-            counts = size / sizeof(TCHAR);
-            nLen = _vsntprintf (szBuffer, counts, pstrFormat, Args);
-            if (nLen != -1 && nLen < counts){
-                break;
-            }
-            if (nLen == -1){
-                size *= 2;
-            }else{
-                size += 1 * sizeof(TCHAR);
-            }
+		TCHAR *szBuffer = NULL;
+		int size = 512, nLen, counts;
+		szBuffer = (TCHAR*)malloc(size);
+		ZeroMemory(szBuffer, size);
+		while (TRUE){
+			counts = size / sizeof(TCHAR);
+			nLen = _vsntprintf (szBuffer, counts, pstrFormat, Args);
+			if (nLen != -1 && nLen < counts){
+				break;
+			}
+			if (nLen == -1){
+				size *= 2;
+			}else{
+				size += 1 * sizeof(TCHAR);
+			}
 
-            if ((szBuffer = (TCHAR*)realloc(szBuffer, size)) != NULL){
-                ZeroMemory(szBuffer, size);
-            }else{
-                break;
-            }
-        }
+			if ((szBuffer = (TCHAR*)realloc(szBuffer, size)) != NULL){
+				ZeroMemory(szBuffer, size);
+			}else{
+				break;
+			}
+		}
 
-        Assign(szBuffer);
-        free(szBuffer);
-        return nLen;
+		Assign(szBuffer);
+		free(szBuffer);
+		return nLen;
 #else
-        int nLen, totalLen;
-        TCHAR *szBuffer;
-        nLen = _vsntprintf(NULL, 0, pstrFormat, Args);
-        totalLen = (nLen + 1)*sizeof(TCHAR);
-        szBuffer = (TCHAR*)malloc(totalLen);
-        ZeroMemory(szBuffer, totalLen);
-        nLen = _vsntprintf(szBuffer, nLen + 1, pstrFormat, Args);
-        Assign(szBuffer);
-        free(szBuffer);
-        return nLen;
+		int nLen, totalLen;
+		TCHAR *szBuffer;
+		nLen = _vsntprintf(NULL, 0, pstrFormat, Args);
+		totalLen = (nLen + 1)*sizeof(TCHAR);
+		szBuffer = (TCHAR*)malloc(totalLen);
+		ZeroMemory(szBuffer, totalLen);
+		nLen = _vsntprintf(szBuffer, nLen + 1, pstrFormat, Args);
+		Assign(szBuffer);
+		free(szBuffer);
+		return nLen;
 
 #endif
-    }
+	}
 
 	/////////////////////////////////////////////////////////////////////////////
 	//
@@ -898,7 +898,7 @@ namespace DuiLib
 		if( nSize > 0 ) {
 			m_aT = new TITEM*[nSize];
 			memset(m_aT, 0, nSize * sizeof(TITEM*));
-		} 
+		}
 		m_nBuckets = nSize;
 		m_nCount = 0;
 	}
@@ -922,7 +922,7 @@ namespace DuiLib
 					m_aT[slot] = pItem;
 				}
 				return pItem->Data;
-			}        
+			}
 		}
 
 		return NULL;

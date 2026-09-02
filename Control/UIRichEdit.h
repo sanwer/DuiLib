@@ -126,7 +126,7 @@ namespace DuiLib {
 		bool SetDropAcceptFile(bool bAccept);
 		// 注意：TxSendMessage和SendMessage是有区别的，TxSendMessage没有multibyte和unicode自动转换的功能，
 		// 而richedit2.0内部是以unicode实现的，在multibyte程序中，必须自己处理unicode到multibyte的转换
-		virtual HRESULT TxSendMessage(UINT msg, WPARAM wparam, LPARAM lparam, LRESULT *plresult) const; 
+		virtual HRESULT TxSendMessage(UINT msg, WPARAM wparam, LPARAM lparam, LRESULT *plresult) const;
 		IDropTarget* GetTxDropTarget();
 		virtual bool OnTxViewChanged();
 		virtual void OnTxNotify(DWORD iNotify, void *pv);
@@ -157,7 +157,7 @@ namespace DuiLib {
 		LRESULT MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, bool& bHandled);
 
 	protected:
-		enum { 
+		enum {
 			DEFAULT_TIMERID = 20,
 		};
 

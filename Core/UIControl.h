@@ -28,8 +28,8 @@ namespace DuiLib {
 		virtual CPaintManagerUI* GetManager() const;
 		virtual void SetManager(CPaintManagerUI* pManager, CControlUI* pParent, bool bInit = true);
 		virtual CControlUI* GetParent() const;
-	    void setInstance(HINSTANCE instance = NULL) {m_instance = instance;};
-		
+		void setInstance(HINSTANCE instance = NULL) {m_instance = instance;};
+
 		// 定时器
 		bool SetTimer(UINT nTimerID, UINT nElapse);
 		void KillTimer(UINT nTimerID);
@@ -92,8 +92,8 @@ namespace DuiLib {
 		void SetBorderStyle(int nStyle);
 
 		// 位置相关
-		virtual RECT GetRelativePos() const; // 相对(父控件)位置
-		virtual RECT GetClientPos() const; // 客户区域（除去scrollbar和inset）
+		virtual RECT GetRelativePos() const;        // 相对(父控件)位置
+		virtual RECT GetClientPos() const;          // 客户区域（除去scrollbar和inset）
 		virtual const RECT& GetPos() const;
 		virtual void SetPos(RECT rc, bool bNeedInvalidate = true);
 		virtual void Move(SIZE szOffset, bool bNeedInvalidate = true);
@@ -102,14 +102,14 @@ namespace DuiLib {
 		virtual int GetX() const;
 		virtual int GetY() const;
 		virtual RECT GetPadding() const;
-		virtual void SetPadding(RECT rcPadding); // 设置外边距，由上层窗口绘制
-		virtual SIZE GetFixedXY() const;         // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
-		virtual void SetFixedXY(SIZE szXY);      // 仅float为true时有效
+		virtual void SetPadding(RECT rcPadding);    // 设置外边距，由上层窗口绘制
+		virtual SIZE GetFixedXY() const;            // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+		virtual void SetFixedXY(SIZE szXY);         // 仅float为true时有效
 		virtual SIZE GetFixedSize() const;
-		virtual int GetFixedWidth() const;       // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
-		virtual void SetFixedWidth(int cx);      // 预设的参考值
-		virtual int GetFixedHeight() const;      // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
-		virtual void SetFixedHeight(int cy);     // 预设的参考值
+		virtual int GetFixedWidth() const;          // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+		virtual void SetFixedWidth(int cx);         // 预设的参考值
+		virtual int GetFixedHeight() const;         // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
+		virtual void SetFixedHeight(int cy);        // 预设的参考值
 		virtual int GetMinWidth() const;
 		virtual void SetMinWidth(int cx);
 		virtual int GetMaxWidth() const;
@@ -126,8 +126,8 @@ namespace DuiLib {
 		virtual CDuiString GetToolTip() const;
 		virtual void SetToolTip(LPCTSTR pstrText);
 		virtual void SetToolTipWidth(int nWidth);
-		virtual int	  GetToolTipWidth(void);	// 多行ToolTip单行最长宽度
-		
+		virtual int GetToolTipWidth(void);          // 多行ToolTip单行最长宽度
+
 		// 光标
 		virtual WORD GetCursor();
 		virtual void SetCursor(WORD wCursor);
@@ -141,10 +141,10 @@ namespace DuiLib {
 		virtual void SetContextMenuUsed(bool bMenuUsed);
 
 		// 用户属性
-		virtual const CDuiString& GetUserData(); // 辅助函数，供用户使用
+		virtual const CDuiString& GetUserData();    // 辅助函数，供用户使用
 		virtual void SetUserData(LPCTSTR pstrText); // 辅助函数，供用户使用
-		virtual UINT_PTR GetTag() const; // 辅助函数，供用户使用
-		virtual void SetTag(UINT_PTR pTag); // 辅助函数，供用户使用
+		virtual UINT_PTR GetTag() const;            // 辅助函数，供用户使用
+		virtual void SetTag(UINT_PTR pTag);         // 辅助函数，供用户使用
 
 		// 一些重要的属性
 		virtual bool IsVisible() const;
@@ -260,7 +260,7 @@ namespace DuiLib {
 		SIZE m_cxyBorderRound;
 		RECT m_rcPaint;
 		RECT m_rcBorderSize;
-	    HINSTANCE m_instance;
+		HINSTANCE m_instance;
 
 		CStdStringPtrMap m_mCustomAttrHash;
 	};

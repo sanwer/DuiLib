@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_CHILDLAYOUT
 #include "UIChildLayout.h"
 
 namespace DuiLib
@@ -35,12 +36,12 @@ namespace DuiLib
 			CContainerUI::SetAttribute(pstrName,pstrValue);
 	}
 
-	void CChildLayoutUI::SetChildLayoutXML( DuiLib::CDuiString pXML )
+	void CChildLayoutUI::SetChildLayoutXML( CDuiString pXML )
 	{
 		m_pstrXMLFile=pXML;
 	}
 
-	DuiLib::CDuiString CChildLayoutUI::GetChildLayoutXML()
+	CDuiString CChildLayoutUI::GetChildLayoutXML()
 	{
 		return m_pstrXMLFile;
 	}
@@ -56,3 +57,4 @@ namespace DuiLib
 		return _T("ChildLayoutUI");
 	}
 } // namespace DuiLib
+#endif // DUIMOD_CHILDLAYOUT

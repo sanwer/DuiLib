@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#ifdef DUIMOD_LOADING
 #include "UILoading.h"
 #include <Gdiplus.h>
 
@@ -10,40 +11,40 @@ namespace
 
 void DrawLine(Graphics* _objGraphics, PointF _objPointOne, PointF _objPointTwo, Color _objColor, int _intLineThickness)
 {
-    SolidBrush brush(_objColor);
-    Pen objPen(&brush, (Gdiplus::REAL)_intLineThickness);
-    {
-        objPen.SetStartCap(LineCap::LineCapRound);
-        objPen.SetEndCap(LineCap::LineCapRound);
-        _objGraphics->DrawLine(&objPen, _objPointOne, _objPointTwo);
-    }
+	SolidBrush brush(_objColor);
+	Pen objPen(&brush, (Gdiplus::REAL)_intLineThickness);
+	{
+		objPen.SetStartCap(LineCap::LineCapRound);
+		objPen.SetEndCap(LineCap::LineCapRound);
+		_objGraphics->DrawLine(&objPen, _objPointOne, _objPointTwo);
+	}
 }
 
 PointF GetCoordinate(PointF _objCircleCenter, int _intRadius, double _dblAngle)
 {
-    double dblAngle = 3.14 * _dblAngle / 180;
-    PointF pf(_objCircleCenter.X + _intRadius * (float)cos(dblAngle), _objCircleCenter.Y + _intRadius * (float)sin(dblAngle));
-    return pf;
+	double dblAngle = 3.14 * _dblAngle / 180;
+	PointF pf(_objCircleCenter.X + _intRadius * (float)cos(dblAngle), _objCircleCenter.Y + _intRadius * (float)sin(dblAngle));
+	return pf;
 }
 
 Color Darken(Color _objColor, int _intPercent)
 {
-    int intRed = _objColor.GetR();
-    int intGreen = _objColor.GetG();
-    int intBlue = _objColor.GetB();
-    Color color(_intPercent, min(intRed, 255), min(intGreen, 255), min(intBlue, 255));
-    return color;
+	int intRed = _objColor.GetR();
+	int intGreen = _objColor.GetG();
+	int intBlue = _objColor.GetB();
+	Color color(_intPercent, min(intRed, 255), min(intGreen, 255), min(intBlue, 255));
+	return color;
 }
 
 double* GetSpokesAngles(int _intNumberSpoke)
 {
-    double* Angles = new double[_intNumberSpoke];
-    double dblAngle = (double)360 / _intNumberSpoke;
-    for (int shtCounter = 0; shtCounter < _intNumberSpoke; shtCounter++)
-    {
-        Angles[shtCounter] = (shtCounter == 0 ? dblAngle : Angles[shtCounter - 1] + dblAngle);
-    }
-    return Angles;
+	double* Angles = new double[_intNumberSpoke];
+	double dblAngle = (double)360 / _intNumberSpoke;
+	for (int shtCounter = 0; shtCounter < _intNumberSpoke; shtCounter++)
+	{
+		Angles[shtCounter] = (shtCounter == 0 ? dblAngle : Angles[shtCounter - 1] + dblAngle);
+	}
+	return Angles;
 }
 }
 
@@ -53,8 +54,8 @@ CLoadingUI::CLoadingUI()
 	: m_bStop(true)
 	, m_nTime(100)
 	, m_nNumber(0)
-	, m_Angles(nullptr)
-	, m_Colors(nullptr)
+	, m_Angles(NULL)
+	, m_Colors(NULL)
 	, m_NumberOfSpoke(10)
 	, m_SpokeThickness(4)
 	, m_OuterCircleRadius( 10)
@@ -67,8 +68,8 @@ CLoadingUI::~CLoadingUI()
 {
 	Stop();
 
-    if(m_Angles) delete m_Angles;
-    if(m_Colors) delete m_Colors;
+	if(m_Angles) delete m_Angles;
+	if(m_Colors) delete m_Colors;
 }
 
 LPCTSTR CLoadingUI::GetClass() const
@@ -213,17 +214,17 @@ void CLoadingUI::Init()
 	Start();
 }
 
-void DuiLib::CLoadingUI::DoEvent(TEventUI& event)
+void CLoadingUI::DoEvent(TEventUI& event)
 {
-    if (event.Type == UIEVENT_TIMER && event.wParam == kTimerLoadingId)
-    {
-        m_ProgressValue = ++m_ProgressValue % m_NumberOfSpoke;
-        Invalidate();
-    }
-    else
-    {
-        CControlUI::DoEvent(event);
-    }
+	if (event.Type == UIEVENT_TIMER && event.wParam == kTimerLoadingId)
+	{
+		m_ProgressValue = ++m_ProgressValue % m_NumberOfSpoke;
+		Invalidate();
+	}
+	else
+	{
+		CControlUI::DoEvent(event);
+	}
 }
 
 CControlUI* CreateLoadingControl(LPCTSTR pstrType)
@@ -235,4 +236,4 @@ CControlUI* CreateLoadingControl(LPCTSTR pstrType)
 
 	return NULL;
 }
-
+#endif // DUIMOD_LOADING

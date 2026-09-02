@@ -63,37 +63,37 @@ namespace DuiLib
 		void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
 		CStdPtrArray GetTreeNodes();
-		int			 GetTreeIndex();
-		int			 GetNodeIndex();
+		int GetTreeIndex();
+		int GetNodeIndex();
 
 	public:
-		CHorizontalLayoutUI*	GetTreeNodeHoriznotal() const {return pHoriz;};
-		CCheckBoxUI*			GetFolderButton() const {return pFolderButton;};
-		CLabelUI*				GetDottedLine() const {return pDottedLine;};
-		CCheckBoxUI*			GetCheckBox() const {return pCheckBox;};
-		COptionUI*				GetItemButton() const {return pItemButton;};
+		CHorizontalLayoutUI* GetTreeNodeHoriznotal() const {return pHoriz;};
+		CCheckBoxUI* GetFolderButton() const {return pFolderButton;};
+		CLabelUI* GetDottedLine() const {return pDottedLine;};
+		CCheckBoxUI* GetCheckBox() const {return pCheckBox;};
+		COptionUI* GetItemButton() const {return pItemButton;};
 
 	private:
 		CTreeNodeUI* GetLastNode();
 		CTreeNodeUI* CalLocation(CTreeNodeUI* _pTreeNodeUI);
 
 	private:
-		long	m_iTreeLavel;
-		bool	m_bIsVisable;
-		bool	m_bIsCheckBox;
-		DWORD	m_dwItemTextColor;
-		DWORD	m_dwItemHotTextColor;
-		DWORD	m_dwSelItemTextColor;
-		DWORD	m_dwSelItemHotTextColor;
+		long m_iTreeLavel;
+		bool m_bIsVisable;
+		bool m_bIsCheckBox;
+		DWORD m_dwItemTextColor;
+		DWORD m_dwItemHotTextColor;
+		DWORD m_dwSelItemTextColor;
+		DWORD m_dwSelItemHotTextColor;
 
-		CTreeViewUI*			pTreeView;
-		CHorizontalLayoutUI*	pHoriz;
-		CCheckBoxUI*			pFolderButton;
-		CLabelUI*				pDottedLine;
-		CCheckBoxUI*			pCheckBox;
-		COptionUI*				pItemButton;
-		CTreeNodeUI*			pParentTreeNode;
-		CStdPtrArray			mTreeNodes;
+		CTreeViewUI* pTreeView;
+		CHorizontalLayoutUI* pHoriz;
+		CCheckBoxUI* pFolderButton;
+		CLabelUI* pDottedLine;
+		CCheckBoxUI* pCheckBox;
+		COptionUI* pItemButton;
+		CTreeNodeUI* pParentTreeNode;
+		CStdPtrArray mTreeNodes;
 	};
 
 	class UILIB_API CTreeViewUI : public CListUI,public INotifyUI
@@ -105,7 +105,7 @@ namespace DuiLib
 
 	public:
 		virtual LPCTSTR GetClass() const;
-		virtual LPVOID	GetInterface(LPCTSTR pstrName);
+		virtual LPVOID GetInterface(LPCTSTR pstrName);
 
 		virtual UINT GetListType();
 		virtual bool Add(CTreeNodeUI* pControl );
@@ -130,7 +130,7 @@ namespace DuiLib
 		virtual void SetItemHotTextColor(DWORD _dwItemHotTextColor);
 		virtual void SetSelItemTextColor(DWORD _dwSelItemTextColor);
 		virtual void SetSelItemHotTextColor(DWORD _dwSelHotItemTextColor);
-		
+
 		virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 	private:
 		UINT m_uItemMinWidth;

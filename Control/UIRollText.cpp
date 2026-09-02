@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#ifdef DUIMOD_ROLLTEXT
 #include "UIRollText.h"
 
 namespace DuiLib
@@ -39,10 +40,10 @@ namespace DuiLib
 			EndRoll();
 		}
 		m_nText_W_H = 0;
-	
+
 		m_pManager->KillTimer(this, ROLLTEXT_TIMERID);
 		m_pManager->SetTimer(this, ROLLTEXT_TIMERID, lTimeSpan);
-	
+
 		m_pManager->KillTimer(this, ROLLTEXT_ROLL_END);
 		m_pManager->SetTimer(this, ROLLTEXT_ROLL_END, lMaxTimeLimited*1000);
 
@@ -55,20 +56,20 @@ namespace DuiLib
 
 		m_pManager->KillTimer(this, ROLLTEXT_ROLL_END);
 		m_pManager->KillTimer(this, ROLLTEXT_TIMERID);
-		
+
 		m_bUseRoll = FALSE;
 	}
 
 	void CRollTextUI::SetPos(RECT rc)
 	{
 		CLabelUI::SetPos(rc);
-		m_nText_W_H = 0;			//布局变化重新计算
+		m_nText_W_H = 0; //布局变化重新计算
 	}
 
 	void CRollTextUI::SetText( LPCTSTR pstrText )
 	{
 		CLabelUI::SetText(pstrText);
-		m_nText_W_H = 0;			//文本变化重新计算
+		m_nText_W_H = 0; //文本变化重新计算
 	}
 
 	void CRollTextUI::DoEvent(TEventUI& event)
@@ -78,7 +79,7 @@ namespace DuiLib
 			m_pManager->KillTimer(this, ROLLTEXT_ROLL_END);
 			m_pManager->SendNotify(this, DUI_MSGTYPE_TEXTROLLEND);
 		}
-		else if( event.Type == UIEVENT_TIMER && event.wParam == ROLLTEXT_TIMERID ) 
+		else if( event.Type == UIEVENT_TIMER && event.wParam == ROLLTEXT_TIMERID )
 		{
 			Invalidate();
 			return;
@@ -106,14 +107,14 @@ namespace DuiLib
 		{
 			int nScrollRange = 0;
 
-			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//左面移动
+			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) { //左面移动
 				nScrollRange = m_nText_W_H + rcClient.GetWidth();
 
 				rcClient.Offset((m_nRollDirection == ROLLTEXT_LEFT?rcClient.GetWidth():-rcClient.GetWidth()), 0);
 				rcClient.Offset((m_nRollDirection == ROLLTEXT_LEFT?-m_nScrollPos:m_nScrollPos), 0);
 				rcClient.right += (m_nText_W_H - rcClient.GetWidth());
 			}
-			else {																		//上下移动
+			else { //上下移动
 				nScrollRange = m_nText_W_H + rcClient.GetHeight();
 				rcClient.Offset(0, (m_nRollDirection == ROLLTEXT_UP?rcClient.GetHeight():-rcClient.GetHeight()));
 				rcClient.Offset(0, (m_nRollDirection == ROLLTEXT_UP?-m_nScrollPos:m_nScrollPos));
@@ -129,11 +130,11 @@ namespace DuiLib
 		RECT rc = rcClient;
 		UINT uTextStyle = DT_WORDBREAK | DT_EDITCONTROL;
 		if(m_nText_W_H == 0) {
-			uTextStyle |= DT_CALCRECT;				//第一次计算文本宽度或高度
-			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) {	//左面移动
+			uTextStyle |= DT_CALCRECT; //第一次计算文本宽度或高度
+			if (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT) { //左面移动
 				rc.right += 10000;
 			}
-			else {																		//上下移动
+			else { //上下移动
 				rc.bottom += 10000;
 			}
 		}
@@ -147,7 +148,8 @@ namespace DuiLib
 		}
 
 		if(m_nText_W_H == 0) {
-			m_nText_W_H = (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT)?(rc.right - rc.left):(rc.bottom - rc.top);		//计算文本宽度或高度
+			m_nText_W_H = (m_nRollDirection == ROLLTEXT_LEFT || m_nRollDirection == ROLLTEXT_RIGHT)?(rc.right - rc.left):(rc.bottom - rc.top); //计算文本宽度或高度
 		}
 	}
 }
+#endif // DUIMOD_ROLLTEXT

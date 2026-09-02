@@ -33,9 +33,9 @@ namespace DuiLib
 		void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
 	protected:
-		DWORD	m_dwIP;
-		bool       m_bReadOnly;
-		int		m_nIPUpdateFlag;
+		DWORD m_dwIP;
+		bool m_bReadOnly;
+		int m_nIPUpdateFlag;
 
 		CIPAddressWnd* m_pWindow;
 	};

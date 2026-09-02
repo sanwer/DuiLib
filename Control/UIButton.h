@@ -32,8 +32,8 @@ namespace DuiLib
 		virtual void SetDisabledImage(LPCTSTR pStrImage);
 		virtual LPCTSTR GetHotForeImage();
 		virtual void SetHotForeImage(LPCTSTR pStrImage);
-        virtual LPCTSTR GetPushedForeImage();
-        virtual void SetPushedForeImage(LPCTSTR pStrImage);
+		virtual LPCTSTR GetPushedForeImage();
+		virtual void SetPushedForeImage(LPCTSTR pStrImage);
 		void SetStateCount(int nCount);
 		int GetStateCount() const;
 		virtual LPCTSTR GetStateImage();
@@ -43,7 +43,7 @@ namespace DuiLib
 		void BindTabLayoutName(LPCTSTR _TabLayoutName);
 		void BindTriggerTabSel(int _SetSelectIndex = -1);
 		void RemoveBindTabIndex();
-		int	 GetBindTabLayoutIndex();
+		int GetBindTabLayoutIndex();
 		LPCTSTR GetBindTabLayoutName();
 
 		void SetHotFont(int index);
@@ -86,9 +86,9 @@ namespace DuiLib
 	protected:
 		UINT m_uButtonState;
 
-		int		m_iHotFont;
-		int		m_iPushedFont;
-		int		m_iFocusedFont;
+		int m_iHotFont;
+		int m_iPushedFont;
+		int m_iFocusedFont;
 
 		DWORD m_dwHotBkColor;
 		DWORD m_dwPushedBkColor;
@@ -110,10 +110,10 @@ namespace DuiLib
 		int m_nStateCount;
 		CDuiString m_sStateImage;
 
-		int			m_iBindTabIndex;
-		CDuiString	m_sBindTabLayoutName;
+		int m_iBindTabIndex;
+		CDuiString m_sBindTabLayoutName;
 	};
 
-}	// namespace DuiLib
+} // namespace DuiLib
 
 #endif // __UIBUTTON_H__

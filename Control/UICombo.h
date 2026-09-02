@@ -49,7 +49,7 @@ namespace DuiLib {
 
 		UINT GetListType();
 		TListInfoUI* GetListInfo();
-		int GetCurSel() const;  
+		int GetCurSel() const;
 		const CDuiString& GetCurUserData();
 		bool SelectUserData(LPCTSTR pstrText);
 		UINT_PTR GetCurTag() const;
@@ -142,13 +142,13 @@ namespace DuiLib {
 		CComboWnd* m_pWindow;
 
 		int m_iCurSel;
-		DWORD	m_dwTextColor;
-		DWORD	m_dwDisabledTextColor;
-		int		m_iFont;
-		UINT	m_uTextStyle;
-		RECT	m_rcTextPadding;
-		bool	m_bShowHtml;
-		bool	m_bShowShadow;
+		DWORD m_dwTextColor;
+		DWORD m_dwDisabledTextColor;
+		int m_iFont;
+		UINT m_uTextStyle;
+		RECT m_rcTextPadding;
+		bool m_bShowHtml;
+		bool m_bShowShadow;
 		CDuiString m_sDropBoxAttributes;
 		CDuiString m_sCurUserData;
 		SIZE m_szDropBox;

@@ -35,8 +35,8 @@ namespace DuiLib
 		HWND m_hWnd;
 		UINT m_uMessage;
 		HICON m_hIcon;
-		NOTIFYICONDATA	m_trayData;
+		NOTIFYICONDATA m_trayData;
 	};
 }
-#endif // 
+#endif // __UITRAICON_H__
 

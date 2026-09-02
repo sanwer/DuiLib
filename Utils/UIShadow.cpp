@@ -42,18 +42,18 @@ bool CShadowUI::Initialize(HINSTANCE hInstance)
 
 	memset(&wcex, 0, sizeof(wcex));
 
-	wcex.cbSize = sizeof(WNDCLASSEX); 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= DefWindowProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= NULL;
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= NULL;
-	wcex.lpszClassName	= strWndClassName;
-	wcex.hIconSm		= NULL;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = DefWindowProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = NULL;
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
+	wcex.lpszMenuName = NULL;
+	wcex.lpszClassName = strWndClassName;
+	wcex.hIconSm = NULL;
 
 	RegisterClassEx(&wcex);
 
@@ -72,7 +72,7 @@ void CShadowUI::Create(CPaintManagerUI* pPaintManager)
 	m_pManager = pPaintManager;
 	HWND hParentWnd = m_pManager->GetPaintWindow();
 	// Add parent window - shadow pair to the map
-	_ASSERT(GetShadowMap().find(hParentWnd) == GetShadowMap().end());	// Only one shadow for each window
+	_ASSERT(GetShadowMap().find(hParentWnd) == GetShadowMap().end()); // Only one shadow for each window
 	GetShadowMap()[hParentWnd] = this;
 
 	// Determine the initial show state of shadow according to parent window's state
@@ -84,11 +84,11 @@ void CShadowUI::Create(CPaintManagerUI* pPaintManager)
 		/*WS_VISIBLE | */styleValue | WS_POPUPWINDOW,
 		CW_USEDEFAULT, 0, 0, 0, hParentWnd, NULL, CPaintManagerUI::GetInstance(), NULL);
 
-	if(!(WS_VISIBLE & lParentStyle))	// Parent invisible
+	if(!(WS_VISIBLE & lParentStyle)) // Parent invisible
 		m_Status = SS_ENABLED;
-	else if((WS_MAXIMIZE | WS_MINIMIZE) & lParentStyle)	// Parent visible but does not need shadow
+	else if((WS_MAXIMIZE | WS_MINIMIZE) & lParentStyle) // Parent visible but does not need shadow
 		m_Status = SS_ENABLED | SS_PARENTVISIBLE;
-	else	// Show the shadow
+	else // Show the shadow
 	{
 		m_Status = SS_ENABLED | SS_VISABLE | SS_PARENTVISIBLE;
 		::ShowWindow(m_hWnd, SW_SHOWNOACTIVATE);
@@ -98,7 +98,7 @@ void CShadowUI::Create(CPaintManagerUI* pPaintManager)
 	// Replace the original WndProc of parent window to steal messages
 	m_OriParentProc = GetWindowLongPtr(hParentWnd, GWLP_WNDPROC);
 
-#pragma warning(disable: 4311)	// temporrarily disable the type_cast warning in Win32
+#pragma warning(disable: 4311) // temporrarily disable the type_cast warning in Win32
 	SetWindowLongPtr(hParentWnd, GWLP_WNDPROC, (LONG_PTR)ParentProc);
 #pragma warning(default: 4311)
 
@@ -112,7 +112,7 @@ std::map<HWND, CShadowUI *>& CShadowUI::GetShadowMap()
 
 LRESULT CALLBACK CShadowUI::ParentProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	_ASSERT(GetShadowMap().find(hwnd) != GetShadowMap().end());	// Shadow must have been attached
+	_ASSERT(GetShadowMap().find(hwnd) != GetShadowMap().end()); // Shadow must have been attached
 
 	CShadowUI *pThis = GetShadowMap()[hwnd];
 	if (pThis->IsDisableShadow()) {
@@ -163,7 +163,7 @@ LRESULT CALLBACK CShadowUI::ParentProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
 			}
 			break;
 		}
-		
+
 	case WM_MOVE:
 		if(pThis->m_Status & SS_VISABLE) {
 			RECT WndRect;
@@ -236,10 +236,10 @@ LRESULT CALLBACK CShadowUI::ParentProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
 		break;
 
 	case WM_DESTROY:
-		DestroyWindow(pThis->m_hWnd);	// Destroy the shadow
+		DestroyWindow(pThis->m_hWnd); // Destroy the shadow
 		break;
 	case WM_NCDESTROY:
-		GetShadowMap().erase(hwnd);	// Remove this window and shadow from the map
+		GetShadowMap().erase(hwnd); // Remove this window and shadow from the map
 		break;
 	}
 
@@ -247,8 +247,8 @@ LRESULT CALLBACK CShadowUI::ParentProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
 }
 
 //Formats GetLastError() value.
-void GetLastErrorMessage() 
-{          
+void GetLastErrorMessage()
+{
 	LPVOID lpMsgBuf;
 	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
@@ -281,7 +281,7 @@ void CShadowUI::Update(HWND hParent)
 		nShadWndWid = WndRect.right - WndRect.left + m_nSize * 2;
 		nShadWndHei = WndRect.bottom - WndRect.top + m_nSize * 2;
 	}
-		
+
 	// Create the alpha blending bitmap
 	BITMAPINFO bmi;        // bitmap header
 	ZeroMemory(&bmi, sizeof(BITMAPINFO));
@@ -311,7 +311,7 @@ void CShadowUI::Update(HWND hParent)
 		const TDrawInfo* pDrawInfo = m_pManager->GetDrawInfo(m_sShadowImage, _T(""));
 		if(pDrawInfo != NULL) {
 			const TImageInfo* data = m_pManager->GetImageEx(pDrawInfo->sImageName, pDrawInfo->sResType, pDrawInfo->dwMask, pDrawInfo->bHSL, pDrawInfo->bGdiplus);
-			if( !data ) return;    
+			if( !data ) return;
 			RECT rcBmpPart = {0};
 			rcBmpPart.right = data->nX;
 			rcBmpPart.bottom = data->nY;
@@ -362,9 +362,9 @@ void CShadowUI::MakeShadow(UINT32 *pShadBits, HWND hParent, RECT *rcParent)
 	SIZE szParent = {rcParent->right - rcParent->left, rcParent->bottom - rcParent->top};
 	SIZE szShadow = {szParent.cx + 2 * m_nSize, szParent.cy + 2 * m_nSize};
 	// Extra 2 lines (set to be empty) in ptAnchors are used in dilation
-	int nAnchors = max(szParent.cy, szShadow.cy);	// # of anchor points pares
+	int nAnchors = max(szParent.cy, szShadow.cy); // # of anchor points pares
 	int (*ptAnchors)[2] = new int[nAnchors + 2][2];
-	int (*ptAnchorsOri)[2] = new int[szParent.cy][2];	// anchor points, will not modify during erosion
+	int (*ptAnchorsOri)[2] = new int[szParent.cy][2]; // anchor points, will not modify during erosion
 	ptAnchors[0][0] = szParent.cx;
 	ptAnchors[0][1] = 0;
 	ptAnchors[nAnchors + 1][0] = szParent.cx;
@@ -409,8 +409,8 @@ void CShadowUI::MakeShadow(UINT32 *pShadBits, HWND hParent, RECT *rcParent)
 	}
 
 	if(m_nSize > 0)
-		ptAnchors -= m_nSize;	// Restore pos of ptAnchors for erosion
-	int (*ptAnchorsTmp)[2] = new int[nAnchors + 2][2];	// Store the result of erosion
+		ptAnchors -= m_nSize; // Restore pos of ptAnchors for erosion
+	int (*ptAnchorsTmp)[2] = new int[nAnchors + 2][2]; // Store the result of erosion
 	// First and last line should be empty
 	ptAnchorsTmp[0][0] = szParent.cx;
 	ptAnchorsTmp[0][1] = 0;
@@ -435,7 +435,7 @@ void CShadowUI::MakeShadow(UINT32 *pShadBits, HWND hParent, RECT *rcParent)
 	}
 
 	// morphologic dilation
-	ptAnchors += (m_nSize < 0 ? -m_nSize : 0) + 1;	// now coordinates in ptAnchors are same as in shadow window
+	ptAnchors += (m_nSize < 0 ? -m_nSize : 0) + 1; // now coordinates in ptAnchors are same as in shadow window
 	// Generate the kernel
 	int nKernelSize = m_nSize > m_nSharpness ? m_nSize : m_nSharpness;
 	int nCenterSize = m_nSize > m_nSharpness ? (m_nSize - m_nSharpness) : 0;
@@ -479,7 +479,7 @@ void CShadowUI::MakeShadow(UINT32 *pShadBits, HWND hParent, RECT *rcParent)
 						pKernelPixel++;
 					}
 				}
-			}	// for() start of line
+			} // for() start of line
 
 			// End of line
 			for(j = max(j, min(ptAnchors[i - 1][1], ptAnchors[i + 1][1]) - 1); j < ptAnchors[i][1]; j++)
@@ -497,17 +497,17 @@ void CShadowUI::MakeShadow(UINT32 *pShadBits, HWND hParent, RECT *rcParent)
 						pKernelPixel++;
 					}
 				}
-			}	// for() end of line
+			} // for() end of line
 
 		}
-	}	// for() Generate blurred border
+	} // for() Generate blurred border
 
 	// Erase unwanted parts and complement missing
 	UINT32 clCenter = m_nDarkness << 24 | PreMultiply(m_Color, m_nDarkness);
 	for(int i = min(nKernelSize, max(m_nSize - m_nyOffset, 0)); i < max(szShadow.cy - nKernelSize, min(szParent.cy + m_nSize - m_nyOffset, szParent.cy + 2 * m_nSize)); i++) {
 		UINT32 *pLine = pShadBits + (szShadow.cy - i - 1) * szShadow.cx;
-		// Line is not covered by parent window 
-		if(i - m_nSize + m_nyOffset < 0 || i - m_nSize + m_nyOffset >= szParent.cy)	{
+		// Line is not covered by parent window
+		if(i - m_nSize + m_nyOffset < 0 || i - m_nSize + m_nyOffset >= szParent.cy) {
 			for(int j = ptAnchors[i][0]; j < ptAnchors[i][1]; j++) {
 				*(pLine + j) = clCenter;
 			}
@@ -552,9 +552,9 @@ void CShadowUI::DisableShadow(bool bDisable)
 			// Determine the initial show state of shadow according to parent window's state
 			LONG lParentStyle = GetWindowLongPtr(GetParent(m_hWnd), GWL_STYLE);
 
-			if (!(WS_VISIBLE & lParentStyle))	// Parent invisible
+			if (!(WS_VISIBLE & lParentStyle)) // Parent invisible
 				m_Status = SS_ENABLED;
-			else if ((WS_MAXIMIZE | WS_MINIMIZE) & lParentStyle)	// Parent visible but does not need shadow
+			else if ((WS_MAXIMIZE | WS_MINIMIZE) & lParentStyle) // Parent visible but does not need shadow
 				m_Status = SS_ENABLED | SS_PARENTVISIBLE;
 			else {
 				m_Status = SS_ENABLED | SS_VISABLE | SS_PARENTVISIBLE;
@@ -569,7 +569,7 @@ void CShadowUI::DisableShadow(bool bDisable)
 }
 
 ////TODO shadow disnable fix////
-bool CShadowUI::IsDisableShadow() const 
+bool CShadowUI::IsDisableShadow() const
 {
 	return m_bIsDisableShadow;
 }
@@ -612,7 +612,7 @@ bool CShadowUI::SetPosition(int NewXOffset, int NewYOffset)
 	if(NewXOffset > 35 || NewXOffset < -35 ||
 		NewYOffset > 35 || NewYOffset < -35)
 		return false;
-	
+
 	m_nxOffset = (signed char)NewXOffset;
 	m_nyOffset = (signed char)NewYOffset;
 	if(m_hWnd != NULL && (SS_VISABLE & m_Status))

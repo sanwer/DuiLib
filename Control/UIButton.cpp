@@ -49,11 +49,11 @@ namespace DuiLib
 			return;
 		}
 
-		if( event.Type == UIEVENT_SETFOCUS ) 
+		if( event.Type == UIEVENT_SETFOCUS )
 		{
 			Invalidate();
 		}
-		if( event.Type == UIEVENT_KILLFOCUS ) 
+		if( event.Type == UIEVENT_KILLFOCUS )
 		{
 			Invalidate();
 		}
@@ -65,7 +65,7 @@ namespace DuiLib
 					return;
 				}
 			}
-		}		
+		}
 		if( event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)
 		{
 			if( ::PtInRect(&m_rcItem, event.ptMouse) && IsEnabled() ) {
@@ -74,16 +74,16 @@ namespace DuiLib
 				if(IsRichEvent()) m_pManager->SendNotify(this, DUI_MSGTYPE_BUTTONDOWN);
 			}
 			return;
-		}	
+		}
 		if( event.Type == UIEVENT_MOUSEMOVE )
 		{
-            if ((m_uButtonState & UISTATE_CAPTURED) != 0)
-            {
-                if (::PtInRect(&m_rcItem, event.ptMouse))
-                    m_uButtonState |= UISTATE_PUSHED;
-                else m_uButtonState &= ~UISTATE_PUSHED;
-                Invalidate();
-            }
+			if ((m_uButtonState & UISTATE_CAPTURED) != 0)
+			{
+				if (::PtInRect(&m_rcItem, event.ptMouse))
+					m_uButtonState |= UISTATE_PUSHED;
+				else m_uButtonState &= ~UISTATE_PUSHED;
+				Invalidate();
+			}
 
 			return;
 		}
@@ -92,7 +92,7 @@ namespace DuiLib
 			if( (m_uButtonState & UISTATE_CAPTURED) != 0 ) {
 				m_uButtonState &= ~(UISTATE_PUSHED | UISTATE_CAPTURED);
 				Invalidate();
-				if( ::PtInRect(&m_rcItem, event.ptMouse) ) Activate();				
+				if( ::PtInRect(&m_rcItem, event.ptMouse) ) Activate();
 			}
 			return;
 		}
@@ -146,7 +146,7 @@ namespace DuiLib
 		}
 	}
 
-	
+
 	void CButtonUI::SetHotFont(int index)
 	{
 		m_iHotFont = index;
@@ -190,7 +190,7 @@ namespace DuiLib
 	{
 		return m_dwHotBkColor;
 	}
-	
+
 	void CButtonUI::SetPushedBkColor( DWORD dwColor )
 	{
 		m_dwPushedBkColor = dwColor;
@@ -201,7 +201,7 @@ namespace DuiLib
 	{
 		return m_dwPushedBkColor;
 	}
-		
+
 	void CButtonUI::SetDisabledBkColor( DWORD dwColor )
 	{
 		m_dwDisabledBkColor = dwColor;
@@ -212,7 +212,7 @@ namespace DuiLib
 	{
 		return m_dwDisabledBkColor;
 	}
-	
+
 	void CButtonUI::SetHotTextColor(DWORD dwColor)
 	{
 		m_dwHotTextColor = dwColor;
@@ -348,16 +348,16 @@ namespace DuiLib
 		Invalidate();
 	}
 
-    LPCTSTR CButtonUI::GetPushedForeImage()
-    {
-        return m_sPushedForeImage;
-    }
+	LPCTSTR CButtonUI::GetPushedForeImage()
+	{
+		return m_sPushedForeImage;
+	}
 
-    void CButtonUI::SetPushedForeImage(LPCTSTR pStrImage)
-    {
-        m_sPushedForeImage = pStrImage;
-        Invalidate();
-    }
+	void CButtonUI::SetPushedForeImage(LPCTSTR pStrImage)
+	{
+		m_sPushedForeImage = pStrImage;
+		Invalidate();
+	}
 
 	void CButtonUI::SetStateCount(int nCount)
 	{
@@ -385,7 +385,7 @@ namespace DuiLib
 	void CButtonUI::BindTabIndex(int _BindTabIndex )
 	{
 		if( _BindTabIndex >= 0)
-			m_iBindTabIndex	= _BindTabIndex;
+			m_iBindTabIndex = _BindTabIndex;
 	}
 
 	void CButtonUI::BindTabLayoutName( LPCTSTR _TabLayoutName )
@@ -407,7 +407,7 @@ namespace DuiLib
 
 	void CButtonUI::RemoveBindTabIndex()
 	{
-		m_iBindTabIndex	= -1;
+		m_iBindTabIndex = -1;
 		m_sBindTabLayoutName.Empty();
 	}
 
@@ -428,8 +428,8 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("pushedimage")) == 0 ) SetPushedImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("focusedimage")) == 0 ) SetFocusedImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("disabledimage")) == 0 ) SetDisabledImage(pstrValue);
-        else if (_tcsicmp(pstrName, _T("hotforeimage")) == 0) SetHotForeImage(pstrValue);
-        else if (_tcsicmp(pstrName, _T("pushedforeimage")) == 0) SetPushedForeImage(pstrValue);
+		else if (_tcsicmp(pstrName, _T("hotforeimage")) == 0) SetHotForeImage(pstrValue);
+		else if (_tcsicmp(pstrName, _T("pushedforeimage")) == 0) SetPushedForeImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("stateimage")) == 0 ) SetStateImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("statecount")) == 0 ) SetStateCount(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("bindtabindex")) == 0 ) BindTabIndex(_ttoi(pstrValue));
@@ -500,7 +500,7 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("hotfont")) == 0 ) SetHotFont(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("pushedfont")) == 0 ) SetPushedFont(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("focuedfont")) == 0 ) SetFocusedFont(_ttoi(pstrValue));
-		
+
 		else CLabelUI::SetAttribute(pstrName, pstrValue);
 	}
 
@@ -513,7 +513,7 @@ namespace DuiLib
 
 		if( m_dwTextColor == 0 ) m_dwTextColor = m_pManager->GetDefaultFontColor();
 		if( m_dwDisabledTextColor == 0 ) m_dwDisabledTextColor = m_pManager->GetDefaultDisabledColor();
-		
+
 		CDuiString sText = GetText();
 		if( sText.IsEmpty() ) return;
 
@@ -527,7 +527,7 @@ namespace DuiLib
 		rc.bottom -= m_rcTextPadding.bottom;
 
 		DWORD clrColor = IsEnabled()?m_dwTextColor:m_dwDisabledTextColor;
-		
+
 		if( ((m_uButtonState & UISTATE_PUSHED) != 0) && (GetPushedTextColor() != 0) )
 			clrColor = GetPushedTextColor();
 		else if( ((m_uButtonState & UISTATE_HOT) != 0) && (GetHotTextColor() != 0) )

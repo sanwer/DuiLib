@@ -1,5 +1,6 @@
 ﻿#ifndef __UILIST_H__
 #define __UILIST_H__
+#pragma once
 
 namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +135,7 @@ namespace DuiLib {
 		int GetSelectItemCount() const;
 		int GetNextSelItem(int nItem) const;
 
-		CListHeaderUI* GetHeader() const;  
+		CListHeaderUI* GetHeader() const;
 		CContainerUI* GetList() const;
 		UINT GetListType();
 		TListInfoUI* GetListInfo();
@@ -166,7 +167,7 @@ namespace DuiLib {
 		void SetAlternateBk(bool bAlternateBk);
 		void SetSelectedItemTextColor(DWORD dwTextColor);
 		void SetSelectedItemBkColor(DWORD dwBkColor);
-		void SetSelectedItemImage(LPCTSTR pStrImage); 
+		void SetSelectedItemImage(LPCTSTR pStrImage);
 		void SetHotItemTextColor(DWORD dwTextColor);
 		void SetHotItemBkColor(DWORD dwBkColor);
 		void SetHotItemImage(LPCTSTR pStrImage);
@@ -196,7 +197,7 @@ namespace DuiLib {
 		LPCTSTR GetDisabledItemImage() const;
 		DWORD GetItemLineColor() const;
 
-		void SetMultiExpanding(bool bMultiExpandable); 
+		void SetMultiExpanding(bool bMultiExpandable);
 		int GetExpandedItem() const;
 		bool ExpandItem(int iIndex, bool bExpand = true);
 
@@ -507,7 +508,7 @@ namespace DuiLib {
 		void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 		bool DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 
-		virtual void DrawItemText(HDC hDC, const RECT& rcItem);    
+		virtual void DrawItemText(HDC hDC, const RECT& rcItem);
 		virtual void DrawItemBk(HDC hDC, const RECT& rcItem);
 
 		void SetPos(RECT rc, bool bNeedInvalidate = true);

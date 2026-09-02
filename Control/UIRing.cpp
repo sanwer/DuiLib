@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_RING
 #include "UIRing.h"
 
 namespace DuiLib
@@ -105,3 +106,4 @@ namespace DuiLib
 		}
 	}
 }
+#endif // DUIMOD_RING

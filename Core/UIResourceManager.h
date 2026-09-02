@@ -21,7 +21,7 @@ namespace DuiLib {
 		{
 			static CResourceManager * p = new CResourceManager;
 			return p;
-		};	
+		};
 		void Release(void) { delete this; }
 
 	public:
@@ -35,7 +35,7 @@ namespace DuiLib {
 		void SetLanguage(LPCTSTR pstrLanguage) { m_sLauguage = pstrLanguage; }
 		LPCTSTR GetLanguage() { return m_sLauguage; }
 		BOOL LoadLanguage(LPCTSTR pstrXml);
-		
+
 	public:
 		void SetTextQueryInterface(IQueryControlText* pInterface) { m_pQuerypInterface = pInterface; }
 		CDuiString GetText(LPCTSTR lpstrId, LPCTSTR lpstrType = NULL);
@@ -44,7 +44,7 @@ namespace DuiLib {
 
 	private:
 		CStdStringPtrMap m_mTextResourceHashMap;
-		IQueryControlText*	m_pQuerypInterface;
+		IQueryControlText* m_pQuerypInterface;
 		CStdStringPtrMap m_mImageHashMap;
 		CStdStringPtrMap m_mXmlHashMap;
 		CMarkup m_xml;

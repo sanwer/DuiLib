@@ -28,15 +28,15 @@ namespace DuiLib {
 		UINT GetControlFlags() const;
 		LPVOID GetInterface(LPCTSTR pstrName);
 
-	public: 
+	public:
 		virtual void DoEvent(TEventUI& event);
 
 	public:
 		void InitListCtrl();
 
 	protected:
-		CRichEditUI*		m_pEditUI;
-		CComboBoxUI*	m_pComboBoxUI;
+		CRichEditUI* m_pEditUI;
+		CComboBoxUI* m_pComboBoxUI;
 
 	public:
 		virtual BOOL CheckColumEditable(int nColum);
@@ -49,9 +49,9 @@ namespace DuiLib {
 
 	public:
 		virtual void Notify(TNotifyUI& msg);
-		BOOL	m_bAddMessageFilter;
-		int		m_nRow,m_nColum;
-		void	SetEditRowAndColum(int nRow,int nColum) { m_nRow = nRow; m_nColum = nColum; };
+		BOOL m_bAddMessageFilter;
+		int m_nRow,m_nColum;
+		void SetEditRowAndColum(int nRow,int nColum) { m_nRow = nRow; m_nColum = nColum; };
 
 	public:
 		IListComboCallbackUI* m_pXCallback;
@@ -158,8 +158,8 @@ namespace DuiLib {
 		BOOL GetCheck();
 
 	private:
-		UINT	m_uCheckBoxState;
-		BOOL	m_bChecked;
+		UINT m_uCheckBoxState;
+		BOOL m_bChecked;
 
 		CDuiString m_sCheckBoxNormalImage;
 		CDuiString m_sCheckBoxHotImage;
@@ -190,7 +190,7 @@ namespace DuiLib {
 		LPCTSTR GetCheckBoxForeImage();
 		void SetCheckBoxForeImage(LPCTSTR pStrImage);
 
-		void GetCheckBoxRect(RECT &rc);	
+		void GetCheckBoxRect(RECT &rc);
 
 		int GetCheckBoxWidth() const;       // 实际大小位置使用GetPos获取，这里得到的是预设的参考值
 		void SetCheckBoxWidth(int cx);      // 预设的参考值
@@ -203,7 +203,7 @@ namespace DuiLib {
 		void SetOwner(CContainerUI* pOwner);
 		CContainerUI* GetOwner();
 	};
-	 
+
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
@@ -240,8 +240,8 @@ namespace DuiLib {
 		CStdPtrArray m_aTexts;
 
 	private:
-		UINT	m_uCheckBoxState;
-		BOOL	m_bChecked;
+		UINT m_uCheckBoxState;
+		BOOL m_bChecked;
 
 		CDuiString m_sCheckBoxNormalImage;
 		CDuiString m_sCheckBoxHotImage;
@@ -275,7 +275,7 @@ namespace DuiLib {
 		LPCTSTR GetCheckBoxForeImage();
 		void SetCheckBoxForeImage(LPCTSTR pStrImage);
 
-		void GetCheckBoxRect(int nIndex, RECT &rc);	
+		void GetCheckBoxRect(int nIndex, RECT &rc);
 		void GetColumRect(int nColum, RECT &rc);
 
 		int GetCheckBoxWidth() const;       // 实际大小位置使用GetPos获取，这里得到的是预设的参考值

@@ -38,7 +38,7 @@ public:
 		: count_(0)
 	{}
 
-	virtual ~ObserverImpl()	{}
+	virtual ~ObserverImpl() {}
 
 	virtual void AddReceiver(ReceiverImplBase<ReturnT, ParamT>* receiver)
 	{
@@ -103,7 +103,7 @@ public:
 		: count_(0)
 	{}
 
-	virtual ~ReceiverImpl()	{}
+	virtual ~ReceiverImpl() {}
 
 	virtual void AddObserver(ObserverImplBase<ReturnT, ParamT>* observer)
 	{

@@ -47,7 +47,7 @@ public:\
 		CDuiString sRegClassName;\
 		sRegClassName.Format(_T("C%sUI"), str_class_name); \
 		RegistControl(sRegClassName, (CreateClass)class_type::CreateControl);\
-    }
+	}
 }
 
 #endif //__CONTROL_FACTORY_H__

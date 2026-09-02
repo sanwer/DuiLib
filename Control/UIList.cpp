@@ -214,7 +214,7 @@ namespace DuiLib {
 			SelectItem(FindSelectable(iSel, false));
 		}
 		else if (iIndex < m_iCurSel) {
-			m_iCurSel -= 1; 
+			m_iCurSel -= 1;
 			for (int i = 0; i < m_aSelItems.GetSize(); ++i)
 			{
 				int sel = (int)m_aSelItems.GetAt(i);
@@ -392,11 +392,11 @@ namespace DuiLib {
 			case VK_RETURN:
 				if (m_iCurSel != -1) GetItemAt(m_iCurSel)->Activate();
 				return;
-			case 0x41:// Ctrl+A 
+			case 0x41:// Ctrl+A
 				{
 					//全选
 					if (IsMultiSelect() && (GetKeyState(VK_CONTROL) & 0x8000)) {
-                        UnSelectAllItems();
+						UnSelectAllItems();
 						SelectAllItems();
 					}
 					return;
@@ -493,15 +493,15 @@ namespace DuiLib {
 		m_iCurSel = iIndex;
 		//如果已经选中了就无需要再重复加入by nakkler
 		if(m_aSelItems.Find((LPVOID)iIndex)==-1)
-            m_aSelItems.Add((LPVOID)iIndex);
+			m_aSelItems.Add((LPVOID)iIndex);
 
-        EnsureVisible(iIndex);
-        if (bTakeFocus) pControl->SetFocus();
-        if (m_pManager != NULL && iLastSel != m_iCurSel)
-        {
-            m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMSELECT, iIndex);
-        }
-		
+		EnsureVisible(iIndex);
+		if (bTakeFocus) pControl->SetFocus();
+		if (m_pManager != NULL && iLastSel != m_iCurSel)
+		{
+			m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMSELECT, iIndex);
+		}
+
 		return true;
 	}
 
@@ -1704,7 +1704,7 @@ namespace DuiLib {
 	{
 
 	}
-	void CListHeaderUI::DoPostPaint(HDC hDC, const RECT& rcPaint) 
+	void CListHeaderUI::DoPostPaint(HDC hDC, const RECT& rcPaint)
 	{
 
 	}
@@ -2741,7 +2741,7 @@ namespace DuiLib {
 				pInfo->nFont, pInfo->uTextStyle);
 
 			m_nLinks += nLinks;
-			nLinks = lengthof(m_rcLinks) - m_nLinks; 
+			nLinks = lengthof(m_rcLinks) - m_nLinks;
 		}
 		for( int i = m_nLinks; i < lengthof(m_rcLinks); i++ ) {
 			::ZeroMemory(m_rcLinks + i, sizeof(RECT));
@@ -3081,7 +3081,7 @@ namespace DuiLib {
 		}
 		if (IsSelected() && pInfo->dwSelectedBkColor > 0) {
 			iBackColor = pInfo->dwSelectedBkColor;
-			
+
 		}
 		if (!IsEnabled() && pInfo->dwDisabledBkColor > 0) {
 			iBackColor = pInfo->dwDisabledBkColor;

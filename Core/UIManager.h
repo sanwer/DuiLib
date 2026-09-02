@@ -14,10 +14,10 @@ namespace DuiLib {
 	//
 	enum UILIB_RESTYPE
 	{
-		UILIB_FILE=1,		// 来自磁盘文件
-		UILIB_ZIP,			// 来自磁盘zip压缩包
-		UILIB_RESOURCE,		// 来自资源
-		UILIB_ZIPRESOURCE,	// 来自资源的zip压缩包
+		UILIB_FILE=1,       // 来自磁盘文件
+		UILIB_ZIP,          // 来自磁盘zip压缩包
+		UILIB_RESOURCE,     // 来自资源
+		UILIB_ZIPRESOURCE,  // 来自资源的zip压缩包
 	};
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
@@ -61,9 +61,9 @@ namespace DuiLib {
 	typedef enum MSGTYPE_UI
 	{
 		UIMSG_TRAYICON = WM_USER + 1,// 托盘消息
-		UIMSG_SET_DPI,				 // DPI
-		WM_MENUCLICK,				 // 菜单消息
-		UIMSG_USER = WM_USER + 100,	 // 程序自定义消息
+		UIMSG_SET_DPI,               // DPI
+		WM_MENUCLICK,                // 菜单消息
+		UIMSG_USER = WM_USER + 100,  // 程序自定义消息
 	}UIMSG;
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -301,7 +301,7 @@ namespace DuiLib {
 		static void SetResourceType(int nType);
 		static int GetResourceType();
 		static bool GetHSL(short* H, short* S, short* L);
-		static void SetHSL(bool bUseHSL, short H, short S, short L); // H:0~360, S:0~200, L:0~200 
+		static void SetHSL(bool bUseHSL, short H, short S, short L); // H:0~360, S:0~200, L:0~200
 		static void ReloadSkin();
 		static CPaintManagerUI* GetPaintManager(LPCTSTR pstrName);
 		static CStdPtrArray* GetPaintManagers();
@@ -404,7 +404,7 @@ namespace DuiLib {
 		void SetPainting(bool bIsPainting);
 
 		bool AddNotifier(INotifyUI* pControl);
-		bool RemoveNotifier(INotifyUI* pControl);   
+		bool RemoveNotifier(INotifyUI* pControl);
 		void SendNotify(TNotifyUI& Msg, bool bAsync = false);
 		void SendNotify(CControlUI* pControl, LPCTSTR pstrMessage, WPARAM wParam = 0, LPARAM lParam = 0, bool bAsync = false);
 
@@ -473,7 +473,7 @@ namespace DuiLib {
 
 	private:
 		CDuiString m_sName;
-		HWND m_hWndPaint;	//所附加的窗体的句柄
+		HWND m_hWndPaint; //所附加的窗体的句柄
 		HDC m_hDcPaint;
 		HDC m_hDcOffscreen;
 		HDC m_hDcBackground;
@@ -493,8 +493,8 @@ namespace DuiLib {
 		CControlUI* m_pRoot;
 		CControlUI* m_pFocus;
 		CControlUI* m_pEventHover;
-        CControlUI* m_pEventClick;
-        CControlUI* m_pEventRClick;
+		CControlUI* m_pEventClick;
+		CControlUI* m_pEventRClick;
 		CControlUI* m_pEventKey;
 		CControlUI* m_pLastToolTip;
 		//
@@ -510,7 +510,7 @@ namespace DuiLib {
 		bool m_bUpdateNeeded;
 		bool m_bFocusNeeded;
 		bool m_bOffscreenPaint;
-		
+
 		BYTE m_nOpacity;
 		bool m_bLayered;
 		RECT m_rcLayeredInset;
@@ -541,13 +541,13 @@ namespace DuiLib {
 		CStdStringPtrMap m_mNameHash;
 		CStdStringPtrMap m_mWindowCustomAttrHash;
 		CStdStringPtrMap m_mOptionGroup;
-		
+
 		bool m_bForceUseSharedRes;
 		TResInfo m_ResInfo;
-		
+
 		// 窗口阴影
 		CShadowUI m_shadow;
-		
+
 		// DPI管理器
 		CDPI* m_pDPI;
 		// 是否开启Gdiplus
@@ -568,7 +568,7 @@ namespace DuiLib {
 		static CDuiString m_pStrResourceZip;
 		static CDuiString m_pStrResourceZipPwd;
 		static HANDLE m_hResourceZip;
-        static BYTE* m_cbZipBuf;
+		static BYTE* m_cbZipBuf;
 
 		static bool m_bCachedResourceZip;
 		static int m_nResType;

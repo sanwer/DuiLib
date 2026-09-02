@@ -2,31 +2,36 @@
 #define __UILIB_H__
 #pragma once
 
+// ===========================================================================
+// 导出/导入宏
+// ===========================================================================
 #ifdef UILIB_STATIC
 #define UILIB_API
 #else
 #if defined(UILIB_EXPORTS)
-#	if defined(_MSC_VER)
-#		define UILIB_API __declspec(dllexport)
-#	else
-#		define UILIB_API
-#	endif
+# if defined(_MSC_VER)
+#   define UILIB_API __declspec(dllexport)
+# else
+#   define UILIB_API
+# endif
 #else
-#	if defined(_MSC_VER)
-#		define UILIB_API __declspec(dllimport)
-#	else
-#		define UILIB_API
-#	endif
+# if defined(_MSC_VER)
+#   define UILIB_API __declspec(dllimport)
+# else
+#   define UILIB_API
+# endif
 #endif
 #endif
 #define UILIB_COMDAT __declspec(selectany)
 
+// 抑制警告
 #pragma warning(disable:4505)
 #pragma warning(disable:4251)
 #pragma warning(disable:4189)
 #pragma warning(disable:4121)
 #pragma warning(disable:4100)
 
+// 清单依赖
 #if defined _M_IX86
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64
@@ -37,6 +42,9 @@
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
+// ===========================================================================
+// 系统头文件
+// ===========================================================================
 #include <windows.h>
 #include <windowsx.h>
 #include <commctrl.h>
@@ -46,14 +54,84 @@
 #include <assert.h>
 #include <crtdbg.h>
 #include <malloc.h>
-#include <comdef.h>
 #include <gdiplus.h>
 
+// ===========================================================================
+// 模块开关
+// 注意：所有模块默认关闭，取消下方对应模块的注释符即可启用
+// ===========================================================================
+
+#define DUIMOD_COMBO                // CComboUI 下拉框，依赖 List
+#define DUIMOD_DATETIME             // CDateTimeUI 日期时间
+#define DUIMOD_PROGRESS             // CProgressUI 进度条
+#define DUIMOD_SLIDER               // CSliderUI 滑动条（自动启用 PROGRESS）
+#define DUIMOD_RICHEDIT             // CRichEditUI 富文本
+#define DUIMOD_TILELAYOUT           // CTileLayoutUI 平铺布局
+#define DUIMOD_CHILDLAYOUT          // CChildLayoutUI 子窗体布局
+#define DUIMOD_GROUPBOX             // CGroupBoxUI 分组框
+#define DUIMOD_ANIMATION            // CUIAnimation 动画基类（FADEBUTTON/TABLAYOUT 自动联动）
+#define DUIMOD_TRAYICON             // CTrayIconUI 托盘图标
+#define DUIMOD_IPADDRESS            // CIPAddressUI IP地址
+#define DUIMOD_COMBOBOX             // CComboBoxUI 组合下拉（自动启用 COMBO）
+
+#define DUIMOD_LISTEX               // CListExUI 扩展列表（自动启用 COMBOBOX + RICHEDIT）
+#define DUIMOD_MENU                 // CMenuUI 菜单
+#define DUIMOD_TREEVIEW             // CTreeViewUI 树控件
+#define DUIMOD_ACTIVEX              // CActiveXUI ActiveX容器
+#define DUIMOD_GIFANIM              // CGifAnimUI GIF动画
+#define DUIMOD_COLORPALETTE         // CColorPaletteUI 调色板
+#define DUIMOD_HOTKEY               // CHotKeyUI 热键
+#define DUIMOD_FADEBUTTON           // CFadeButtonUI 渐变按钮（自动启用 ANIMATION）
+#define DUIMOD_RING                 // CRingUI 环形
+#define DUIMOD_LOADING              // CLoadingUI 加载动画
+#define DUIMOD_PAGECONTROL          // CPageControlUI 分页
+#define DUIMOD_ROLLTEXT             // CRollTextUI 滚动文字
+#define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI 动画页切换（自动启用 ANIMATION）
+#define DUIMOD_IPADDRESSEX          // CIPAddressExUI 扩展IP地址
+
+// ===========================================================================
+// 模块依赖联动（自动启用依赖模块，无需手动开启）
+// ===========================================================================
+#ifdef DUIMOD_SLIDER
+#ifndef DUIMOD_PROGRESS
+#define DUIMOD_PROGRESS
+#endif
+#endif
+
+#ifdef DUIMOD_COMBOBOX
+#ifndef DUIMOD_COMBO
+#define DUIMOD_COMBO
+#endif
+#endif
+
+#ifdef DUIMOD_FADEBUTTON
+#ifndef DUIMOD_ANIMATION
+#define DUIMOD_ANIMATION
+#endif
+#endif
+
+#ifdef DUIMOD_ANIMATIONTABLAYOUT
+#ifndef DUIMOD_ANIMATION
+#define DUIMOD_ANIMATION
+#endif
+#endif
+
+#ifdef DUIMOD_LISTEX
+#ifndef DUIMOD_COMBOBOX
+#define DUIMOD_COMBOBOX
+#endif
+#ifndef DUIMOD_RICHEDIT
+#define DUIMOD_RICHEDIT
+#endif
+#endif
+
+// ===========================================================================
+// 工具及核心头文件
+// ===========================================================================
 #include "Utils/Utils.h"
 #include "Utils/unzip.h"
 #include "Utils/VersionHelpers.h"
 #include "Core/UIMarkup.h"
-#include "Utils/observer_impl_base.h"
 #include "Utils/UIShadow.h"
 #include "Utils/UIDelegate.h"
 #include "Utils/DragDropImpl.h"
@@ -72,53 +150,109 @@
 #include "Core/UIRender.h"
 #include "Utils/WinImplBase.h"
 
+// ===========================================================================
+// 核心模块
+// ===========================================================================
 #include "Layout/UIVerticalLayout.h"
 #include "Layout/UIHorizontalLayout.h"
-#include "Layout/UITileLayout.h"
 #include "Layout/UITabLayout.h"
-#include "Layout/UIChildLayout.h"
 
 #include "Control/UIList.h"
-#include "Control/UICombo.h"
 #include "Control/UIScrollBar.h"
-#include "Control/UITreeView.h"
-
 #include "Control/UILabel.h"
 #include "Control/UIText.h"
 #include "Control/UIEdit.h"
-#include "Control/UIGifAnim.h"
-
-#include "Control/UIAnimation.h"
-#include "Layout/UIAnimationTabLayout.h"
 #include "Control/UIButton.h"
 #include "Control/UIOption.h"
 
-#include "Control/UIProgress.h"
-#include "Control/UISlider.h"
-
+// ===========================================================================
+// 普通模块（条件包含，由上方开关控制）
+// ===========================================================================
+#ifdef DUIMOD_TILELAYOUT
+#include "Layout/UITileLayout.h"
+#endif
+#ifdef DUIMOD_CHILDLAYOUT
+#include "Layout/UIChildLayout.h"
+#endif
+#ifdef DUIMOD_ANIMATION
+#include "Control/UIAnimation.h"
+#endif
+#ifdef DUIMOD_COMBO
+#include "Control/UICombo.h"
+#endif
+#ifdef DUIMOD_COMBOBOX
 #include "Control/UIComboBox.h"
+#endif
+#ifdef DUIMOD_PROGRESS
+#include "Control/UIProgress.h"
+#endif
+#ifdef DUIMOD_SLIDER
+#include "Control/UISlider.h"
+#endif
+#ifdef DUIMOD_RICHEDIT
 #include "Control/UIRichEdit.h"
+#endif
+#ifdef DUIMOD_DATETIME
 #include "Control/UIDateTime.h"
+#endif
+#ifdef DUIMOD_IPADDRESS
 #include "Control/UIIPAddress.h"
-#include "Control/UIIPAddressEx.h"
-
-#include "Control/UIActiveX.h"
-#include "Control/UIWebBrowser.h"
-#include "Control/UIFlash.h"
-
-#include "Control/UIMenu.h"
+#endif
+#ifdef DUIMOD_GROUPBOX
 #include "Control/UIGroupBox.h"
-#include "Control/UIRollText.h"
-#include "Control/UIColorPalette.h"
-#include "Control/UIListEx.h"
-#include "Control/UIHotKey.h"
-#include "Control/UIFadeButton.h"
-#include "Control/UIRing.h"
-#include "Control/UILoading.h"
-#include "Control/UIPageControl.h"
+#endif
 
-#pragma comment( lib, "comctl32.lib" )
-#pragma comment( lib, "GdiPlus.lib" )
-#pragma comment( lib, "Imm32.lib" )
+// ===========================================================================
+// 拓展模块（条件包含）
+// ===========================================================================
+#ifdef DUIMOD_TREEVIEW
+#include "Control/UITreeView.h"
+#endif
+#ifdef DUIMOD_GIFANIM
+#include "Control/UIGifAnim.h"
+#endif
+#ifdef DUIMOD_ANIMATIONTABLAYOUT
+#include "Layout/UIAnimationTabLayout.h"
+#endif
+#ifdef DUIMOD_IPADDRESSEX
+#include "Control/UIIPAddressEx.h"
+#endif
+#ifdef DUIMOD_ACTIVEX
+#include "Control/UIActiveX.h"
+#endif
+#ifdef DUIMOD_MENU
+#include "Control/UIMenu.h"
+#endif
+#ifdef DUIMOD_ROLLTEXT
+#include "Control/UIRollText.h"
+#endif
+#ifdef DUIMOD_COLORPALETTE
+#include "Control/UIColorPalette.h"
+#endif
+#ifdef DUIMOD_LISTEX
+#include "Control/UIListEx.h"
+#endif
+#ifdef DUIMOD_HOTKEY
+#include "Control/UIHotKey.h"
+#endif
+#ifdef DUIMOD_FADEBUTTON
+#include "Control/UIFadeButton.h"
+#endif
+#ifdef DUIMOD_RING
+#include "Control/UIRing.h"
+#endif
+#ifdef DUIMOD_LOADING
+#include "Control/UILoading.h"
+#endif
+#ifdef DUIMOD_PAGECONTROL
+#include "Control/UIPageControl.h"
+#endif
+
+// ===========================================================================
+// 链接库
+// ===========================================================================
+#pragma comment(lib, "comctl32.lib")
+#pragma comment(lib, "GdiPlus.lib")
+#pragma comment(lib, "Imm32.lib")
 
 #endif // __UILIB_H__

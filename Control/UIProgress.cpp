@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_PROGRESS
 #include "UIProgress.h"
 
 namespace DuiLib
@@ -21,7 +22,7 @@ namespace DuiLib
 		if( _tcsicmp(pstrName, DUI_CTR_PROGRESS) == 0 ) return static_cast<CProgressUI*>(this);
 		return CLabelUI::GetInterface(pstrName);
 	}
-	
+
 	bool CProgressUI::IsShowText()
 	{
 		return m_bShowText;
@@ -109,9 +110,9 @@ namespace DuiLib
 		}
 		else {
 			rc.bottom = m_rcItem.top + (m_rcItem.bottom - m_rcItem.top) * (m_nMax - m_nValue) / (m_nMax - m_nMin);
-		
+
 		}
-		
+
 		CRenderEngine::DrawColor(hDC, rc, GetAdjustColor(m_dwForeColor));
 	}
 
@@ -159,7 +160,7 @@ namespace DuiLib
 
 	void CProgressUI::SetStretchForeImage( bool bStretchForeImage /*= true*/ )
 	{
-		if (m_bStretchForeImage==bStretchForeImage)		return;
+		if (m_bStretchForeImage==bStretchForeImage) return;
 		m_bStretchForeImage=bStretchForeImage;
 		Invalidate();
 	}
@@ -173,3 +174,4 @@ namespace DuiLib
 		}
 	}
 }
+#endif // DUIMOD_PROGRESS

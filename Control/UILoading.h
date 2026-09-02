@@ -1,5 +1,6 @@
 ﻿#ifndef __UILoadingCircle_H
 #define __UILoadingCircle_H
+#pragma once
 
 namespace DuiLib
 {
@@ -14,7 +15,7 @@ enum StylePresets
 
 class UILIB_API CLoadingUI : public CControlUI
 {
-    DECLARE_DUICONTROL(CControlUI)
+	DECLARE_DUICONTROL(CControlUI)
 
 	enum TIMEID
 	{
@@ -31,15 +32,15 @@ public:
 	void Start();
 	void Stop();
 protected:
-    virtual void PaintBkImage(HDC hDC);
-    virtual void DoEvent(TEventUI& event);
+	virtual void PaintBkImage(HDC hDC);
+	virtual void DoEvent(TEventUI& event);
 	virtual void Init();
 	Gdiplus::Color* GenerateColorsPallet(Gdiplus::Color _objColor, bool _blnShadeColor, int _intNbSpoke);
 
 protected:
-	int                 m_nNumber;
-	int                 m_nTime;
-	bool				m_bStop;
+	int m_nNumber;
+	int m_nTime;
+	bool m_bStop;
 
 	int m_NumberOfSpoke;//辐条数量
 	int m_SpokeThickness;//辐条粗细

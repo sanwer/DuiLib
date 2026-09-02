@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -62,9 +62,6 @@
     <ClCompile Include="Control\UIFadeButton.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Control\UIFlash.cpp">
-      <Filter>Source Files\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Control\UIGifAnim.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
@@ -117,9 +114,6 @@
       <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\UITreeView.cpp">
-      <Filter>Source Files\Control</Filter>
-    </ClCompile>
-    <ClCompile Include="Control\UIWebBrowser.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="Core\ControlFactory.cpp">
@@ -232,9 +226,6 @@
     <ClInclude Include="Control\UIFadeButton.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Control\UIFlash.h">
-      <Filter>Header Files\Control</Filter>
-    </ClInclude>
     <ClInclude Include="Control\UIGifAnim.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
@@ -289,9 +280,6 @@
     <ClInclude Include="Control\UITreeView.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Control\UIWebBrowser.h">
-      <Filter>Header Files\Control</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ControlFactory.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
@@ -340,19 +328,10 @@
     <ClInclude Include="Layout\UIVerticalLayout.h">
       <Filter>Header Files\Layout</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\DownloadMgr.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\DPI.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\DragDropImpl.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\FlashEventHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\observer_impl_base.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Utils\stb_image.h">
@@ -379,9 +358,6 @@
     <ClInclude Include="Utils\WinImplBase.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\WebBrowserEventHandler.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -394,13 +370,5 @@
     <ClInclude Include="Control\UILoading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Utils\Flash11.tlb">
-      <Filter>Source Files\Utils</Filter>
-    </None>
-    <None Include="Utils\Flash11.tlh">
-      <Filter>Source Files\Utils</Filter>
-    </None>
   </ItemGroup>
 </Project>

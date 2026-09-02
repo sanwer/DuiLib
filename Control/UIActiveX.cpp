@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_ACTIVEX
 
 namespace DuiLib {
 
@@ -37,7 +38,7 @@ namespace DuiLib {
 		LRESULT OnPrint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 	protected:
-		enum { 
+		enum {
 			DEFAULT_TIMERID = 20,
 		};
 
@@ -150,7 +151,7 @@ namespace DuiLib {
 			else if( riid == IID_IOleInPlaceUIWindow ) *ppvObject = static_cast<IOleInPlaceUIWindow*>(this);
 			if( *ppvObject != NULL ) AddRef();
 			return *ppvObject == NULL ? E_NOINTERFACE : S_OK;
-		}  
+		}
 		// IOleInPlaceFrameWindow
 		STDMETHOD(InsertMenus)(HMENU /*hmenuShared*/, LPOLEMENUGROUPWIDTHS /*lpMenuWidths*/)
 		{
@@ -235,11 +236,11 @@ namespace DuiLib {
 		STDMETHOD(GetSite)(REFIID riid, LPVOID* ppvSite);
 
 		// IOleClientSite
-		STDMETHOD(SaveObject)(void);       
+		STDMETHOD(SaveObject)(void);
 		STDMETHOD(GetMoniker)(DWORD dwAssign, DWORD dwWhichMoniker, IMoniker** ppmk);
-		STDMETHOD(GetContainer)(IOleContainer** ppContainer);        
-		STDMETHOD(ShowObject)(void);        
-		STDMETHOD(OnShowWindow)(BOOL fShow);        
+		STDMETHOD(GetContainer)(IOleContainer** ppContainer);
+		STDMETHOD(ShowObject)(void);
+		STDMETHOD(OnShowWindow)(BOOL fShow);
 		STDMETHOD(RequestNewObjectLayout)(void);
 
 		// IOleInPlaceSiteWindowless
@@ -257,13 +258,13 @@ namespace DuiLib {
 		STDMETHOD(OnDefWindowMessage)(UINT msg, WPARAM wParam, LPARAM lParam, LRESULT* plResult);
 
 		// IOleInPlaceSiteEx
-		STDMETHOD(OnInPlaceActivateEx)(BOOL *pfNoRedraw, DWORD dwFlags);        
-		STDMETHOD(OnInPlaceDeactivateEx)(BOOL fNoRedraw);       
+		STDMETHOD(OnInPlaceActivateEx)(BOOL *pfNoRedraw, DWORD dwFlags);
+		STDMETHOD(OnInPlaceDeactivateEx)(BOOL fNoRedraw);
 		STDMETHOD(RequestUIActivate)(void);
 
 		// IOleInPlaceSite
-		STDMETHOD(CanInPlaceActivate)(void);       
-		STDMETHOD(OnInPlaceActivate)(void);        
+		STDMETHOD(CanInPlaceActivate)(void);
+		STDMETHOD(OnInPlaceActivate)(void);
 		STDMETHOD(OnUIActivate)(void);
 		STDMETHOD(GetWindowContext)(IOleInPlaceFrame** ppFrame, IOleInPlaceUIWindow** ppDoc, LPRECT lprcPosRect, LPRECT lprcClipRect, LPOLEINPLACEFRAMEINFO lpFrameInfo);
 		STDMETHOD(Scroll)(SIZE scrollExtant);
@@ -278,10 +279,10 @@ namespace DuiLib {
 		STDMETHOD(ContextSensitiveHelp)(BOOL fEnterMode);
 
 		// IOleControlSite
-		STDMETHOD(OnControlInfoChanged)(void);      
-		STDMETHOD(LockInPlaceActive)(BOOL fLock);       
-		STDMETHOD(GetExtendedControl)(IDispatch** ppDisp);        
-		STDMETHOD(TransformCoords)(POINTL* pPtlHimetric, POINTF* pPtfContainer, DWORD dwFlags);       
+		STDMETHOD(OnControlInfoChanged)(void);
+		STDMETHOD(LockInPlaceActive)(BOOL fLock);
+		STDMETHOD(GetExtendedControl)(IDispatch** ppDisp);
+		STDMETHOD(TransformCoords)(POINTL* pPtlHimetric, POINTF* pPtfContainer, DWORD dwFlags);
 		STDMETHOD(TranslateAccelerator)(MSG* pMsg, DWORD grfModifiers);
 		STDMETHOD(OnFocus)(BOOL fGotFocus);
 		STDMETHOD(ShowPropertyFrame)(void);
@@ -311,14 +312,14 @@ namespace DuiLib {
 		bool m_bWindowless;
 	};
 
-	CActiveXCtrl::CActiveXCtrl() : 
-	m_dwRef(1), 
-		m_pOwner(NULL), 
+	CActiveXCtrl::CActiveXCtrl() :
+	m_dwRef(1),
+		m_pOwner(NULL),
 		m_pWindow(NULL),
-		m_pUnkSite(NULL), 
+		m_pUnkSite(NULL),
 		m_pViewObject(NULL),
 		m_pInPlaceObject(NULL),
-		m_bLocked(false), 
+		m_bLocked(false),
 		m_bFocused(false),
 		m_bCaptured(false),
 		m_bWindowless(true),
@@ -532,7 +533,7 @@ namespace DuiLib {
 		return S_OK;
 	}
 
-	STDMETHODIMP CActiveXCtrl::OnInPlaceActivateEx(BOOL* pfNoRedraw, DWORD dwFlags)        
+	STDMETHODIMP CActiveXCtrl::OnInPlaceActivateEx(BOOL* pfNoRedraw, DWORD dwFlags)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::OnInPlaceActivateEx"));
 		ASSERT(m_pInPlaceObject==NULL);
@@ -562,7 +563,7 @@ namespace DuiLib {
 		return Hr;
 	}
 
-	STDMETHODIMP CActiveXCtrl::OnInPlaceDeactivateEx(BOOL fNoRedraw)       
+	STDMETHODIMP CActiveXCtrl::OnInPlaceDeactivateEx(BOOL fNoRedraw)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::OnInPlaceDeactivateEx"));
 		m_bInPlaceActive = false;
@@ -584,7 +585,7 @@ namespace DuiLib {
 		return S_OK;
 	}
 
-	STDMETHODIMP CActiveXCtrl::CanInPlaceActivate(void)       
+	STDMETHODIMP CActiveXCtrl::CanInPlaceActivate(void)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::CanInPlaceActivate"));
 		return S_OK;
@@ -681,28 +682,28 @@ namespace DuiLib {
 		return S_OK;
 	}
 
-	STDMETHODIMP CActiveXCtrl::OnControlInfoChanged(void)      
+	STDMETHODIMP CActiveXCtrl::OnControlInfoChanged(void)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::OnControlInfoChanged"));
 		return S_OK;
 	}
 
-	STDMETHODIMP CActiveXCtrl::LockInPlaceActive(BOOL fLock)       
+	STDMETHODIMP CActiveXCtrl::LockInPlaceActive(BOOL fLock)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::LockInPlaceActive"));
 		return S_OK;
 	}
 
-	STDMETHODIMP CActiveXCtrl::GetExtendedControl(IDispatch** ppDisp)        
+	STDMETHODIMP CActiveXCtrl::GetExtendedControl(IDispatch** ppDisp)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::GetExtendedControl"));
-		if( ppDisp == NULL ) return E_POINTER;   
+		if( ppDisp == NULL ) return E_POINTER;
 		if( m_pOwner == NULL ) return E_UNEXPECTED;
 		if( m_pOwner->m_pUnk == NULL ) return E_UNEXPECTED;
 		return m_pOwner->m_pUnk->QueryInterface(IID_IDispatch, (LPVOID*) ppDisp);
 	}
 
-	STDMETHODIMP CActiveXCtrl::TransformCoords(POINTL* pPtlHimetric, POINTF* pPtfContainer, DWORD dwFlags)       
+	STDMETHODIMP CActiveXCtrl::TransformCoords(POINTL* pPtlHimetric, POINTF* pPtfContainer, DWORD dwFlags)
 	{
 		DUITRACE(_T("AX: CActiveXCtrl::TransformCoords"));
 		return S_OK;
@@ -805,7 +806,7 @@ namespace DuiLib {
 		case WM_CREATE:        lRes = OnCreate(uMsg, wParam, lParam, bHandled); break;
 		case WM_TIMER:         lRes = OnTimer(uMsg, wParam, lParam, bHandled); break;
 		case WM_PAINT:         lRes = OnPaint(uMsg, wParam, lParam, bHandled); break;
-		case WM_PRINT:		   lRes = OnPrint(uMsg, wParam, lParam, bHandled); break;
+		case WM_PRINT:         lRes = OnPrint(uMsg, wParam, lParam, bHandled); break;
 		case WM_SETFOCUS:      lRes = OnSetFocus(uMsg, wParam, lParam, bHandled); break;
 		case WM_KILLFOCUS:     lRes = OnKillFocus(uMsg, wParam, lParam, bHandled); break;
 		case WM_ERASEBKGND:    lRes = OnEraseBkgnd(uMsg, wParam, lParam, bHandled); break;
@@ -890,7 +891,7 @@ namespace DuiLib {
 	{
 		RECT rcClient;
 		::GetClientRect(m_hWnd, &rcClient);
-		m_pOwner->m_pViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, (HDC)wParam, (RECTL*) &rcClient, NULL, NULL, NULL); 
+		m_pOwner->m_pViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, (HDC)wParam, (RECTL*) &rcClient, NULL, NULL, NULL);
 
 		if (m_bDrawCaret ) {
 			RECT rcPos = m_pOwner->m_pOwner->GetPos();
@@ -964,14 +965,14 @@ namespace DuiLib {
 	void CActiveXUI::SetVisible(bool bVisible)
 	{
 		CControlUI::SetVisible(bVisible);
-		if( m_hwndHost != NULL && !m_pControl->m_bWindowless ) 
+		if( m_hwndHost != NULL && !m_pControl->m_bWindowless )
 			::ShowWindow(m_hwndHost, IsVisible() ? SW_SHOW : SW_HIDE);
 	}
 
 	void CActiveXUI::SetInternVisible(bool bVisible)
 	{
 		CControlUI::SetInternVisible(bVisible);
-		if( m_hwndHost != NULL && !m_pControl->m_bWindowless ) 
+		if( m_hwndHost != NULL && !m_pControl->m_bWindowless )
 			::ShowWindow(m_hwndHost, IsVisible() ? SW_SHOW : SW_HIDE);
 	}
 
@@ -1017,7 +1018,7 @@ namespace DuiLib {
 	{
 		if( m_pControl != NULL && m_pControl->m_bWindowless && m_pControl->m_pViewObject != NULL )
 		{
-			m_pControl->m_pViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, hDC, (RECTL*) &m_rcItem, (RECTL*) &m_rcItem, NULL, NULL); 
+			m_pControl->m_pViewObject->Draw(DVASPECT_CONTENT, -1, NULL, NULL, NULL, hDC, (RECTL*) &m_rcItem, (RECTL*) &m_rcItem, NULL, NULL);
 		}
 		return true;
 	}
@@ -1086,7 +1087,7 @@ namespace DuiLib {
 		}
 		m_bDelayCreate = bDelayCreate;
 	}
-	
+
 	bool CActiveXUI::IsMFC() const
 	{
 		return m_bMFC;
@@ -1138,9 +1139,9 @@ namespace DuiLib {
 				m_pUnk->Close(OLECLOSE_NOSAVE);
 			}
 			m_pUnk->SetClientSite(NULL);
-			m_pUnk->Release(); 
+			m_pUnk->Release();
 			m_pUnk = NULL;
-		}		
+		}
 		// 销毁CActiveXCtrl
 		if( m_pControl != NULL ) {
 			m_pControl->m_pOwner = NULL;
@@ -1151,7 +1152,7 @@ namespace DuiLib {
 		m_hwndHost = NULL;
 	}
 
-	typedef HRESULT (__stdcall *DllGetClassObjectFunc)(REFCLSID rclsid, REFIID riid, LPVOID* ppv); 
+	typedef HRESULT (__stdcall *DllGetClassObjectFunc)(REFCLSID rclsid, REFIID riid, LPVOID* ppv);
 
 	bool CActiveXUI::DoCreateControl()
 	{
@@ -1250,3 +1251,4 @@ namespace DuiLib {
 	}
 
 } // namespace DuiLib
+#endif // DUIMOD_ACTIVEX

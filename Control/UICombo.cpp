@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_COMBO
 
 namespace DuiLib {
 
@@ -14,7 +15,7 @@ namespace DuiLib {
 		void OnFinalMessage(HWND hWnd);
 
 		LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
-		void Notify(TNotifyUI& msg) override;
+		void Notify(TNotifyUI& msg);
 
 		void EnsureVisible(int iIndex);
 		void Scroll(int dx, int dy);
@@ -64,9 +65,9 @@ namespace DuiLib {
 		RECT rcInset = m_pOwner->GetDropBoxInset();
 		RECT rcOwner = pOwner->GetPos();
 		RECT rc = rcOwner;
-		rc.top = rc.bottom;		// 父窗口left、bottom位置作为弹出窗口起点
-		rc.bottom = rc.top + szDrop.cy;	// 计算弹出窗口高度
-		if( szDrop.cx > 0 ) rc.right = rc.left + szDrop.cx;	// 计算弹出窗口宽度
+		rc.top = rc.bottom; // 父窗口left、bottom位置作为弹出窗口起点
+		rc.bottom = rc.top + szDrop.cy; // 计算弹出窗口高度
+		if( szDrop.cx > 0 ) rc.right = rc.left + szDrop.cx; // 计算弹出窗口宽度
 
 		SIZE szAvailable = { rc.right - rc.left, rc.bottom - rc.top };
 		int cyFixed = rcInset.top;
@@ -130,7 +131,7 @@ namespace DuiLib {
 				pControl = pControl->GetParent();
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -417,12 +418,12 @@ namespace DuiLib {
 	{
 		return SelectItem(iIndex, bTakeFocus);
 	}
-	
+
 	bool CComboUI::UnSelectItem(int iIndex, bool bOthers)
 	{
 		return false;
 	}
-		
+
 	bool CComboUI::SetItemIndex(CControlUI* pControl, int iIndex)
 	{
 		int iOrginIndex = GetItemIndex(pControl);
@@ -430,7 +431,7 @@ namespace DuiLib {
 		if( iOrginIndex == iIndex ) return true;
 
 		IListItemUI* pSelectedListItem = NULL;
-		if( m_iCurSel >= 0 ) pSelectedListItem = 
+		if( m_iCurSel >= 0 ) pSelectedListItem =
 			static_cast<IListItemUI*>(GetItemAt(m_iCurSel)->GetInterface(_T("ListItem")));
 		if( !CContainerUI::SetItemIndex(pControl, iIndex) ) return false;
 		int iMinIndex = min(iOrginIndex, iIndex);
@@ -449,7 +450,7 @@ namespace DuiLib {
 	bool CComboUI::Add(CControlUI* pControl)
 	{
 		IListItemUI* pListItem = static_cast<IListItemUI*>(pControl->GetInterface(_T("ListItem")));
-		if( pListItem != NULL ) 
+		if( pListItem != NULL )
 		{
 			pListItem->SetOwner(this);
 			pListItem->SetIndex(m_items.GetSize());
@@ -536,11 +537,11 @@ namespace DuiLib {
 			return;
 		}
 
-		if( event.Type == UIEVENT_SETFOCUS ) 
+		if( event.Type == UIEVENT_SETFOCUS )
 		{
 			Invalidate();
 		}
-		if( event.Type == UIEVENT_KILLFOCUS ) 
+		if( event.Type == UIEVENT_KILLFOCUS )
 		{
 			Invalidate();
 		}
@@ -1051,7 +1052,7 @@ namespace DuiLib {
 				m_uTextStyle |= (DT_TOP | DT_SINGLELINE);
 			}
 			if( _tcsstr(pstrValue, _T("vcenter")) != NULL ) {
-				m_uTextStyle &= ~(DT_TOP | DT_BOTTOM );            
+				m_uTextStyle &= ~(DT_TOP | DT_BOTTOM );
 				m_uTextStyle |= (DT_VCENTER | DT_SINGLELINE);
 			}
 			if( _tcsstr(pstrValue, _T("bottom")) != NULL ) {
@@ -1062,7 +1063,7 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("endellipsis")) == 0 ) {
 			if( _tcsicmp(pstrValue, _T("true")) == 0 ) m_uTextStyle |= DT_END_ELLIPSIS;
 			else m_uTextStyle &= ~DT_END_ELLIPSIS;
-		}   
+		}
 		else if( _tcsicmp(pstrName, _T("wordbreak")) == 0 ) {
 			if( _tcsicmp(pstrValue, _T("true")) == 0 ) {
 				m_uTextStyle &= ~DT_SINGLELINE;
@@ -1072,7 +1073,7 @@ namespace DuiLib {
 				m_uTextStyle &= ~DT_WORDBREAK & ~DT_EDITCONTROL;
 				m_uTextStyle |= DT_SINGLELINE;
 			}
-		}    
+		}
 		else if( _tcsicmp(pstrName, _T("font")) == 0 ) SetFont(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("textcolor")) == 0 ) {
 			if( *pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
@@ -1089,10 +1090,10 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("textpadding")) == 0 ) {
 			RECT rcTextPadding = { 0 };
 			LPTSTR pstr = NULL;
-			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SetTextPadding(rcTextPadding);
 		}
 		else if( _tcsicmp(pstrName, _T("showhtml")) == 0 ) SetShowHtml(_tcsicmp(pstrValue, _T("true")) == 0);
@@ -1108,17 +1109,17 @@ namespace DuiLib {
 		{
 			SIZE szDropBoxSize = { 0 };
 			LPTSTR pstr = NULL;
-			szDropBoxSize.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			szDropBoxSize.cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
+			szDropBoxSize.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			szDropBoxSize.cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
 			SetDropBoxSize(szDropBoxSize);
 		}
 		else if( _tcsicmp(pstrName, _T("dropboxinset")) == 0 ) {
 			RECT rcTextPadding = { 0 };
 			LPTSTR pstr = NULL;
-			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SetDropBoxInset(rcTextPadding);
 		}
 		else if( _tcsicmp(pstrName, _T("itemfont")) == 0 ) SetItemFont(_ttoi(pstrValue));
@@ -1153,14 +1154,14 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("itemendellipsis")) == 0 ) {
 			if( _tcsicmp(pstrValue, _T("true")) == 0 ) m_ListInfo.uTextStyle |= DT_END_ELLIPSIS;
 			else m_ListInfo.uTextStyle &= ~DT_END_ELLIPSIS;
-		}   
+		}
 		else if( _tcsicmp(pstrName, _T("itemtextpadding")) == 0 ) {
 			RECT rcTextPadding = { 0 };
 			LPTSTR pstr = NULL;
-			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcTextPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcTextPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcTextPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SetItemTextPadding(rcTextPadding);
 		}
 		else if( _tcsicmp(pstrName, _T("itemtextcolor")) == 0 ) {
@@ -1383,3 +1384,4 @@ namespace DuiLib {
 		return m_pCompareFunc((UINT_PTR)pControl1, (UINT_PTR)pControl2, m_compareData);
 	}
 } // namespace DuiLib
+#endif // DUIMOD_COMBO

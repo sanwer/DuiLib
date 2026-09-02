@@ -1,8 +1,9 @@
 ﻿#ifndef _VERSIONHELPERS_H_INCLUDED_
 #define _VERSIONHELPERS_H_INCLUDED_
+#pragma once
 #include <specstrings.h>
 
-namespace DuiLib 
+namespace DuiLib
 {
 #define _WIN32_WINNT_NT4                    0x0400
 #define _WIN32_WINNT_WIN2K                  0x0500

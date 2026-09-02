@@ -84,7 +84,7 @@ namespace DuiLib {
 	void tagTDrawInfo::Parse(LPCTSTR pStrImage, LPCTSTR pStrModify,CPaintManagerUI *pManager)
 	{
 		// 1、aaa.jpg
-		// 2、file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' 
+		// 2、file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0'
 		// mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false'
 		sDrawString = pStrImage;
 		sDrawModify = pStrModify;
@@ -125,23 +125,23 @@ namespace DuiLib {
 						sResType = sValue;
 					}
 					else if( sItem == _T("dest") ) {
-						rcDest.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);    
-						rcDest.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-						rcDest.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-						rcDest.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);  
+						rcDest.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);
+						rcDest.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+						rcDest.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+						rcDest.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 						//if(pManager != NULL) pManager->GetDPIObj()->Scale(&rcDest);
 					}
 					else if( sItem == _T("source") ) {
-						rcSource.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);    
-						rcSource.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-						rcSource.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
+						rcSource.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);
+						rcSource.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+						rcSource.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
 						rcSource.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 						//if(pManager != NULL) pManager->GetDPIObj()->Scale(&rcSource);
 					}
 					else if( sItem == _T("corner") ) {
-						rcCorner.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);    
-						rcCorner.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-						rcCorner.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
+						rcCorner.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);
+						rcCorner.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+						rcCorner.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
 						rcCorner.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 						//if(pManager != NULL) pManager->GetDPIObj()->Scale(&rcCorner);
 					}
@@ -179,10 +179,10 @@ namespace DuiLib {
 						sAlign = sValue;
 					}
 					else if( sItem == _T("padding") ) {
-						rcPadding.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);    
-						rcPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-						rcPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-						rcPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);  
+						rcPadding.left = _tcstol(sValue.GetData(), &pstr, 10);  ASSERT(pstr);
+						rcPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+						rcPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+						rcPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 						//if(pManager != NULL) pManager->GetDPIObj()->Scale(&rcPadding);
 					}
 				}
@@ -233,7 +233,7 @@ namespace DuiLib {
 	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 带密码zip包解密
 	HANDLE CPaintManagerUI::m_hResourceZip = NULL;
 	bool CPaintManagerUI::m_bCachedResourceZip = true;
-	BYTE* CPaintManagerUI::m_cbZipBuf = nullptr;
+	BYTE* CPaintManagerUI::m_cbZipBuf = NULL;
 	int CPaintManagerUI::m_nResType = UILIB_FILE;
 	TResInfo CPaintManagerUI::m_SharedResInfo;
 	HINSTANCE CPaintManagerUI::m_hInstance = NULL;
@@ -501,20 +501,20 @@ namespace DuiLib {
 			m_hResourceZip = NULL;
 		}
 		m_pStrResourceZip = _T("membuffer");
-        if (m_cbZipBuf)
-        {
-            delete[] m_cbZipBuf;
-            m_cbZipBuf = nullptr;
-        }
-        if (!m_cbZipBuf)
-        {
-            m_cbZipBuf = new BYTE[len];
-            memcpy(m_cbZipBuf, pVoid, len);
-        }
+		if (m_cbZipBuf)
+		{
+			delete[] m_cbZipBuf;
+			m_cbZipBuf = NULL;
+		}
+		if (!m_cbZipBuf)
+		{
+			m_cbZipBuf = new BYTE[len];
+			memcpy(m_cbZipBuf, pVoid, len);
+		}
 
 		m_bCachedResourceZip = true;
 		m_pStrResourceZipPwd = password;  //Garfield 20160325 带密码zip包解密
-		if( m_bCachedResourceZip ) 
+		if( m_bCachedResourceZip )
 		{
 #ifdef UNICODE
 			char* pwd = w2a((wchar_t*)password);
@@ -797,7 +797,7 @@ namespace DuiLib {
 			HMODULE hUser32 = ::GetModuleHandle(_T("User32.dll"));
 			if (hUser32)
 			{
-				fSetLayeredWindowAttributes = 
+				fSetLayeredWindowAttributes =
 					(PFUNCSETLAYEREDWINDOWATTR)::GetProcAddress(hUser32, "SetLayeredWindowAttributes");
 				if( fSetLayeredWindowAttributes == NULL ) return;
 			}
@@ -824,7 +824,7 @@ namespace DuiLib {
 			if( g_fUpdateLayeredWindow == NULL ) {
 				HMODULE hUser32 = ::GetModuleHandle(_T("User32.dll"));
 				if (hUser32) {
-					g_fUpdateLayeredWindow = 
+					g_fUpdateLayeredWindow =
 						(PFUNCUPDATELAYEREDWINDOW)::GetProcAddress(hUser32, "UpdateLayeredWindow");
 					if( g_fUpdateLayeredWindow == NULL ) return;
 				}
@@ -900,7 +900,7 @@ namespace DuiLib {
 
 	bool CPaintManagerUI::PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& lRes)
 	{
-		for( int i = 0; i < m_aPreMessageFilters.GetSize(); i++ ) 
+		for( int i = 0; i < m_aPreMessageFilters.GetSize(); i++ )
 		{
 			bool bHandled = false;
 			LRESULT lResult = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
@@ -959,7 +959,7 @@ namespace DuiLib {
 	{
 		if( m_hWndPaint == NULL ) return false;
 		// Cycle through listeners
-		for( int i = 0; i < m_aMessageFilters.GetSize(); i++ ) 
+		for( int i = 0; i < m_aMessageFilters.GetSize(); i++ )
 		{
 			bool bHandled = false;
 			LRESULT lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
@@ -1006,10 +1006,10 @@ namespace DuiLib {
 		switch( uMsg ) {
 		case WM_APP + 1:
 			{
-				for( int i = 0; i < m_aDelayedCleanup.GetSize(); i++ ) 
+				for( int i = 0; i < m_aDelayedCleanup.GetSize(); i++ )
 					delete static_cast<CControlUI*>(m_aDelayedCleanup[i]);
 				m_aDelayedCleanup.Empty();
-				
+
 				m_bAsyncNotifyPosted = false;
 
 				TNotifyUI* pMsg = NULL;
@@ -1042,12 +1042,12 @@ namespace DuiLib {
 					event.pSender = m_pEventClick;
 					m_pEventClick->Event(event);
 				}
-                if (m_pEventRClick != NULL)
-                {
-                    event.Type = UIEVENT_RBUTTONUP;
-                    event.pSender = m_pEventClick;
-                    m_pEventRClick->Event(event);
-                }
+				if (m_pEventRClick != NULL)
+				{
+					event.Type = UIEVENT_RBUTTONUP;
+					event.pSender = m_pEventClick;
+					m_pEventRClick->Event(event);
+				}
 
 				SetFocus(NULL);
 
@@ -1163,7 +1163,7 @@ namespace DuiLib {
 				}
 				else if( m_bLayered && m_bLayeredChanged ) {
 					RECT rcRoot = rcClient;
-					if( m_pOffscreenBits ) ::ZeroMemory(m_pOffscreenBits, (rcRoot.right - rcRoot.left) 
+					if( m_pOffscreenBits ) ::ZeroMemory(m_pOffscreenBits, (rcRoot.right - rcRoot.left)
 						* (rcRoot.bottom - rcRoot.top) * 4);
 					rcRoot.left += m_rcLayeredInset.left;
 					rcRoot.top += m_rcLayeredInset.top;
@@ -1189,7 +1189,7 @@ namespace DuiLib {
 				// Prepare offscreen bitmap
 				if( m_bOffscreenPaint && m_hbmpOffscreen == NULL ) {
 					m_hDcOffscreen = ::CreateCompatibleDC(m_hDcPaint);
-					m_hbmpOffscreen = CRenderEngine::CreateARGB32Bitmap(m_hDcPaint, dwWidth, dwHeight, (LPBYTE*)&m_pOffscreenBits); 
+					m_hbmpOffscreen = CRenderEngine::CreateARGB32Bitmap(m_hDcPaint, dwWidth, dwHeight, (LPBYTE*)&m_pOffscreenBits);
 					ASSERT(m_hDcOffscreen);
 					ASSERT(m_hbmpOffscreen);
 				}
@@ -1225,7 +1225,7 @@ namespace DuiLib {
 
 							COLORREF* pChildBitmapBits = NULL;
 							HDC hChildMemDC = ::CreateCompatibleDC(m_hDcOffscreen);
-							HBITMAP hChildBitmap = CRenderEngine::CreateARGB32Bitmap(hChildMemDC, rcChildWnd.right-rcChildWnd.left, rcChildWnd.bottom-rcChildWnd.top, (BYTE**)&pChildBitmapBits); 
+							HBITMAP hChildBitmap = CRenderEngine::CreateARGB32Bitmap(hChildMemDC, rcChildWnd.right-rcChildWnd.left, rcChildWnd.bottom-rcChildWnd.top, (BYTE**)&pChildBitmapBits);
 							::ZeroMemory(pChildBitmapBits, (rcChildWnd.right - rcChildWnd.left)*(rcChildWnd.bottom - rcChildWnd.top)*4);
 							HBITMAP hOldChildBitmap = (HBITMAP) ::SelectObject(hChildMemDC, hChildBitmap);
 							::SendMessage(hChildWnd, WM_PRINT, (WPARAM)hChildMemDC,(LPARAM)(PRF_CHECKVISIBLE|PRF_CHILDREN|PRF_CLIENT|PRF_OWNED));
@@ -1272,7 +1272,7 @@ namespace DuiLib {
 							if (!m_diLayered.sDrawString.IsEmpty()) {
 								if( m_hbmpBackground == NULL) {
 									m_hDcBackground = ::CreateCompatibleDC(m_hDcPaint);
-									m_hbmpBackground = CRenderEngine::CreateARGB32Bitmap(m_hDcPaint, dwWidth, dwHeight, (BYTE**)&m_pBackgroundBits); 
+									m_hbmpBackground = CRenderEngine::CreateARGB32Bitmap(m_hDcPaint, dwWidth, dwHeight, (BYTE**)&m_pBackgroundBits);
 									::ZeroMemory(m_pBackgroundBits, dwWidth * dwHeight * 4);
 									::SelectObject(m_hDcBackground, m_hbmpBackground);
 									CRenderClip clip;
@@ -1407,8 +1407,8 @@ namespace DuiLib {
 			{
 				for( int i = 0; i < m_aTimers.GetSize(); i++ ) {
 					const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
-					if(pTimer->hWnd == m_hWndPaint && 
-						pTimer->uWinTimer == LOWORD(wParam) && 
+					if(pTimer->hWnd == m_hWndPaint &&
+						pTimer->uWinTimer == LOWORD(wParam) &&
 						pTimer->bKilled == false)
 					{
 						TEventUI event = { 0 };
@@ -1479,10 +1479,10 @@ namespace DuiLib {
 							::ScreenToClient(m_hWndPaint, &pt);
 							::SendMessage(m_hWndPaint, WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
 						}
-						else 
+						else
 							::SendMessage(m_hWndPaint, WM_MOUSEMOVE, 0, (LPARAM)-1);
 					}
-					else 
+					else
 						::SendMessage(m_hWndPaint, WM_MOUSEMOVE, 0, (LPARAM)-1);
 				}
 				m_bMouseTracking = false;
@@ -1996,8 +1996,8 @@ namespace DuiLib {
 		SetFocus(NULL);
 		m_pEventKey = NULL;
 		m_pEventHover = NULL;
-        m_pEventClick = NULL;
-        m_pEventRClick = NULL;
+		m_pEventClick = NULL;
+		m_pEventRClick = NULL;
 		// Remove the existing control-tree. We might have gotten inside this function as
 		// a result of an event fired or similar, so we cannot just delete the objects and
 		// pull the internal memory of the calling code. We'll delay the cleanup.
@@ -2028,8 +2028,8 @@ namespace DuiLib {
 	{
 		if( pControl == m_pEventKey ) m_pEventKey = NULL;
 		if( pControl == m_pEventHover ) m_pEventHover = NULL;
-        if (pControl == m_pEventClick) m_pEventClick = NULL;
-        if (pControl == m_pEventRClick) m_pEventRClick = NULL;
+		if (pControl == m_pEventClick) m_pEventClick = NULL;
+		if (pControl == m_pEventRClick) m_pEventRClick = NULL;
 		if( pControl == m_pFocus ) m_pFocus = NULL;
 		KillTimer(pControl);
 		const CDuiString& sName = pControl->GetName();
@@ -2039,7 +2039,7 @@ namespace DuiLib {
 		for( int i = 0; i < m_aAsyncNotify.GetSize(); i++ ) {
 			TNotifyUI* pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
 			if( pMsg->pSender == pControl ) pMsg->pSender = NULL;
-		}    
+		}
 	}
 
 	bool CPaintManagerUI::AddOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl)
@@ -2186,14 +2186,14 @@ namespace DuiLib {
 			m_hResourceZip = NULL;
 		}
 
-        if (m_cbZipBuf)
-        {
-            delete[] m_cbZipBuf;
-            m_cbZipBuf = nullptr;
-        }
+		if (m_cbZipBuf)
+		{
+			delete[] m_cbZipBuf;
+			m_cbZipBuf = NULL;
+		}
 	}
 
-	CDPI * DuiLib::CPaintManagerUI::GetDPIObj()
+	CDPI * CPaintManagerUI::GetDPIObj()
 	{
 		if (m_pDPI == NULL) {
 			m_pDPI = new CDPI;
@@ -2201,7 +2201,7 @@ namespace DuiLib {
 		return m_pDPI;
 	}
 
-	void DuiLib::CPaintManagerUI::SetDPI(int iDPI)
+	void CPaintManagerUI::SetDPI(int iDPI)
 	{
 		int scale1 = GetDPIObj()->GetScale();
 		GetDPIObj()->SetScale(iDPI);
@@ -2221,7 +2221,7 @@ namespace DuiLib {
 		::PostMessage(GetPaintWindow(), UIMSG_SET_DPI, 0, 0);
 	}
 
-	void DuiLib::CPaintManagerUI::SetAllDPI(int iDPI)
+	void CPaintManagerUI::SetAllDPI(int iDPI)
 	{
 		for (int i = 0; i < m_aPreMessages.GetSize(); i++) {
 			CPaintManagerUI* pManager = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);
@@ -2229,7 +2229,7 @@ namespace DuiLib {
 		}
 	}
 
-	void DuiLib::CPaintManagerUI::ResetDPIAssets()
+	void CPaintManagerUI::ResetDPIAssets()
 	{
 		RemoveAllDrawInfos();
 		RemoveAllImages();;
@@ -2255,7 +2255,7 @@ namespace DuiLib {
 		}
 	}
 
-	void DuiLib::CPaintManagerUI::RebuildFont(TFontInfo * pFontInfo)
+	void CPaintManagerUI::RebuildFont(TFontInfo * pFontInfo)
 	{
 		::DeleteObject(pFontInfo->hFont);
 		LOGFONT lf = { 0 };
@@ -2290,7 +2290,7 @@ namespace DuiLib {
 		// Already has focus?
 		if( pControl == m_pFocus ) return;
 		// Remove focus from old control
-		if( m_pFocus != NULL ) 
+		if( m_pFocus != NULL )
 		{
 			TEventUI event = { 0 };
 			event.Type = UIEVENT_KILLFOCUS;
@@ -2302,10 +2302,10 @@ namespace DuiLib {
 		}
 		if( pControl == NULL ) return;
 		// Set focus to new control
-		if( pControl != NULL 
-			&& pControl->GetManager() == this 
-			&& pControl->IsVisible() 
-			&& pControl->IsEnabled() ) 
+		if( pControl != NULL
+			&& pControl->GetManager() == this
+			&& pControl->IsVisible()
+			&& pControl->IsEnabled() )
 		{
 			m_pFocus = pControl;
 			TEventUI event = { 0 };
@@ -2461,7 +2461,7 @@ namespace DuiLib {
 		info1.pFocus = m_pFocus;
 		info1.bForward = bForward;
 		CControlUI* pControl = m_pRoot->FindControl(__FindControlFromTab, &info1, UIFIND_VISIBLE | UIFIND_ENABLED | UIFIND_ME_FIRST);
-		if( pControl == NULL ) {  
+		if( pControl == NULL ) {
 			if( bForward ) {
 				// Wrap around
 				FINDTABINFO info2 = { 0 };
@@ -2783,7 +2783,7 @@ namespace DuiLib {
 	{
 		if (m_ResInfo.m_DefaultFontInfo.sFontName.IsEmpty())
 		{
-			if( m_SharedResInfo.m_DefaultFontInfo.tm.tmHeight == 0 ) 
+			if( m_SharedResInfo.m_DefaultFontInfo.tm.tmHeight == 0 )
 			{
 				HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, m_SharedResInfo.m_DefaultFontInfo.hFont);
 				::GetTextMetrics(m_hDcPaint, &m_SharedResInfo.m_DefaultFontInfo.tm);
@@ -2793,7 +2793,7 @@ namespace DuiLib {
 		}
 		else
 		{
-			if( m_ResInfo.m_DefaultFontInfo.tm.tmHeight == 0 ) 
+			if( m_ResInfo.m_DefaultFontInfo.tm.tmHeight == 0 )
 			{
 				HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, m_ResInfo.m_DefaultFontInfo.hFont);
 				::GetTextMetrics(m_hDcPaint, &m_ResInfo.m_DefaultFontInfo.tm);
@@ -2912,7 +2912,7 @@ namespace DuiLib {
 				m_SharedResInfo.m_CustomFonts.Remove(idBuffer);
 			}
 
-			if( !m_SharedResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo) ) 
+			if( !m_SharedResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo) )
 			{
 				::DeleteObject(hFont);
 				delete pFontInfo;
@@ -2929,7 +2929,7 @@ namespace DuiLib {
 				m_ResInfo.m_CustomFonts.Remove(idBuffer);
 			}
 
-			if( !m_ResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo) ) 
+			if( !m_ResInfo.m_CustomFonts.Insert(idBuffer, pFontInfo) )
 			{
 				::DeleteObject(hFont);
 				delete pFontInfo;
@@ -3043,7 +3043,7 @@ namespace DuiLib {
 		for( int i = 0; i< m_ResInfo.m_CustomFonts.GetSize(); i++ ) {
 			if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) {
 				pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
-				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
+				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
 					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
 					&& pFontInfo->bStrikeout == bStrikeout)
 					return pFontInfo->hFont;
@@ -3052,7 +3052,7 @@ namespace DuiLib {
 		for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) {
 			if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
 				pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
-				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
+				if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
 					pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
 					&& pFontInfo->bStrikeout == bStrikeout)
 					return pFontInfo->hFont;
@@ -3095,7 +3095,7 @@ namespace DuiLib {
 			for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) {
 				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) {
 					pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
-					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
+					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
 						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
 						&& pFontInfo->bStrikeout == bStrikeout)
 						return _ttoi(key);
@@ -3107,7 +3107,7 @@ namespace DuiLib {
 			for( int i = 0; i< m_ResInfo.m_CustomFonts.GetSize(); i++ ) {
 				if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) {
 					pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
-					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
+					if (pFontInfo && pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize &&
 						pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic
 						&& pFontInfo->bStrikeout == bStrikeout)
 						return _ttoi(key);
@@ -3123,12 +3123,12 @@ namespace DuiLib {
 		TFontInfo* pFontInfo = NULL;
 		if (bShared)
 		{
-			for( int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) 
+			for( int i = 0; i < m_SharedResInfo.m_CustomFonts.GetSize(); i++ )
 			{
-				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) 
+				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
 				{
 					pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
-					if (pFontInfo && pFontInfo->hFont == hFont) 
+					if (pFontInfo && pFontInfo->hFont == hFont)
 					{
 						::DeleteObject(pFontInfo->hFont);
 						delete pFontInfo;
@@ -3140,12 +3140,12 @@ namespace DuiLib {
 		}
 		else
 		{
-			for( int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++ ) 
+			for( int i = 0; i < m_ResInfo.m_CustomFonts.GetSize(); i++ )
 			{
-				if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) 
+				if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
 				{
 					pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
-					if (pFontInfo && pFontInfo->hFont == hFont) 
+					if (pFontInfo && pFontInfo->hFont == hFont)
 					{
 						::DeleteObject(pFontInfo->hFont);
 						delete pFontInfo;
@@ -3227,7 +3227,7 @@ namespace DuiLib {
 		TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(idBuffer));
 		if (!pFontInfo) pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(idBuffer));
 		if (!pFontInfo) pFontInfo = GetDefaultFontInfo();
-		if (pFontInfo->tm.tmHeight == 0) 
+		if (pFontInfo->tm.tmHeight == 0)
 		{
 			HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, pFontInfo->hFont);
 			::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
@@ -3239,9 +3239,9 @@ namespace DuiLib {
 	TFontInfo* CPaintManagerUI::GetFontInfo(HFONT hFont)
 	{
 		TFontInfo* pFontInfo = NULL;
-		for( int i = 0; i< m_ResInfo.m_CustomFonts.GetSize(); i++ ) 
+		for( int i = 0; i< m_ResInfo.m_CustomFonts.GetSize(); i++ )
 		{
-			if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i)) 
+			if(LPCTSTR key = m_ResInfo.m_CustomFonts.GetAt(i))
 			{
 				pFontInfo = static_cast<TFontInfo*>(m_ResInfo.m_CustomFonts.Find(key));
 				if (pFontInfo && pFontInfo->hFont == hFont) break;
@@ -3249,9 +3249,9 @@ namespace DuiLib {
 		}
 		if (!pFontInfo)
 		{
-			for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ ) 
+			for( int i = 0; i< m_SharedResInfo.m_CustomFonts.GetSize(); i++ )
 			{
-				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i)) 
+				if(LPCTSTR key = m_SharedResInfo.m_CustomFonts.GetAt(i))
 				{
 					pFontInfo = static_cast<TFontInfo*>(m_SharedResInfo.m_CustomFonts.Find(key));
 					if (pFontInfo && pFontInfo->hFont == hFont) break;
@@ -3280,7 +3280,7 @@ namespace DuiLib {
 		if( !data ) {
 			if( AddImage(bitmap, type, mask, bUseHSL, bGdiplus, false, instance) ) {
 				if (m_bForceUseSharedRes) data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
-				else data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap)); 
+				else data = static_cast<TImageInfo*>(m_ResInfo.m_ImageHash.Find(bitmap));
 			}
 		}
 
@@ -3296,7 +3296,7 @@ namespace DuiLib {
 			if( isdigit(*bitmap) ) {
 				LPTSTR pstr = NULL;
 				int iIndex = _tcstol(bitmap, &pstr, 10);
-				
+
 				data = bGdiplus ? CRenderEngine::GdiplusLoadImage(iIndex, type, mask, instance) : CRenderEngine::LoadImage(iIndex, type, mask, instance);
 			}
 		}
@@ -3401,7 +3401,7 @@ namespace DuiLib {
 	void CPaintManagerUI::RemoveImage(LPCTSTR bitmap, bool bShared)
 	{
 		TImageInfo* data = NULL;
-		if (bShared) 
+		if (bShared)
 		{
 			data = static_cast<TImageInfo*>(m_SharedResInfo.m_ImageHash.Find(bitmap));
 			if (data)
@@ -3825,7 +3825,7 @@ namespace DuiLib {
 
 	CControlUI* CALLBACK CPaintManagerUI::__FindControlFromShortcut(CControlUI* pThis, LPVOID pData)
 	{
-		if( !pThis->IsVisible() ) return NULL; 
+		if( !pThis->IsVisible() ) return NULL;
 		FINDSHORTCUT* pFS = static_cast<FINDSHORTCUT*>(pData);
 		if( pFS->ch == toupper(pThis->GetShortcut()) ) pFS->bPickNext = true;
 		if( _tcsstr(pThis->GetClass(), _T("LabelUI")) != NULL ) return NULL;   // Labels never get focus!
@@ -3850,7 +3850,7 @@ namespace DuiLib {
 			while( pFoundControls->GetAt(++iIndex) != NULL ) ;
 			if( iIndex < pFoundControls->GetSize() ) pFoundControls->SetAt(iIndex, pThis);
 		}
-		if( pFoundControls->GetAt(pFoundControls->GetSize() - 1) != NULL ) return pThis; 
+		if( pFoundControls->GetAt(pFoundControls->GetSize() - 1) != NULL ) return pThis;
 		return NULL;
 	}
 
@@ -3858,7 +3858,7 @@ namespace DuiLib {
 	{
 		LPCTSTR pstrType = static_cast<LPCTSTR>(pData);
 		LPCTSTR pType = pThis->GetClass();
-		if( _tcscmp(pstrType, _T("*")) == 0 || _tcscmp(pstrType, pType) == 0 ) 
+		if( _tcscmp(pstrType, _T("*")) == 0 || _tcscmp(pstrType, pType) == 0 )
 			pThis->GetManager()->GetFoundControls()->Add((LPVOID)pThis);
 		return NULL;
 	}
@@ -3888,15 +3888,15 @@ namespace DuiLib {
 		// tabbing and shortcut key-combos. We'll look for all messages for
 		// each window and any child control attached.
 		UINT uStyle = GetWindowStyle(pMsg->hwnd);
-		UINT uChildRes = uStyle & WS_CHILD;	
+		UINT uChildRes = uStyle & WS_CHILD;
 		LRESULT lRes = 0;
 		if (uChildRes != 0)
 		{
 			HWND hWndParent = ::GetParent(pMsg->hwnd);
 
-			for( int i = 0; i < m_aPreMessages.GetSize(); i++ ) 
+			for( int i = 0; i < m_aPreMessages.GetSize(); i++ )
 			{
-				CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);        
+				CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);
 				HWND hTempParent = hWndParent;
 				while(hTempParent)
 				{
@@ -3913,7 +3913,7 @@ namespace DuiLib {
 		}
 		else
 		{
-			for( int i = 0; i < m_aPreMessages.GetSize(); i++ ) 
+			for( int i = 0; i < m_aPreMessages.GetSize(); i++ )
 			{
 				CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_aPreMessages[i]);
 				if(pMsg->hwnd == pT->GetPaintWindow())
@@ -3921,7 +3921,7 @@ namespace DuiLib {
 					if (pT->TranslateAccelerator(pMsg))
 						return true;
 
-					if( pT->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes) ) 
+					if( pT->PreMessageHandler(pMsg->message, pMsg->wParam, pMsg->lParam, lRes) )
 						return true;
 
 					return false;
@@ -3983,7 +3983,7 @@ namespace DuiLib {
 	BOOL CPaintManagerUI::RemoveStyle(LPCTSTR pName, bool bShared)
 	{
 		CDuiString* pStyle = NULL;
-		if (bShared) 
+		if (bShared)
 		{
 			pStyle = static_cast<CDuiString*>(m_SharedResInfo.m_StyleHash.Find(pName));
 			if (pStyle)
@@ -4079,7 +4079,7 @@ namespace DuiLib {
 					else if( sItem == _T("restype") ) {
 						sImageResType = sValue;
 					}
-					else if( sItem == _T("mask") ) 
+					else if( sItem == _T("mask") )
 					{
 						if( sValue[0] == _T('#')) dwMask = _tcstoul(sValue.GetData() + 1, &pstr, 16);
 						else dwMask = _tcstoul(sValue.GetData(), &pstr, 16);
@@ -4136,39 +4136,39 @@ namespace DuiLib {
 		m_pDragDrop = pDragDrop;
 	}
 
-	static WORD DIBNumColors(void* pv) 
-	{     
-		int bits;     
-		LPBITMAPINFOHEADER  lpbi;     
-		LPBITMAPCOREHEADER  lpbc;      
-		lpbi = ((LPBITMAPINFOHEADER)pv);     
-		lpbc = ((LPBITMAPCOREHEADER)pv);      
-		/*  With the BITMAPINFO format headers, the size of the palette 
-		*  is in biClrUsed, whereas in the BITMAPCORE - style headers, it      
-		*  is dependent on the bits per pixel ( = 2 raised to the power of      
+	static WORD DIBNumColors(void* pv)
+	{
+		int bits;
+		LPBITMAPINFOHEADER  lpbi;
+		LPBITMAPCOREHEADER  lpbc;
+		lpbi = ((LPBITMAPINFOHEADER)pv);
+		lpbc = ((LPBITMAPCOREHEADER)pv);
+		/*  With the BITMAPINFO format headers, the size of the palette
+		*  is in biClrUsed, whereas in the BITMAPCORE - style headers, it
+		*  is dependent on the bits per pixel ( = 2 raised to the power of
 		*  bits/pixel).
-		*/     
+		*/
 		if (lpbi->biSize != sizeof(BITMAPCOREHEADER))
-		{         
+		{
 			if (lpbi->biClrUsed != 0)
-				return (WORD)lpbi->biClrUsed;         
-			bits = lpbi->biBitCount;     
-		}     
-		else         
+				return (WORD)lpbi->biClrUsed;
+			bits = lpbi->biBitCount;
+		}
+		else
 			bits = lpbc->bcBitCount;
 		switch (bits)
-		{         
-		case 1:                 
-			return 2;         
-		case 4:                 
-			return 16;         
-		case 8:       
+		{
+		case 1:
+			return 2;
+		case 4:
+			return 16;
+		case 8:
 			return 256;
 		default:
-			/* A 24 bitcount DIB has no color table */                 
+			/* A 24 bitcount DIB has no color table */
 			return 0;
-		} 
-	} 
+		}
+	}
 	//code taken from SEEDIB MSDN sample
 	static WORD ColorTableSize(LPVOID lpv)
 	{
@@ -4271,10 +4271,10 @@ namespace DuiLib {
 			if(hDrop != NULL)
 			{
 				TCHAR szFileName[MAX_PATH];
-				UINT cFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0); 
+				UINT cFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
 				if(cFiles > 0)
 				{
-					DragQueryFile(hDrop, 0, szFileName, sizeof(szFileName)); 
+					DragQueryFile(hDrop, 0, szFileName, sizeof(szFileName));
 					HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, szFileName,IMAGE_BITMAP,0,0,LR_DEFAULTSIZE|LR_LOADFROMFILE);
 					if(hBitmap)
 					{

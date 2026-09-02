@@ -111,7 +111,7 @@ namespace DuiLib
 		return bRet;
 	}
 
-	UINT DuiLib::CDPI::GetDPI()
+	UINT CDPI::GetDPI()
 	{
 		if (m_Awareness == PROCESS_DPI_UNAWARE) {
 			return 96;

@@ -39,19 +39,19 @@ enum MenuAlignment
 
 enum MenuItemDefaultInfo
 {
-	ITEM_DEFAULT_HEIGHT = 30,		//每一个item的默认高度（只在竖状排列时自定义）
-	ITEM_DEFAULT_WIDTH = 150,		//窗口的默认宽度
+	ITEM_DEFAULT_HEIGHT = 30,               //每一个item的默认高度（只在竖状排列时自定义）
+	ITEM_DEFAULT_WIDTH = 150,               //窗口的默认宽度
 
-	ITEM_DEFAULT_ICON_WIDTH = 26,	//默认图标所占宽度
-	ITEM_DEFAULT_ICON_SIZE = 16,	//默认图标的大小
+	ITEM_DEFAULT_ICON_WIDTH = 26,           //默认图标所占宽度
+	ITEM_DEFAULT_ICON_SIZE = 16,            //默认图标的大小
 
-	ITEM_DEFAULT_EXPLAND_ICON_WIDTH = 20,	//默认下级菜单扩展图标所占宽度
-	ITEM_DEFAULT_EXPLAND_ICON_SIZE = 9,		//默认下级菜单扩展图标的大小
+	ITEM_DEFAULT_EXPLAND_ICON_WIDTH = 20,   //默认下级菜单扩展图标所占宽度
+	ITEM_DEFAULT_EXPLAND_ICON_SIZE = 9,     //默认下级菜单扩展图标的大小
 
-	DEFAULT_LINE_LEFT_INSET = ITEM_DEFAULT_ICON_WIDTH + 3,	//默认分隔线的左边距
-	DEFAULT_LINE_RIGHT_INSET = 7,	//默认分隔线的右边距
-	DEFAULT_LINE_HEIGHT = 6,		//默认分隔线所占高度
-	DEFAULT_LINE_COLOR = 0xFFBCBFC4	//默认分隔线颜色
+	DEFAULT_LINE_LEFT_INSET = ITEM_DEFAULT_ICON_WIDTH + 3, //默认分隔线的左边距
+	DEFAULT_LINE_RIGHT_INSET = 7,           //默认分隔线的右边距
+	DEFAULT_LINE_HEIGHT = 6,                //默认分隔线所占高度
+	DEFAULT_LINE_COLOR = 0xFFBCBFC4         //默认分隔线颜色
 
 };
 
@@ -80,8 +80,8 @@ class UILIB_API MenuObserverImpl : public MenuMenuObserverImplBase
 	friend class Iterator;
 public:
 	MenuObserverImpl():
-	m_pMainWndPaintManager(NULL),
-	m_pMenuCheckInfo(NULL)
+ m_pMainWndPaintManager(NULL),
+ m_pMenuCheckInfo(NULL)
 	{
 		pReceivers_ = new ReceiversVector;
 	}
@@ -93,7 +93,7 @@ public:
 			delete pReceivers_;
 			pReceivers_ = NULL;
 		}
-		
+
 	}
 
 	virtual void AddReceiver(MenuMenuReceiverImplBase* receiver)
@@ -165,7 +165,7 @@ public:
 	virtual void SetManger(CPaintManagerUI* pManager)
 	{
 		if (pManager != NULL)
-			m_pMainWndPaintManager = pManager;
+ m_pMainWndPaintManager = pManager;
 	}
 
 	virtual CPaintManagerUI* GetManager() const
@@ -176,9 +176,9 @@ public:
 	virtual void SetMenuCheckInfo(CStdStringPtrMap* pInfo)
 	{
 		if (pInfo != NULL)
-			m_pMenuCheckInfo = pInfo;
+ m_pMenuCheckInfo = pInfo;
 		else
-			m_pMenuCheckInfo = NULL;
+ m_pMenuCheckInfo = NULL;
 	}
 
 	virtual CStdStringPtrMap* GetMenuCheckInfo() const
@@ -248,19 +248,19 @@ class UILIB_API CMenuUI : public CListUI
 public:
 	CMenuUI();
 	virtual ~CMenuUI();
-	CMenuWnd*	m_pWindow;
-    LPCTSTR GetClass() const;
-    LPVOID GetInterface(LPCTSTR pstrName);
+	CMenuWnd* m_pWindow;
+	LPCTSTR GetClass() const;
+	LPVOID GetInterface(LPCTSTR pstrName);
 	UINT GetListType();
 
 	virtual void DoEvent(TEventUI& event);
 
-    virtual bool Add(CControlUI* pControl);
-    virtual bool AddAt(CControlUI* pControl, int iIndex);
+	virtual bool Add(CControlUI* pControl);
+	virtual bool AddAt(CControlUI* pControl, int iIndex);
 
-    virtual int GetItemIndex(CControlUI* pControl) const;
-    virtual bool SetItemIndex(CControlUI* pControl, int iIndex);
-    virtual bool Remove(CControlUI* pControl);
+	virtual int GetItemIndex(CControlUI* pControl) const;
+	virtual bool SetItemIndex(CControlUI* pControl, int iIndex);
+	virtual bool Remove(CControlUI* pControl);
 
 	SIZE EstimateSize(SIZE szAvailable);
 
@@ -291,26 +291,26 @@ public:
 	void Close(UINT nRet = IDOK);
 	bool isClosing;
 	/*
-	 *	@pOwner 一级菜单不要指定这个参数，这是菜单内部使用的
-	 *	@xml	菜单的布局文件
-	 *	@point	菜单的左上角坐标
-	 *	@pMainPaintManager	菜单的父窗体管理器指针
-	 *	@pMenuCheckInfo	保存菜单的单选和复选信息结构指针
-	 *	@dwAlignment		菜单的出现位置，默认出现在鼠标的右下侧。
+	 * @pOwner              一级菜单不要指定这个参数，这是菜单内部使用的
+	 * @xml                 菜单的布局文件
+	 * @point               菜单的左上角坐标
+	 * @pMainPaintManager   菜单的父窗体管理器指针
+	 * @pMenuCheckInfo      保存菜单的单选和复选信息结构指针
+	 * @dwAlignment         菜单的出现位置，默认出现在鼠标的右下侧。
 	 */
 
-    void Init(CMenuElementUI* pOwner, STRINGorID xml, POINT point,
+	void Init(CMenuElementUI* pOwner, STRINGorID xml, POINT point,
 		CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = NULL,
 		DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
-    LPCTSTR GetWindowClassName() const;
-    void OnFinalMessage(HWND hWnd);
+	LPCTSTR GetWindowClassName() const;
+	void OnFinalMessage(HWND hWnd);
 	void Notify(TNotifyUI& msg);
 	CControlUI* CreateControl(LPCTSTR pstrClassName);
 
 	LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-    LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	BOOL Receive(ContextMenuParam param);
 
@@ -326,12 +326,12 @@ public:
 
 public:
 	bool m_bCaptured;
-	POINT			m_BasedPoint;
-	STRINGorID		m_xml;
-    CPaintManagerUI m_pm;
-    CMenuElementUI* m_pOwner;
-    CMenuUI*	m_pLayout;
-	DWORD		m_dwAlignment;	//菜单对齐方式
+	POINT m_BasedPoint;
+	STRINGorID m_xml;
+	CPaintManagerUI m_pm;
+	CMenuElementUI* m_pOwner;
+	CMenuUI* m_pLayout;
+	DWORD m_dwAlignment; //菜单对齐方式
 };
 
 class CListContainerElementUI;
@@ -340,12 +340,12 @@ class UILIB_API CMenuElementUI : public CListContainerElementUI
 	DECLARE_DUICONTROL(CMenuElementUI)
 	friend CMenuWnd;
 public:
-    CMenuElementUI();
+	CMenuElementUI();
 	~CMenuElementUI();
 
-    LPCTSTR GetClass() const;
-    LPVOID GetInterface(LPCTSTR pstrName);
-    bool DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
+	LPCTSTR GetClass() const;
+	LPVOID GetInterface(LPCTSTR pstrName);
+	bool DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 	void DrawItemText(HDC hDC, const RECT& rcItem);
 	SIZE EstimateSize(SIZE szAvailable);
 
@@ -353,7 +353,7 @@ public:
 
 	CMenuWnd* GetMenuWnd();
 	void CreateMenuWnd();
-	
+
 	void SetLineType();
 	void SetLineColor(DWORD color);
 	DWORD GetLineColor() const;
@@ -376,17 +376,17 @@ public:
 	MenuItemInfo* GetItemInfo(LPCTSTR pstrName);
 	MenuItemInfo* SetItemInfo(LPCTSTR pstrName, bool bChecked);
 protected:
-	CMenuWnd*	m_pWindow;
+	CMenuWnd* m_pWindow;
 
-	bool		m_bDrawLine;	//画分隔线
-	DWORD		m_dwLineColor;  //分隔线颜色
-	RECT		m_rcLinePadding;	//分割线的左右边距
+	bool m_bDrawLine;     //画分隔线
+	DWORD m_dwLineColor;  //分隔线颜色
+	RECT m_rcLinePadding; //分割线的左右边距
 
-	SIZE		m_szIconSize; 	//画图标
-	CDuiString	m_strIcon;
-	bool		m_bCheckItem;
+	SIZE m_szIconSize;    //画图标
+	CDuiString m_strIcon;
+	bool m_bCheckItem;
 
-	bool		m_bShowExplandIcon;
+	bool m_bShowExplandIcon;
 };
 
 } // namespace DuiLib

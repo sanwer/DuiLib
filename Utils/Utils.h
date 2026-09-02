@@ -107,19 +107,19 @@ namespace DuiLib
 	public:
 		CStdArray(int iPreallocSize = 0)
 		{
-			m_pData = NULL;
-			m_nCount = 0;
-			m_nAllocated = iPreallocSize;
+ m_pData = NULL;
+ m_nCount = 0;
+ m_nAllocated = iPreallocSize;
 			if (iPreallocSize > 0) {
-				m_pData = static_cast<T*>(malloc(iPreallocSize * sizeof(T)));
+ m_pData = static_cast<T*>(malloc(iPreallocSize * sizeof(T)));
 			}
 		}
 
 		CStdArray(const CStdArray& src)
 		{
-			m_pData = NULL;
-			m_nCount = 0;
-			m_nAllocated = 0;
+ m_pData = NULL;
+ m_nCount = 0;
+ m_nAllocated = 0;
 			for (int i = 0; i < src.GetSize(); i++) {
 				Add(src.GetAt(i));
 			}
@@ -133,17 +133,17 @@ namespace DuiLib
 		void Empty()
 		{
 			if (m_pData != NULL) free(m_pData);
-			m_pData = NULL;
-			m_nCount = m_nAllocated = 0;
+ m_pData = NULL;
+ m_nCount = m_nAllocated = 0;
 		}
 
 		void Resize(int iSize)
 		{
 			Empty();
-			m_pData = static_cast<T*>(malloc(iSize * sizeof(T)));
+ m_pData = static_cast<T*>(malloc(iSize * sizeof(T)));
 			::ZeroMemory(m_pData, iSize * sizeof(T));
-			m_nAllocated = iSize;
-			m_nCount = iSize;
+ m_nAllocated = iSize;
+ m_nCount = iSize;
 		}
 
 		bool IsEmpty() const
@@ -164,22 +164,22 @@ namespace DuiLib
 				if (nAllocated == 0) nAllocated = 11;
 				T* ppData = static_cast<T*>(realloc(m_pData, nAllocated * sizeof(T)));
 				if (ppData != NULL) {
-					m_nAllocated = nAllocated;
-					m_pData = ppData;
+ m_nAllocated = nAllocated;
+ m_pData = ppData;
 				}
 				else {
 					--m_nCount;
 					return false;
 				}
 			}
-			m_pData[m_nCount - 1] = pData;
+ m_pData[m_nCount - 1] = pData;
 			return true;
 		}
 
 		bool SetAt(int iIndex, T pData)
 		{
 			if (iIndex < 0 || iIndex >= m_nCount) return false;
-			m_pData[iIndex] = pData;
+ m_pData[iIndex] = pData;
 			return true;
 		}
 
@@ -192,8 +192,8 @@ namespace DuiLib
 				if (nAllocated == 0) nAllocated = 11;
 				T* pData = static_cast<T*>(realloc(m_pData, nAllocated * sizeof(T)));
 				if (pData != NULL) {
-					m_nAllocated = nAllocated;
-					m_pData = pData;
+ m_nAllocated = nAllocated;
+ m_pData = pData;
 				}
 				else {
 					--m_nCount;
@@ -201,7 +201,7 @@ namespace DuiLib
 				}
 			}
 			memmove(&m_pData[iIndex + 1], &m_pData[iIndex], (m_nCount - iIndex - 1) * sizeof(T));
-			m_pData[iIndex] = pData;
+ m_pData[iIndex] = pData;
 			return true;
 		}
 
@@ -410,9 +410,9 @@ namespace DuiLib
 	class CDuiVariant : public VARIANT
 	{
 	public:
-		CDuiVariant() 
-		{ 
-			VariantInit(this); 
+		CDuiVariant()
+		{
+			VariantInit(this);
 		}
 		CDuiVariant(int i)
 		{
@@ -439,9 +439,9 @@ namespace DuiLib
 			this->pdispVal = disp;
 		}
 
-		~CDuiVariant() 
-		{ 
-			VariantClear(this); 
+		~CDuiVariant()
+		{
+			VariantClear(this);
 		}
 	};
 
@@ -459,7 +459,7 @@ namespace DuiLib
 				WideCharToMultiByte(CodePage, 0, lpszSrc, -1, pANSI, nANSILen, NULL, NULL);
 				return pANSI;
 			}
-		}	
+		}
 		return NULL;
 	}
 
@@ -508,21 +508,21 @@ namespace DuiLib
 
 	//protected:
 	//	friend class CRenderEngine;
-	//	CDuiString	m_sImageAttribute;
+	//	CDuiString m_sImageAttribute;
 
-	//	CDuiString	m_sImage;
-	//	CDuiString	m_sResType;
-	//	TImageInfo	*m_imageInfo;
-	//	bool		m_bLoadSuccess;
+	//	CDuiString m_sImage;
+	//	CDuiString m_sResType;
+	//	TImageInfo *m_imageInfo;
+	//	bool m_bLoadSuccess;
 
-	//	RECT	m_rcDest;
-	//	RECT	m_rcSource;
-	//	RECT	m_rcCorner;
-	//	BYTE	m_bFade;
-	//	DWORD	m_dwMask;
-	//	bool	m_bHole;
-	//	bool	m_bTiledX;
-	//	bool	m_bTiledY;
+	//	RECT m_rcDest;
+	//	RECT m_rcSource;
+	//	RECT m_rcCorner;
+	//	BYTE m_bFade;
+	//	DWORD m_dwMask;
+	//	bool m_bHole;
+	//	bool m_bTiledX;
+	//	bool m_bTiledY;
 	//};
 }// namespace DuiLib
 

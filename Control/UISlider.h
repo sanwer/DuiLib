@@ -45,7 +45,7 @@ namespace DuiLib
 		CDuiString m_sThumbPushedImage;
 
 		CDuiString m_sImageModify;
-		bool	   m_bSendMove;
+		bool m_bSendMove;
 	};
 }
 

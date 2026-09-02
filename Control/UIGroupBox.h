@@ -21,7 +21,7 @@ namespace DuiLib
 		void SetFont(int index);
 		int GetFont() const;
 
-	protected:	
+	protected:
 		//Paint
 		virtual void PaintText(HDC hDC);
 		virtual void PaintBorder(HDC hDC);

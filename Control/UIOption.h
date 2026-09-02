@@ -61,19 +61,19 @@ namespace DuiLib
 		void PaintText(HDC hDC);
 
 	protected:
-		bool			m_bSelected;
-		CDuiString		m_sGroupName;
-		CDuiString		m_sGroupType;
+		bool m_bSelected;
+		CDuiString m_sGroupName;
+		CDuiString m_sGroupType;
 
-		int				m_iSelectedFont;
+		int m_iSelectedFont;
 
-		DWORD			m_dwSelectedBkColor;
-		DWORD			m_dwSelectedTextColor;
+		DWORD m_dwSelectedBkColor;
+		DWORD m_dwSelectedTextColor;
 
-		CDuiString		m_sSelectedImage;
-		CDuiString		m_sSelectedHotImage;
-		CDuiString		m_sSelectedPushedImage;
-		CDuiString		m_sSelectedForeImage;
+		CDuiString m_sSelectedImage;
+		CDuiString m_sSelectedHotImage;
+		CDuiString m_sSelectedPushedImage;
+		CDuiString m_sSelectedForeImage;
 
 		int m_nSelectedStateCount;
 		CDuiString m_sSelectedStateImage;
@@ -99,7 +99,7 @@ namespace DuiLib
 		virtual void Selected(bool bSelected, bool bMsg = true);
 
 	protected:
-		bool m_bAutoCheck; 
+		bool m_bAutoCheck;
 	};
 } // namespace DuiLib
 

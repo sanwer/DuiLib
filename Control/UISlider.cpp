@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_SLIDER
 #include "UISlider.h"
 
 namespace DuiLib
@@ -60,12 +61,12 @@ namespace DuiLib
 		if( m_bHorizontal ) {
 			int left = m_rcItem.left + (m_rcItem.right - m_rcItem.left - m_szThumb.cx) * (m_nValue - m_nMin) / (m_nMax - m_nMin);
 			int top = (m_rcItem.bottom + m_rcItem.top - m_szThumb.cy) / 2;
-			rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy); 
+			rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
 		}
 		else {
 			int left = (m_rcItem.right + m_rcItem.left - m_szThumb.cx) / 2;
 			int top = m_rcItem.bottom - m_szThumb.cy - (m_rcItem.bottom - m_rcItem.top - m_szThumb.cy) * (m_nValue - m_nMin) / (m_nMax - m_nMin);
-			rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy); 
+			rcThumb = CDuiRect(left, top, left + m_szThumb.cx, top + m_szThumb.cy);
 		}
 		if(m_pManager != NULL) {
 			//m_pManager->GetDPIObj()->Scale(&rcThumb);
@@ -173,7 +174,7 @@ namespace DuiLib
 		{
 			return;
 		}
-		if( event.Type == UIEVENT_SCROLLWHEEL ) 
+		if( event.Type == UIEVENT_SCROLLWHEEL )
 		{
 			if( IsEnabled() ) {
 				switch( LOWORD(event.wParam) ) {
@@ -255,8 +256,8 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("thumbsize")) == 0 ) {
 			SIZE szXY = {0};
 			LPTSTR pstr = NULL;
-			szXY.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			szXY.cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr); 
+			szXY.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			szXY.cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
 			SetThumbSize(szXY);
 		}
 		else if( _tcsicmp(pstrName, _T("step")) == 0 ) {
@@ -305,3 +306,4 @@ namespace DuiLib
 		}
 	}
 }
+#endif // DUIMOD_SLIDER

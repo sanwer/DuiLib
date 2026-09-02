@@ -1,5 +1,6 @@
 ﻿#ifndef __UIANIMATIONTABLAYOUT_H__
 #define __UIANIMATIONTABLAYOUT_H__
+#pragma once
 
 namespace DuiLib
 {

@@ -1,4 +1,5 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_MENU
 
 #include "UIMenu.h"
 
@@ -143,7 +144,7 @@ namespace DuiLib {
 
 	CMenuWnd::~CMenuWnd()
 	{
-		
+
 	}
 
 	void CMenuWnd::Close(UINT nRet)
@@ -205,7 +206,7 @@ namespace DuiLib {
 			mCheckInfos->Resize(0);
 		}
 	}
-	
+
 	MenuItemInfo* CMenuWnd::SetMenuItemInfo(LPCTSTR pstrName, bool bChecked)
 	{
 		if(pstrName == NULL || lstrlen(pstrName) <= 0) return NULL;
@@ -252,7 +253,7 @@ namespace DuiLib {
 		CMenuWnd::GetGlobalContextMenuObserver().AddReceiver(this);
 
 		Create((m_pOwner == NULL) ? pMainPaintManager->GetPaintWindow() : m_pOwner->GetManager()->GetPaintWindow(), NULL, WS_POPUP , WS_EX_TOOLWINDOW | WS_EX_TOPMOST, CDuiRect());
-		
+
 		// HACK: Don't deselect the parent's caption
 		HWND hWndParent = m_hWnd;
 		while( ::GetParent(hWndParent) != NULL ) hWndParent = ::GetParent(hWndParent);
@@ -269,9 +270,9 @@ namespace DuiLib {
 
 	void CMenuWnd::Notify(TNotifyUI& msg)
 	{
-		if( CMenuWnd::GetGlobalContextMenuObserver().GetManager() != NULL) 
+		if( CMenuWnd::GetGlobalContextMenuObserver().GetManager() != NULL)
 		{
-			if( msg.sType == _T("click") || msg.sType == _T("valuechanged") ) 
+			if( msg.sType == _T("click") || msg.sType == _T("valuechanged") )
 			{
 				CMenuWnd::GetGlobalContextMenuObserver().GetManager()->SendNotify(msg, false);
 			}
@@ -385,7 +386,7 @@ namespace DuiLib {
 		CControlUI* pRoot = m_pm.GetRoot();
 
 #if defined(WIN32) && !defined(UNDER_CE)
-		MONITORINFO oMonitor = {}; 
+		MONITORINFO oMonitor = {};
 		oMonitor.cbSize = sizeof(oMonitor);
 		::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY), &oMonitor);
 		CDuiRect rcWork = oMonitor.rcWork;
@@ -439,7 +440,7 @@ namespace DuiLib {
 		int cyFixed = 0;
 
 #if defined(WIN32) && !defined(UNDER_CE)
-		MONITORINFO oMonitor = {}; 
+		MONITORINFO oMonitor = {};
 		oMonitor.cbSize = sizeof(oMonitor);
 		::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTOPRIMARY), &oMonitor);
 		CDuiRect rcWork = oMonitor.rcWork;
@@ -581,11 +582,11 @@ namespace DuiLib {
 		BOOL bHandled = TRUE;
 		switch( uMsg )
 		{
-		case WM_CREATE:       
-			lRes = OnCreate(uMsg, wParam, lParam, bHandled); 
+		case WM_CREATE:
+			lRes = OnCreate(uMsg, wParam, lParam, bHandled);
 			break;
-		case WM_KILLFOCUS:       
-			lRes = OnKillFocus(uMsg, wParam, lParam, bHandled); 
+		case WM_KILLFOCUS:
+			lRes = OnKillFocus(uMsg, wParam, lParam, bHandled);
 			break;
 		case WM_KEYDOWN:
 			if( wParam == VK_ESCAPE || wParam == VK_LEFT)
@@ -660,7 +661,7 @@ namespace DuiLib {
 
 	LPVOID CMenuElementUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("MenuElement")) == 0 ) return static_cast<CMenuElementUI*>(this);    
+		if( _tcsicmp(pstrName, _T("MenuElement")) == 0 ) return static_cast<CMenuElementUI*>(this);
 		return CListContainerElementUI::GetInterface(pstrName);
 	}
 
@@ -856,7 +857,7 @@ namespace DuiLib {
 			RECT rcTextPadding = GetManager()->GetDPIObj()->Scale(pInfo->rcTextPadding);
 			rcText.left += rcTextPadding.left;
 			rcText.right -= rcTextPadding.right;
-			if( pInfo->bShowHtml ) {   
+			if( pInfo->bShowHtml ) {
 				int nLinks = 0;
 				CRenderEngine::DrawHtmlText(m_pManager->GetPaintDC(), m_pManager, rcText, sText, iTextColor, NULL, NULL, nLinks, pInfo->nFont, DT_CALCRECT | pInfo->uTextStyle);
 			}
@@ -915,7 +916,7 @@ namespace DuiLib {
 			{
 				if (GetItemAt(i)->GetInterface(_T("MenuElement")) != NULL)
 				{
-					
+
 					hasSubMenu = true;
 				}
 			}
@@ -1121,14 +1122,14 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("iconsize")) == 0 ) {
 			LPTSTR pstr = NULL;
 			LONG cx = 0, cy = 0;
-			cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);   
+			cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
 			SetIconSize(cx, cy);
 		}
-		else if( _tcsicmp(pstrName, _T("checkitem")) == 0 ) {		
-			SetCheckItem(_tcsicmp(pstrValue, _T("true")) == 0 ? true : false);		
+		else if( _tcsicmp(pstrName, _T("checkitem")) == 0 ) {
+			SetCheckItem(_tcsicmp(pstrValue, _T("true")) == 0 ? true : false);
 		}
-		else if( _tcsicmp(pstrName, _T("ischeck")) == 0 ) {		
+		else if( _tcsicmp(pstrName, _T("ischeck")) == 0 ) {
 			CStdStringPtrMap* mCheckInfos = CMenuWnd::GetGlobalContextMenuObserver().GetMenuCheckInfo();
 			if (mCheckInfos != NULL)
 			{
@@ -1142,7 +1143,7 @@ namespace DuiLib {
 				}
 				if(!bFind) SetChecked(_tcsicmp(pstrValue, _T("true")) == 0 ? true : false);
 			}
-		}	
+		}
 		else if( _tcsicmp(pstrName, _T("linetype")) == 0){
 			if (_tcsicmp(pstrValue, _T("true")) == 0)
 				SetLineType();
@@ -1158,13 +1159,13 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("linepadding")) == 0 ) {
 			RECT rcInset = { 0 };
 			LPTSTR pstr = NULL;
-			rcInset.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcInset.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcInset.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcInset.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcInset.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcInset.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcInset.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcInset.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SetLinePadding(rcInset);
 		}
-		else if	( _tcsicmp(pstrName, _T("height")) == 0){
+		else if ( _tcsicmp(pstrName, _T("height")) == 0){
 			SetFixedHeight(_ttoi(pstrValue));
 		}
 		else
@@ -1211,3 +1212,4 @@ namespace DuiLib {
 		return NULL;
 	}
 } // namespace DuiLib
+#endif // DUIMOD_MENU

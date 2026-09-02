@@ -1,19 +1,20 @@
 ﻿#include "StdAfx.h"
-#pragma comment( lib, "ws2_32.lib" )
+#ifdef DUIMOD_IPADDRESS
+#pragma comment(lib, "ws2_32.lib")
 
-DWORD GetLocalIpAddress()   
-{   
-	WORD wVersionRequested = MAKEWORD(2, 2);   
-	WSADATA wsaData;   
-	if (WSAStartup(wVersionRequested, &wsaData) != 0)   
-		return 0;   
-	char local[255] = {0};   
-	gethostname(local, sizeof(local));   
-	hostent* ph = gethostbyname(local);   
-	if (ph == NULL)   
-		return 0;   
-	in_addr addr;   
-	memcpy(&addr, ph->h_addr_list[0], sizeof(in_addr));   
+DWORD GetLocalIpAddress()
+{
+	WORD wVersionRequested = MAKEWORD(2, 2);
+	WSADATA wsaData;
+	if (WSAStartup(wVersionRequested, &wsaData) != 0)
+		return 0;
+	char local[255] = {0};
+	gethostname(local, sizeof(local));
+	hostent* ph = gethostbyname(local);
+	if (ph == NULL)
+		return 0;
+	in_addr addr;
+	memcpy(&addr, ph->h_addr_list[0], sizeof(in_addr));
 	DWORD dwIP = MAKEIPADDRESS(addr.S_un.S_un_b.s_b1, addr.S_un.S_un_b.s_b2, addr.S_un.S_un_b.s_b3, addr.S_un.S_un_b.s_b4);
 	return dwIP;
 }
@@ -76,7 +77,7 @@ namespace DuiLib
 		::ShowWindow(m_hWnd, SW_SHOW);
 		::SetFocus(m_hWnd);
 
-		m_bInit = true;    
+		m_bInit = true;
 	}
 
 	RECT CIPAddressWnd::CalPos()
@@ -245,9 +246,9 @@ namespace DuiLib
 		{
 			if( m_pWindow != NULL ) return;
 		}
-		if( event.Type == UIEVENT_SETFOCUS && IsEnabled() ) 
+		if( event.Type == UIEVENT_SETFOCUS && IsEnabled() )
 		{
-			if( m_pWindow ) 
+			if( m_pWindow )
 			{
 				return;
 			}
@@ -256,11 +257,11 @@ namespace DuiLib
 			m_pWindow->Init(this);
 			m_pWindow->ShowWindow();
 		}
-		if( event.Type == UIEVENT_KILLFOCUS && IsEnabled() ) 
+		if( event.Type == UIEVENT_KILLFOCUS && IsEnabled() )
 		{
 			Invalidate();
 		}
-		if( event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK || event.Type == UIEVENT_RBUTTONDOWN) 
+		if( event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK || event.Type == UIEVENT_RBUTTONDOWN)
 		{
 			if( IsEnabled() ) {
 				GetManager()->ReleaseCapture();
@@ -277,11 +278,11 @@ namespace DuiLib
 			}
 			return;
 		}
-		if( event.Type == UIEVENT_MOUSEMOVE ) 
+		if( event.Type == UIEVENT_MOUSEMOVE )
 		{
 			return;
 		}
-		if( event.Type == UIEVENT_BUTTONUP ) 
+		if( event.Type == UIEVENT_BUTTONUP )
 		{
 			return;
 		}
@@ -306,3 +307,4 @@ namespace DuiLib
 		CLabelUI::SetAttribute(pstrName, pstrValue);
 	}
 }
+#endif // DUIMOD_IPADDRESS

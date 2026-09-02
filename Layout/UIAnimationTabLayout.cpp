@@ -1,11 +1,12 @@
 ﻿#include "StdAfx.h"
+#ifdef DUIMOD_ANIMATIONTABLAYOUT
 #include "UIAnimationTabLayout.h"
 
 namespace DuiLib {
 	IMPLEMENT_DUICONTROL(CAnimationTabLayoutUI)
 
-	CAnimationTabLayoutUI::CAnimationTabLayoutUI() : 
-		m_bIsVerticalDirection( false ), 
+	CAnimationTabLayoutUI::CAnimationTabLayoutUI() :
+		m_bIsVerticalDirection( false ),
 		m_nPositiveDirection( 1 ),
 		m_pCurrentControl( NULL ),
 		m_bControlVisibleFlag( false )
@@ -20,7 +21,7 @@ namespace DuiLib {
 
 	LPVOID CAnimationTabLayoutUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("AnimationTabLayout")) == 0 ) 
+		if( _tcsicmp(pstrName, _T("AnimationTabLayout")) == 0 )
 			return static_cast<CAnimationTabLayoutUI*>(this);
 		return CTabLayoutUI::GetInterface(pstrName);
 	}
@@ -40,7 +41,7 @@ namespace DuiLib {
 				GetItemAt(it)->SetFocus();
 				m_bControlVisibleFlag = false;
 				m_pCurrentControl = static_cast<CControlUI*>(m_items[it]);
-				
+
 			}
 			else GetItemAt(it)->SetVisible(false);
 		}
@@ -64,14 +65,14 @@ namespace DuiLib {
 			m_rcCurPos.top = m_rcItem.top;
 			m_rcCurPos.bottom = m_rcItem.bottom;
 			m_rcCurPos.left = m_rcItem.left - ( m_rcItem.right - m_rcItem.left ) * m_nPositiveDirection + 52 * m_nPositiveDirection;
-			m_rcCurPos.right = m_rcItem.right - ( m_rcItem.right - m_rcItem.left ) * m_nPositiveDirection+ 52 * m_nPositiveDirection;		
+			m_rcCurPos.right = m_rcItem.right - ( m_rcItem.right - m_rcItem.left ) * m_nPositiveDirection+ 52 * m_nPositiveDirection;
 		}
 		else
 		{
 			m_rcCurPos.left = m_rcItem.left;
 			m_rcCurPos.right = m_rcItem.right;
 			m_rcCurPos.top = m_rcItem.top - ( m_rcItem.bottom - m_rcItem.top ) * m_nPositiveDirection;
-			m_rcCurPos.bottom = m_rcItem.bottom - ( m_rcItem.bottom - m_rcItem.top ) * m_nPositiveDirection;		
+			m_rcCurPos.bottom = m_rcItem.bottom - ( m_rcItem.bottom - m_rcItem.top ) * m_nPositiveDirection;
 		}
 
 		StopAnimation( TAB_ANIMATION_ID );
@@ -80,7 +81,7 @@ namespace DuiLib {
 
 	void CAnimationTabLayoutUI::DoEvent(TEventUI& event)
 	{
-		if( event.Type == UIEVENT_TIMER ) 
+		if( event.Type == UIEVENT_TIMER )
 		{
 			OnTimer(  event.wParam );
 		}
@@ -106,7 +107,7 @@ namespace DuiLib {
 			if( nCurFrame != nTotalFrame )
 			{
 				m_rcCurPos.left = m_rcCurPos.left + iStepLen;
-				m_rcCurPos.right = m_rcCurPos.right +iStepLen;			
+				m_rcCurPos.right = m_rcCurPos.right +iStepLen;
 			}
 			else
 			{
@@ -119,17 +120,17 @@ namespace DuiLib {
 			if( nCurFrame != nTotalFrame )
 			{
 				m_rcCurPos.top = m_rcCurPos.top + iStepLen;
-				m_rcCurPos.bottom = m_rcCurPos.bottom +iStepLen;			
+				m_rcCurPos.bottom = m_rcCurPos.bottom +iStepLen;
 			}
 			else
 			{
-				m_rcItem = m_rcCurPos = m_rcItemOld;	
-			}	
+				m_rcItem = m_rcCurPos = m_rcItemOld;
+			}
 		}
 		SetPos(m_rcCurPos);
 	}
 
-	void CAnimationTabLayoutUI::OnAnimationStop(INT nAnimationID) 
+	void CAnimationTabLayoutUI::OnAnimationStop(INT nAnimationID)
 	{
 		SetPos(m_rcItemOld);
 		NeedParentUpdate();
@@ -141,3 +142,4 @@ namespace DuiLib {
 		return CTabLayoutUI::SetAttribute(pstrName, pstrValue);
 	}
 } // namespace DuiLib
+#endif // DUIMOD_ANIMATIONTABLAYOUT

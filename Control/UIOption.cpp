@@ -125,7 +125,7 @@ namespace DuiLib
 			Selected(true);
 		}
 		else Selected(!m_bSelected);
-		
+
 		Invalidate();
 		return true;
 	}
@@ -359,7 +359,7 @@ namespace DuiLib
 			rc.right -= rcTextPadding.right;
 			rc.top += rcTextPadding.top;
 			rc.bottom -= rcTextPadding.bottom;
-			
+
 			if( m_bShowHtml )
 				CRenderEngine::DrawHtmlText(hDC, m_pManager, rc, sText, IsEnabled()?m_dwTextColor:m_dwDisabledTextColor, \
 				NULL, NULL, nLinks, iFont, m_uTextStyle);
@@ -405,7 +405,7 @@ namespace DuiLib
 	void CCheckBoxUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if( _tcsicmp(pstrName, _T("EnableAutoCheck")) == 0 ) SetAutoCheck(_tcsicmp(pstrValue, _T("true")) == 0);
-		
+
 		COptionUI::SetAttribute(pstrName, pstrValue);
 	}
 
@@ -424,7 +424,7 @@ namespace DuiLib
 
 		if( m_bAutoCheck && (event.Type == UIEVENT_BUTTONDOWN || event.Type == UIEVENT_DBLCLICK)) {
 			if( ::PtInRect(&m_rcItem, event.ptMouse) && IsEnabled() ) {
-				SetCheck(!GetCheck()); 
+				SetCheck(!GetCheck());
 				m_pManager->SendNotify(this, DUI_MSGTYPE_CHECKCLICK, 0, 0);
 				Invalidate();
 			}

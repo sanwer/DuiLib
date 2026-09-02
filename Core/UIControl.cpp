@@ -4,11 +4,11 @@ namespace DuiLib {
 	IMPLEMENT_DUICONTROL(CControlUI)
 
 		CControlUI::CControlUI()
-		:m_pManager(NULL), 
-		m_pParent(NULL), 
+		:m_pManager(NULL),
+		m_pParent(NULL),
 		m_bUpdateNeeded(true),
 		m_bMenuUsed(false),
-		m_bVisible(true), 
+		m_bVisible(true),
 		m_bInternVisible(true),
 		m_bFocused(false),
 		m_bEnabled(true),
@@ -52,7 +52,7 @@ namespace DuiLib {
 	CControlUI::~CControlUI()
 	{
 		if( OnDestroy ) OnDestroy(this);
-		RemoveAllCustomAttribute();	
+		RemoveAllCustomAttribute();
 		if( m_pManager != NULL ) m_pManager->ReapObjects(this);
 	}
 
@@ -256,7 +256,7 @@ namespace DuiLib {
 		m_sBkImage = pStrImage;
 		Invalidate();
 	}
-	
+
 	LPCTSTR CControlUI::GetForeImage() const
 	{
 		return m_sForeImage;
@@ -373,7 +373,7 @@ namespace DuiLib {
 		}
 	}
 
-	RECT CControlUI::GetClientPos() const 
+	RECT CControlUI::GetClientPos() const
 	{
 		return m_rcItem;
 	}
@@ -483,7 +483,7 @@ namespace DuiLib {
 
 	void CControlUI::SetFixedWidth(int cx)
 	{
-		if( cx < 0 ) return; 
+		if( cx < 0 ) return;
 		m_cxyFixed.cx = cx;
 		NeedParentUpdate();
 	}
@@ -498,7 +498,7 @@ namespace DuiLib {
 
 	void CControlUI::SetFixedHeight(int cy)
 	{
-		if( cy < 0 ) return; 
+		if( cy < 0 ) return;
 		m_cxyFixed.cy = cy;
 		NeedParentUpdate();
 	}
@@ -514,7 +514,7 @@ namespace DuiLib {
 	{
 		if( m_cxyMin.cx == cx ) return;
 
-		if( cx < 0 ) return; 
+		if( cx < 0 ) return;
 		m_cxyMin.cx = cx;
 		NeedParentUpdate();
 	}
@@ -530,7 +530,7 @@ namespace DuiLib {
 	{
 		if( m_cxyMax.cx == cx ) return;
 
-		if( cx < 0 ) return; 
+		if( cx < 0 ) return;
 		m_cxyMax.cx = cx;
 		NeedParentUpdate();
 	}
@@ -539,7 +539,7 @@ namespace DuiLib {
 	{
 		SIZE cxyMin = m_cxyMin;
 		if(m_pManager != NULL) m_pManager->GetDPIObj()->Scale(&cxyMin);
-		
+
 		return cxyMin.cy;
 	}
 
@@ -547,7 +547,7 @@ namespace DuiLib {
 	{
 		if( m_cxyMin.cy == cy ) return;
 
-		if( cy < 0 ) return; 
+		if( cy < 0 ) return;
 		m_cxyMin.cy = cy;
 		NeedParentUpdate();
 	}
@@ -563,7 +563,7 @@ namespace DuiLib {
 	{
 		if( m_cxyMax.cy == cy ) return;
 
-		if( cy < 0 ) return; 
+		if( cy < 0 ) return;
 		m_cxyMax.cy = cy;
 		NeedParentUpdate();
 	}
@@ -572,7 +572,7 @@ namespace DuiLib {
 	{
 		return m_piFloatPercent;
 	}
-	
+
 	void CControlUI::SetFloatPercent(TPercentInfo piFloatPercent)
 	{
 		m_piFloatPercent = piFloatPercent;
@@ -613,7 +613,7 @@ namespace DuiLib {
 		if(m_pManager != NULL) return m_pManager->GetDPIObj()->Scale(m_nTooltipWidth);
 		return m_nTooltipWidth;
 	}
-	
+
 	WORD CControlUI::GetCursor()
 	{
 		return m_wCursor;
@@ -723,7 +723,7 @@ namespace DuiLib {
 	}
 	void CControlUI::SetKeyboardEnabled(bool bEnabled)
 	{
-		m_bKeyboardEnabled = bEnabled ; 
+		m_bKeyboardEnabled = bEnabled ;
 	}
 
 	bool CControlUI::IsFocused() const
@@ -770,7 +770,7 @@ namespace DuiLib {
 		{
 			rcTemp = invalidateRc;
 			rcParent = pParent->GetPos();
-			if( !::IntersectRect(&invalidateRc, &rcTemp, &rcParent) ) 
+			if( !::IntersectRect(&invalidateRc, &rcTemp, &rcParent) )
 			{
 				return;
 			}
@@ -842,13 +842,13 @@ namespace DuiLib {
 			return;
 		}
 
-		if( event.Type == UIEVENT_SETFOCUS ) 
+		if( event.Type == UIEVENT_SETFOCUS )
 		{
 			m_bFocused = true;
 			Invalidate();
 			return;
 		}
-		if( event.Type == UIEVENT_KILLFOCUS ) 
+		if( event.Type == UIEVENT_KILLFOCUS )
 		{
 			m_bFocused = false;
 			Invalidate();
@@ -954,10 +954,10 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("pos")) == 0 ) {
 			RECT rcPos = { 0 };
 			LPTSTR pstr = NULL;
-			rcPos.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcPos.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcPos.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcPos.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcPos.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcPos.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcPos.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcPos.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SIZE szXY = {rcPos.left >= 0 ? rcPos.left : rcPos.right, rcPos.top >= 0 ? rcPos.top : rcPos.bottom};
 			SetFixedXY(szXY);
 			SetFixedWidth(abs(rcPos.right - rcPos.left));
@@ -1026,10 +1026,10 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("padding")) == 0 ) {
 			RECT rcPadding = { 0 };
 			LPTSTR pstr = NULL;
-			rcPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
-			rcPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
-			rcPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    
-			rcPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);    
+			rcPadding.left = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
+			rcPadding.top = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
+			rcPadding.right = _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);
+			rcPadding.bottom = _tcstol(pstr + 1, &pstr, 10); ASSERT(pstr);
 			SetPadding(rcPadding);
 		}
 		else if( _tcsicmp(pstrName, _T("gradient")) == 0 ) SetGradient(pstrValue);
@@ -1099,48 +1099,48 @@ namespace DuiLib {
 		else if( _tcsicmp(pstrName, _T("borderround")) == 0 ) {
 			SIZE cxyRound = { 0 };
 			LPTSTR pstr = NULL;
-			cxyRound.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
+			cxyRound.cx = _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);
 			cxyRound.cy = _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);
 			SetBorderRound(cxyRound);
 		}
-		else if( _tcsicmp(pstrName, _T("bkimage")) == 0 ) SetBkImage(pstrValue);
+		else if( _tcsicmp(pstrName, _T("bkimage")) == 0 )   SetBkImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("foreimage")) == 0 ) SetForeImage(pstrValue);
-		else if( _tcsicmp(pstrName, _T("width")) == 0 ) SetFixedWidth(_ttoi(pstrValue));
-		else if( _tcsicmp(pstrName, _T("height")) == 0 ) SetFixedHeight(_ttoi(pstrValue));
-		else if( _tcsicmp(pstrName, _T("minwidth")) == 0 ) SetMinWidth(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("width")) == 0 )     SetFixedWidth(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("height")) == 0 )    SetFixedHeight(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("minwidth")) == 0 )  SetMinWidth(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("minheight")) == 0 ) SetMinHeight(_ttoi(pstrValue));
-		else if( _tcsicmp(pstrName, _T("maxwidth")) == 0 ) SetMaxWidth(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("maxwidth")) == 0 )  SetMaxWidth(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("maxheight")) == 0 ) SetMaxHeight(_ttoi(pstrValue));
-		else if( _tcsicmp(pstrName, _T("name")) == 0 ) SetName(pstrValue);
-		else if( _tcsicmp(pstrName, _T("drag")) == 0 ) SetDragEnable(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("drop")) == 0 ) SetDropEnable(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("name")) == 0 )      SetName(pstrValue);
+		else if( _tcsicmp(pstrName, _T("drag")) == 0 )      SetDragEnable(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("drop")) == 0 )      SetDropEnable(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if( _tcsicmp(pstrName, _T("resourcetext")) == 0 ) SetResourceText(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if( _tcsicmp(pstrName, _T("richevent")) == 0 ) SetRichEvent(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("text")) == 0 ) SetText(pstrValue);
-		else if( _tcsicmp(pstrName, _T("tooltip")) == 0 ) SetToolTip(pstrValue);
-		else if( _tcsicmp(pstrName, _T("userdata")) == 0 ) SetUserData(pstrValue);
-		else if( _tcsicmp(pstrName, _T("enabled")) == 0 ) SetEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("mouse")) == 0 ) SetMouseEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("keyboard")) == 0 ) SetKeyboardEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("visible")) == 0 ) SetVisible(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("float")) == 0 ) SetFloat(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if( _tcsicmp(pstrName, _T("shortcut")) == 0 ) SetShortcut(pstrValue[0]);
-		else if( _tcsicmp(pstrName, _T("menu")) == 0 ) SetContextMenuUsed(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("text")) == 0 )      SetText(pstrValue);
+		else if( _tcsicmp(pstrName, _T("tooltip")) == 0 )   SetToolTip(pstrValue);
+		else if( _tcsicmp(pstrName, _T("userdata")) == 0 )  SetUserData(pstrValue);
+		else if( _tcsicmp(pstrName, _T("enabled")) == 0 )   SetEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("mouse")) == 0 )     SetMouseEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("keyboard")) == 0 )  SetKeyboardEnabled(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("visible")) == 0 )   SetVisible(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("float")) == 0 )     SetFloat(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("shortcut")) == 0 )  SetShortcut(pstrValue[0]);
+		else if( _tcsicmp(pstrName, _T("menu")) == 0 )      SetContextMenuUsed(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if( _tcsicmp(pstrName, _T("cursor")) == 0 && pstrValue) {
-			if( _tcsicmp(pstrValue, _T("arrow")) == 0 )			SetCursor(DUI_ARROW);
-			else if( _tcsicmp(pstrValue, _T("ibeam")) == 0 )	SetCursor(DUI_IBEAM);
-			else if( _tcsicmp(pstrValue, _T("wait")) == 0 )		SetCursor(DUI_WAIT);
-			else if( _tcsicmp(pstrValue, _T("cross")) == 0 )	SetCursor(DUI_CROSS);
-			else if( _tcsicmp(pstrValue, _T("uparrow")) == 0 )	SetCursor(DUI_UPARROW);
-			else if( _tcsicmp(pstrValue, _T("size")) == 0 )		SetCursor(DUI_SIZE);
-			else if( _tcsicmp(pstrValue, _T("icon")) == 0 )		SetCursor(DUI_ICON);
-			else if( _tcsicmp(pstrValue, _T("sizenwse")) == 0 )	SetCursor(DUI_SIZENWSE);
-			else if( _tcsicmp(pstrValue, _T("sizenesw")) == 0 )	SetCursor(DUI_SIZENESW);
-			else if( _tcsicmp(pstrValue, _T("sizewe")) == 0 )	SetCursor(DUI_SIZEWE);
-			else if( _tcsicmp(pstrValue, _T("sizens")) == 0 )	SetCursor(DUI_SIZENS);
-			else if( _tcsicmp(pstrValue, _T("sizeall")) == 0 )	SetCursor(DUI_SIZEALL);
-			else if( _tcsicmp(pstrValue, _T("no")) == 0 )		SetCursor(DUI_NO);
-			else if( _tcsicmp(pstrValue, _T("hand")) == 0 )		SetCursor(DUI_HAND);
+			if( _tcsicmp(pstrValue, _T("arrow")) == 0 )         SetCursor(DUI_ARROW);
+			else if( _tcsicmp(pstrValue, _T("ibeam")) == 0 )    SetCursor(DUI_IBEAM);
+			else if( _tcsicmp(pstrValue, _T("wait")) == 0 )     SetCursor(DUI_WAIT);
+			else if( _tcsicmp(pstrValue, _T("cross")) == 0 )    SetCursor(DUI_CROSS);
+			else if( _tcsicmp(pstrValue, _T("uparrow")) == 0 )  SetCursor(DUI_UPARROW);
+			else if( _tcsicmp(pstrValue, _T("size")) == 0 )     SetCursor(DUI_SIZE);
+			else if( _tcsicmp(pstrValue, _T("icon")) == 0 )     SetCursor(DUI_ICON);
+			else if( _tcsicmp(pstrValue, _T("sizenwse")) == 0 ) SetCursor(DUI_SIZENWSE);
+			else if( _tcsicmp(pstrValue, _T("sizenesw")) == 0 ) SetCursor(DUI_SIZENESW);
+			else if( _tcsicmp(pstrValue, _T("sizewe")) == 0 )   SetCursor(DUI_SIZEWE);
+			else if( _tcsicmp(pstrValue, _T("sizens")) == 0 )   SetCursor(DUI_SIZENS);
+			else if( _tcsicmp(pstrValue, _T("sizeall")) == 0 )  SetCursor(DUI_SIZEALL);
+			else if( _tcsicmp(pstrValue, _T("no")) == 0 )       SetCursor(DUI_NO);
+			else if( _tcsicmp(pstrValue, _T("hand")) == 0 )     SetCursor(DUI_HAND);
 		}
 		else if( _tcsicmp(pstrName, _T("virtualwnd")) == 0 ) SetVirtualWnd(pstrValue);
 		else {
@@ -1158,11 +1158,11 @@ namespace DuiLib {
 			}
 		}
 		CDuiString sXmlData = pstrValue;
-        sXmlData.Replace(_T("&quot;"), _T("\""));
-        sXmlData.Replace(_T("\r"), _T(" "));
-        sXmlData.Replace(_T("\n"), _T(" "));
-        sXmlData.Replace(_T("\t"), _T(" "));
-        sXmlData.Trim();
+		sXmlData.Replace(_T("&quot;"), _T("\""));
+		sXmlData.Replace(_T("\r"), _T(" "));
+		sXmlData.Replace(_T("\n"), _T(" "));
+		sXmlData.Replace(_T("\t"), _T(" "));
+		sXmlData.Trim();
 
 		LPCTSTR pstrList = sXmlData.GetData();
 		// 解析样式属性
@@ -1171,16 +1171,16 @@ namespace DuiLib {
 		while( *pstrList != _T('\0') ) {
 			sItem.Empty();
 			sValue.Empty();
-            while (*pstrList != _T('\0')  && (*pstrList == _T(' ')) )
-            {
+			while (*pstrList != _T('\0')  && (*pstrList == _T(' ')) )
+			{
 				pstrList++;
-            }
+			}
 			while( *pstrList != _T('\0') && *pstrList != _T('=') ) {
 				LPTSTR pstrTemp = ::CharNext(pstrList);
 				while( pstrList < pstrTemp) {
 					sItem += *pstrList++;
 				}
-			}			
+			}
 			ASSERT( *pstrList == _T('=') );
 			if( *pstrList++ != _T('=') ) return this;
 			ASSERT( *pstrList == _T('\"') );
@@ -1199,7 +1199,7 @@ namespace DuiLib {
 				return this;
 			}else
 			{
-                ++pstrList;
+				++pstrList;
 			}
 		}
 		return this;
@@ -1286,7 +1286,7 @@ namespace DuiLib {
 	{
 		CRenderEngine::DrawColor(hDC, m_rcItem, GetAdjustColor(m_dwForeColor));
 	}
-	
+
 	void CControlUI::PaintForeImage(HDC hDC)
 	{
 		if( m_sForeImage.IsEmpty() ) return;
@@ -1303,7 +1303,7 @@ namespace DuiLib {
 		int nBorderSize = GetBorderSize();
 		SIZE cxyBorderRound = GetBorderRound();
 		RECT rcBorderSize = GetBorderRectSize();
-		
+
 		if(m_dwBorderColor != 0 || m_dwFocusBorderColor != 0) {
 			//画圆角边框
 			if(nBorderSize > 0 && ( cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0 )) {
@@ -1313,32 +1313,32 @@ namespace DuiLib {
 					CRenderEngine::DrawRoundRect(hDC, m_rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(m_dwBorderColor), m_nBorderStyle);
 			}
 			else {
-				if (IsFocused() && m_dwFocusBorderColor != 0 && nBorderSize > 0) { 
+				if (IsFocused() && m_dwFocusBorderColor != 0 && nBorderSize > 0) {
 					CRenderEngine::DrawRect(hDC, m_rcItem, nBorderSize, GetAdjustColor(m_dwFocusBorderColor), m_nBorderStyle);
 				}
 				else if(rcBorderSize.left > 0 || rcBorderSize.top > 0 || rcBorderSize.right > 0 || rcBorderSize.bottom > 0) {
 					RECT rcBorder;
 
 					if(rcBorderSize.left > 0){
-						rcBorder		= m_rcItem;
-						rcBorder.right	= rcBorder.left;
+						rcBorder = m_rcItem;
+						rcBorder.right = rcBorder.left;
 						CRenderEngine::DrawLine(hDC,rcBorder,rcBorderSize.left,GetAdjustColor(m_dwBorderColor),m_nBorderStyle);
 					}
 					if(rcBorderSize.top > 0){
-						rcBorder		= m_rcItem;
-						rcBorder.bottom	= rcBorder.top;
+						rcBorder = m_rcItem;
+						rcBorder.bottom = rcBorder.top;
 						CRenderEngine::DrawLine(hDC,rcBorder,rcBorderSize.top,GetAdjustColor(m_dwBorderColor),m_nBorderStyle);
 					}
 					if(rcBorderSize.right > 0){
-						rcBorder		= m_rcItem;
+						rcBorder = m_rcItem;
 						rcBorder.right -= 1;
-						rcBorder.left	= rcBorder.right;
+						rcBorder.left = rcBorder.right;
 						CRenderEngine::DrawLine(hDC,rcBorder,rcBorderSize.right,GetAdjustColor(m_dwBorderColor),m_nBorderStyle);
 					}
 					if(rcBorderSize.bottom > 0){
-						rcBorder		= m_rcItem;
+						rcBorder = m_rcItem;
 						rcBorder.bottom -= 1;
-						rcBorder.top	= rcBorder.bottom;
+						rcBorder.top = rcBorder.bottom;
 						CRenderEngine::DrawLine(hDC,rcBorder,rcBorderSize.bottom,GetAdjustColor(m_dwBorderColor),m_nBorderStyle);
 					}
 				}
