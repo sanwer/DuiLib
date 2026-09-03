@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_COMBOBOX
 #include "UIComboBox.h"
 
 namespace DuiLib
@@ -109,4 +108,3 @@ namespace DuiLib
 		}
 	}
 }
-#endif // DUIMOD_COMBOBOX

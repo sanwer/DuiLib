@@ -60,47 +60,32 @@
 // 模块开关
 // 注意：所有模块默认关闭，取消下方对应模块的注释符即可启用
 // ===========================================================================
-
-#define DUIMOD_COMBO                // CComboUI 下拉框，依赖 List
-#define DUIMOD_DATETIME             // CDateTimeUI 日期时间
-#define DUIMOD_PROGRESS             // CProgressUI 进度条
-#define DUIMOD_SLIDER               // CSliderUI 滑动条（自动启用 PROGRESS）
-#define DUIMOD_RICHEDIT             // CRichEditUI 富文本
-#define DUIMOD_TILELAYOUT           // CTileLayoutUI 平铺布局
-#define DUIMOD_CHILDLAYOUT          // CChildLayoutUI 子窗体布局
-#define DUIMOD_GROUPBOX             // CGroupBoxUI 分组框
-#define DUIMOD_ANIMATION            // CUIAnimation 动画基类（FADEBUTTON/TABLAYOUT 自动联动）
-#define DUIMOD_TRAYICON             // CTrayIconUI 托盘图标
-#define DUIMOD_IPADDRESS            // CIPAddressUI IP地址
-#define DUIMOD_COMBOBOX             // CComboBoxUI 组合下拉（自动启用 COMBO）
-
-#define DUIMOD_LISTEX               // CListExUI 扩展列表（自动启用 COMBOBOX + RICHEDIT）
-#define DUIMOD_MENU                 // CMenuUI 菜单
-#define DUIMOD_TREEVIEW             // CTreeViewUI 树控件
 #define DUIMOD_ACTIVEX              // CActiveXUI ActiveX容器
-#define DUIMOD_GIFANIM              // CGifAnimUI GIF动画
+#define DUIMOD_ANIMATION            // CUIAnimation 动画基类（FADEBUTTON/TABLAYOUT 自动联动）
+#define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI 动画页切换（自动启用 ANIMATION）
 #define DUIMOD_COLORPALETTE         // CColorPaletteUI 调色板
-#define DUIMOD_HOTKEY               // CHotKeyUI 热键
 #define DUIMOD_FADEBUTTON           // CFadeButtonUI 渐变按钮（自动启用 ANIMATION）
-#define DUIMOD_RING                 // CRingUI 环形
+#define DUIMOD_GIFANIM              // CGifAnimUI GIF动画
+#define DUIMOD_HOTKEY               // CHotKeyUI 热键
+#define DUIMOD_IPADDRESS            // CIPAddressUI IP地址
+#define DUIMOD_IPADDRESSEX          // CIPAddressExUI 扩展IP地址
+#define DUIMOD_LISTEX               // CListExUI 扩展列表（自动启用 COMBOBOX + RICHEDIT）
 #define DUIMOD_LOADING              // CLoadingUI 加载动画
 #define DUIMOD_PAGECONTROL          // CPageControlUI 分页
+#define DUIMOD_PROGRESS             // CProgressUI 进度条
+#define DUIMOD_RICHEDIT             // CRichEditUI 富文本
+#define DUIMOD_RING                 // CRingUI 环形
 #define DUIMOD_ROLLTEXT             // CRollTextUI 滚动文字
-#define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI 动画页切换（自动启用 ANIMATION）
-#define DUIMOD_IPADDRESSEX          // CIPAddressExUI 扩展IP地址
+#define DUIMOD_SLIDER               // CSliderUI 滑动条（自动启用 PROGRESS）
+#define DUIMOD_TRAYICON             // CTrayIconUI 托盘图标
+#define DUIMOD_TREEVIEW             // CTreeViewUI 树控件
 
 // ===========================================================================
 // 模块依赖联动（自动启用依赖模块，无需手动开启）
 // ===========================================================================
-#ifdef DUIMOD_SLIDER
-#ifndef DUIMOD_PROGRESS
-#define DUIMOD_PROGRESS
-#endif
-#endif
-
-#ifdef DUIMOD_COMBOBOX
-#ifndef DUIMOD_COMBO
-#define DUIMOD_COMBO
+#ifdef DUIMOD_ANIMATIONTABLAYOUT
+#ifndef DUIMOD_ANIMATION
+#define DUIMOD_ANIMATION
 #endif
 #endif
 
@@ -110,18 +95,15 @@
 #endif
 #endif
 
-#ifdef DUIMOD_ANIMATIONTABLAYOUT
-#ifndef DUIMOD_ANIMATION
-#define DUIMOD_ANIMATION
+#ifdef DUIMOD_LISTEX
+#ifndef DUIMOD_RICHEDIT
+#define DUIMOD_RICHEDIT
 #endif
 #endif
 
-#ifdef DUIMOD_LISTEX
-#ifndef DUIMOD_COMBOBOX
-#define DUIMOD_COMBOBOX
-#endif
-#ifndef DUIMOD_RICHEDIT
-#define DUIMOD_RICHEDIT
+#ifdef DUIMOD_SLIDER
+#ifndef DUIMOD_PROGRESS
+#define DUIMOD_PROGRESS
 #endif
 #endif
 
@@ -135,7 +117,6 @@
 #include "Utils/UIShadow.h"
 #include "Utils/UIDelegate.h"
 #include "Utils/DragDropImpl.h"
-#include "Utils/TrayIcon.h"
 #include "Utils/DPI.h"
 
 #include "Core/UIDefine.h"
@@ -145,7 +126,6 @@
 #include "Core/ControlFactory.h"
 #include "Core/UIControl.h"
 #include "Core/UIContainer.h"
-
 #include "Core/UIDlgBuilder.h"
 #include "Core/UIRender.h"
 #include "Utils/WinImplBase.h"
@@ -153,100 +133,83 @@
 // ===========================================================================
 // 核心模块
 // ===========================================================================
-#include "Layout/UILinearLayout.h"
-#include "Layout/UIVerticalLayout.h"
-#include "Layout/UIHorizontalLayout.h"
-#include "Layout/UITabLayout.h"
-
-#include "Control/UIList.h"
-#include "Control/UIScrollBar.h"
-#include "Control/UILabel.h"
-#include "Control/UIText.h"
-#include "Control/UIEdit.h"
-#include "Control/UIButton.h"
-#include "Control/UIOption.h"
-
-// ===========================================================================
-// 普通模块（条件包含，由上方开关控制）
-// ===========================================================================
-#ifdef DUIMOD_TILELAYOUT
-#include "Layout/UITileLayout.h"
-#endif
-#ifdef DUIMOD_CHILDLAYOUT
 #include "Layout/UIChildLayout.h"
+#include "Layout/UIHorizontalLayout.h"
+#include "Layout/UIVerticalLayout.h"
+#include "Layout/UITabLayout.h"
+#include "Layout/UITileLayout.h"
+#include "Control/UILabel.h"
+#include "Control/UIButton.h"
+#include "Control/UIList.h"
+#include "Control/UICombo.h"
+#include "Control/UIComboBox.h"
+#include "Control/UIDateTime.h"
+#include "Control/UIEdit.h"
+#include "Control/UIGroupBox.h"
+#include "Control/UIMenu.h"
+#include "Control/UIOption.h"
+#include "Control/UIScrollBar.h"
+#include "Control/UIText.h"
+
+// ===========================================================================
+// 开关模块（条件包含，由上方开关控制）
+// ===========================================================================
+#ifdef DUIMOD_ACTIVEX
+#include "Control/UIActiveX.h"
 #endif
 #ifdef DUIMOD_ANIMATION
 #include "Control/UIAnimation.h"
 #endif
-#ifdef DUIMOD_COMBO
-#include "Control/UICombo.h"
-#endif
-#ifdef DUIMOD_COMBOBOX
-#include "Control/UIComboBox.h"
-#endif
-#ifdef DUIMOD_PROGRESS
-#include "Control/UIProgress.h"
-#endif
-#ifdef DUIMOD_SLIDER
-#include "Control/UISlider.h"
-#endif
-#ifdef DUIMOD_RICHEDIT
-#include "Control/UIRichEdit.h"
-#endif
-#ifdef DUIMOD_DATETIME
-#include "Control/UIDateTime.h"
-#endif
-#ifdef DUIMOD_IPADDRESS
-#include "Control/UIIPAddress.h"
-#endif
-#ifdef DUIMOD_GROUPBOX
-#include "Control/UIGroupBox.h"
-#endif
-
-// ===========================================================================
-// 拓展模块（条件包含）
-// ===========================================================================
-#ifdef DUIMOD_TREEVIEW
-#include "Control/UITreeView.h"
-#endif
-#ifdef DUIMOD_GIFANIM
-#include "Control/UIGifAnim.h"
-#endif
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
 #include "Layout/UIAnimationTabLayout.h"
-#endif
-#ifdef DUIMOD_IPADDRESSEX
-#include "Control/UIIPAddressEx.h"
-#endif
-#ifdef DUIMOD_ACTIVEX
-#include "Control/UIActiveX.h"
-#endif
-#ifdef DUIMOD_MENU
-#include "Control/UIMenu.h"
-#endif
-#ifdef DUIMOD_ROLLTEXT
-#include "Control/UIRollText.h"
 #endif
 #ifdef DUIMOD_COLORPALETTE
 #include "Control/UIColorPalette.h"
 #endif
-#ifdef DUIMOD_LISTEX
-#include "Control/UIListEx.h"
+#ifdef DUIMOD_FADEBUTTON
+#include "Control/UIFadeButton.h"
+#endif
+#ifdef DUIMOD_GIFANIM
+#include "Control/UIGifAnim.h"
 #endif
 #ifdef DUIMOD_HOTKEY
 #include "Control/UIHotKey.h"
 #endif
-#ifdef DUIMOD_FADEBUTTON
-#include "Control/UIFadeButton.h"
+#ifdef DUIMOD_IPADDRESS
+#include "Control/UIIPAddress.h"
 #endif
-#ifdef DUIMOD_RING
-#include "Control/UIRing.h"
+#ifdef DUIMOD_IPADDRESSEX
+#include "Control/UIIPAddressEx.h"
+#endif
+#ifdef DUIMOD_LISTEX
+#include "Control/UIListEx.h"
 #endif
 #ifdef DUIMOD_LOADING
 #include "Control/UILoading.h"
 #endif
 #ifdef DUIMOD_PAGECONTROL
 #include "Control/UIPageControl.h"
+#endif
+#ifdef DUIMOD_PROGRESS
+#include "Control/UIProgress.h"
+#endif
+#ifdef DUIMOD_RICHEDIT
+#include "Control/UIRichEdit.h"
+#endif
+#ifdef DUIMOD_RING
+#include "Control/UIRing.h"
+#endif
+#ifdef DUIMOD_ROLLTEXT
+#include "Control/UIRollText.h"
+#endif
+#ifdef DUIMOD_SLIDER
+#include "Control/UISlider.h"
+#endif
+#ifdef DUIMOD_TRAYICON
+#include "Utils/TrayIcon.h"
+#endif
+#ifdef DUIMOD_TREEVIEW
+#include "Control/UITreeView.h"
 #endif
 
 // ===========================================================================

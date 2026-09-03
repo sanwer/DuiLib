@@ -1,6 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_MENU
-
 #include "UIMenu.h"
 
 namespace DuiLib {
@@ -1212,4 +1210,3 @@ namespace DuiLib {
 		return NULL;
 	}
 } // namespace DuiLib
-#endif // DUIMOD_MENU

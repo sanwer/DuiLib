@@ -301,20 +301,17 @@ protected:                                                                \
 #define DUI_CTR_SCROLLBAR                       (_T("ScrollBar"))
 #define DUI_CTR_IPADDRESS                       (_T("IPAddress"))
 
+#define DUI_CTR_CHILDLAYOUT                     (_T("ChildLayout"))
+#define DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
+#define DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
+
 #define DUI_CTR_LISTHEADER                      (_T("ListHeader"))
 #define DUI_CTR_LISTFOOTER                      (_T("ListFooter"))
 #define DUI_CTR_TILELAYOUT                      (_T("TileLayout"))
 
-#define DUI_CTR_CHILDLAYOUT                     (_T("ChildLayout"))
 #define DUI_CTR_LISTELEMENT                     (_T("ListElement"))
-
-#define DUI_CTR_LINEARLAYOUT                    (_T("LinearLayout"))
-#define DUI_CTR_VERTICALLAYOUT                  (_T("VerticalLayout"))
 #define DUI_CTR_LISTHEADERITEM                  (_T("ListHeaderItem"))
-
 #define DUI_CTR_LISTTEXTELEMENT                 (_T("ListTextElement"))
-
-#define DUI_CTR_HORIZONTALLAYOUT                (_T("HorizontalLayout"))
 #define DUI_CTR_LISTLABELELEMENT                (_T("ListLabelElement"))
 
 #define DUI_CTR_ANIMATIONTABLAYOUT              (_T("AnimationTabLayout"))

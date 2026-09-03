@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_GROUPBOX
 #include "UIGroupBox.h"
 
 namespace DuiLib
@@ -159,4 +158,3 @@ namespace DuiLib
 		CVerticalLayoutUI::SetAttribute(pstrName, pstrValue);
 	}
 }
-#endif // DUIMOD_GROUPBOX

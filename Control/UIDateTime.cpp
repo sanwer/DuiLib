@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_DATETIME
 #include "UIDateTime.h"
 
 namespace DuiLib
@@ -323,4 +322,3 @@ namespace DuiLib
 		else return CLabelUI::SetAttribute(pstrName, pstrValue);
 	}
 }
-#endif // DUIMOD_DATETIME

@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_CHILDLAYOUT
 #include "UIChildLayout.h"
 
 namespace DuiLib
@@ -57,4 +56,3 @@ namespace DuiLib
 		return _T("ChildLayoutUI");
 	}
 } // namespace DuiLib
-#endif // DUIMOD_CHILDLAYOUT

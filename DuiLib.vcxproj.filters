@@ -158,9 +158,6 @@
     <ClCompile Include="Layout\UIHorizontalLayout.cpp">
       <Filter>Source Files\Layout</Filter>
     </ClCompile>
-    <ClCompile Include="Layout\UILinearLayout.cpp">
-      <Filter>Source Files\Layout</Filter>
-    </ClCompile>
     <ClCompile Include="Layout\UITabLayout.cpp">
       <Filter>Source Files\Layout</Filter>
     </ClCompile>
@@ -253,10 +250,16 @@
     <ClInclude Include="Control\UIListEx.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
+    <ClInclude Include="Control\UILoading.h">
+      <Filter>Header Files\Control</Filter>
+    </ClInclude>
     <ClInclude Include="Control\UIMenu.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
     <ClInclude Include="Control\UIOption.h">
+      <Filter>Header Files\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Control\UIPageControl.h">
       <Filter>Header Files\Control</Filter>
     </ClInclude>
     <ClInclude Include="Control\UIProgress.h">
@@ -322,9 +325,6 @@
     <ClInclude Include="Layout\UIHorizontalLayout.h">
       <Filter>Header Files\Layout</Filter>
     </ClInclude>
-    <ClInclude Include="Layout\UILinearLayout.h">
-      <Filter>Header Files\Layout</Filter>
-    </ClInclude>
     <ClInclude Include="Layout\UITabLayout.h">
       <Filter>Header Files\Layout</Filter>
     </ClInclude>
@@ -368,12 +368,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UIlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\UIPageControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Control\UILoading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_TILELAYOUT
 #include "UITileLayout.h"
 
 namespace DuiLib
@@ -186,4 +185,3 @@ namespace DuiLib
 		ProcessScrollBar(rc, 0, cyNeeded);
 	}
 }
-#endif // DUIMOD_TILELAYOUT

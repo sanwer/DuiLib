@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_COMBO
 
 namespace DuiLib {
 
@@ -1384,4 +1383,3 @@ namespace DuiLib {
 		return m_pCompareFunc((UINT_PTR)pControl1, (UINT_PTR)pControl2, m_compareData);
 	}
 } // namespace DuiLib
-#endif // DUIMOD_COMBO

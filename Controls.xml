@@ -204,70 +204,7 @@
     <!-- 自有属性 -->
     <Attribute name="xmlfile" default="" type="STRING" comment="子窗体XML布局文件" />
   </ChildLayout>
-  <LinearLayout parent="Container" notifies="setfocus killfocus timer menu windowinit(root)">
-    <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
-    <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
-    <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
-    <Attribute name="bkimage" default="" type="STRING" comment="背景图片,如(bk.bmp或file='aaa.jpg' res='' restype='0' dest='0,0,0,0' source='0,0,0,0' corner='0,0,0,0' mask='#FF0000' fade='255' hole='false' xtiled='false' ytiled='false')" />
-    <Attribute name="bordercolor" default="0x00000000" type="DWORD" comment="边框颜色,如(0xFF000000)" />
-    <Attribute name="borderround" default="0,0" type="SIZE" comment="边框圆角半径,如(2,2)" />
-    <Attribute name="bordersize" default="0" type="INT | RECT" comment="可以设置INT或RECT类型的值。当值为ING时则左、上、右、下都用该值作为宽。值为RECT类型时则分别设置左、上、右、下的边框" />
-    <Attribute name="borderstyle" default="0" type="INT" comment="边框样式的设置,数值范围0-5" />
-    <Attribute name="bottombordersize" default="0" type="INT" comment="底部边框大小，如(1)，设置该值大于0，则将忽略bordersize属性的设置" />
-    <Attribute name="colorhsl" default="false" type="BOOL" comment="本控件的颜色是否随窗口的hsl变化而变化,如(false)" />
-    <Attribute name="cursor" default="arrow" type="STRING" comment="光标：arrow,cross,hand,ibeam,icon,no,size,sizeall,sizenesw,sizens,sizenwse,sizewe,uparrow,wait" />
-    <Attribute name="drag" default="false" type="BOOL" comment="是否允许从该控件开始拖拽；必须同时通过m_pm.EnableDragDrop(true)启用拖拽支持" />
-    <Attribute name="drop" default="false" type="BOOL" comment="设置控件的接收拖放标志；当前源码未生效" />
-    <Attribute name="enabled" default="true" type="BOOL" comment="是否可以响应用户操作,如(true)" />
-    <Attribute name="float" default="false" type="BOOL" comment="是否使用绝对定位,如(true)" />
-    <Attribute name="floatalign" default="" type="STRING" comment="用于控制float控件先对于父控件的对齐方式（left\center\right、top\vcenter\bottom）" />
-    <Attribute name="focusbordercolor" default="0x00000000" type="DWORD" comment="获得焦点时边框的颜色,如(0xFFFF0000)" />
-    <Attribute name="forecolor" type="DWORD" comment="前景颜色" />
-    <Attribute name="foreimage" default="" type="STRING" comment="前景图片" />
-    <Attribute name="gradient" default="" type="STRING" comment="背景渐变方向；值为hor时水平渐变，其他值（包括空值）为垂直渐变，仅在bkcolor2或bkcolor3生效时可见" />
-    <Attribute name="height" default="0" type="INT" comment="控件预设的高度，如(30)" />
-    <Attribute name="innerstyle" default="" type="STRING" comment="通过样式表设置控件的样式" />
-    <Attribute name="keyboard" default="true" type="BOOL" comment="非CButtonUI类忽略该值，为false时不支持TAB_STOP,且该对象不处理键盘信息" />
-    <Attribute name="leftbordersize" default="0" type="INT" comment="左边边框大小，如(1)，设置该值大于0，则将忽略bordersize属性的设置" />
-    <Attribute name="maxheight" default="9999" type="INT" comment="控件的最大高度，如(30)" />
-    <Attribute name="maxwidth" default="9999" type="INT" comment="控件的最大宽度，如(100)" />
-    <Attribute name="menu" default="false" type="BOOL" comment="是否需要右键菜单,如(true)" />
-    <Attribute name="minheight" default="0" type="INT" comment="控件的最小高度，如(30)" />
-    <Attribute name="minwidth" default="0" type="INT" comment="控件的最小宽度，如(100)" />
-    <Attribute name="mouse" default="true" type="BOOL" comment="本控件是否可以响应鼠标操作,如(true)" />
-    <Attribute name="name" default="" type="STRING" comment="控件名字，同一窗口内必须唯一，如(testbtn)" />
-    <Attribute name="padding" default="0,0,0,0" type="RECT" comment="外边距,如(2,2,2,2)" />
-    <Attribute name="pos" default="0,0,0,0" type="RECT" comment="位置，如果为float控件则指定位置和大小，否则只指定大小,如(0,0,100,100)" />
-    <Attribute name="resourcetext" default="false" type="BOOL" comment="是否支持多语言，为true文字绘制会走多语言接口" />
-    <Attribute name="richevent" default="false" type="BOOL" comment="为true时控件会额外发送buttondown/mouseenter/mouseleave等富事件通知，仅部分控件(如Button/List)响应" />
-    <Attribute name="rightbordersize" default="0" type="INT" comment="右边边框大小，如(1)，设置该值大于0，则将忽略bordersize属性的设置" />
-    <Attribute name="shortcut" type="CHAR" comment="对应的快捷键,如(P)" />
-    <Attribute name="style" default="" type="STRING" comment="通过样式名称设置控件的样式" />
-    <Attribute name="text" default="" type="STRING" comment="显示文本,如(测试文本)" />
-    <Attribute name="tooltip" default="" type="STRING" comment="鼠标悬浮提示,如(请在这里输入你的密码)" />
-    <Attribute name="topbordersize" default="0" type="INT" comment="顶部边框大小，如(1)，设置该值大于0，则将忽略bordersize属性的设置" />
-    <Attribute name="userdata" default="" type="STRING" comment="自定义标识" />
-    <Attribute name="virtualwnd" default="" type="STRING" comment="设置控件的虚拟窗体的名字" />
-    <Attribute name="visible" default="true" type="BOOL" comment="是否可见,如(true)" />
-    <Attribute name="width" default="0" type="INT" comment="控件预设的宽度，如(100)" />
-    <Attribute name="childalign" default="left" type="STRING" comment="子控件整体水平对齐,取值left、center、right,仅当没有可伸缩子控件时生效" />
-    <Attribute name="childpadding" default="0" type="INT" comment="子控件之间的额外距离,如(4)" />
-    <Attribute name="childvalign" default="top" type="STRING" comment="子控件整体垂直对齐,取值top、vcenter、bottom,仅当没有可伸缩子控件时生效" />
-    <Attribute name="fixedscrollbar" default="false" type="BOOL" comment="是否固定滚动条,滚动条常驻不按内容自动显示隐藏" />
-    <Attribute name="hscrollbar" default="false" type="BOOL" comment="是否使用横向滚动条,如(true)" />
-    <Attribute name="hscrollbarstyle" default="" type="STRING" comment="设置本容器的横向滚动条的样式" />
-    <Attribute name="inset" default="0,0,0,0" type="RECT" comment="容器的内边距,如(2,2,2,2)" />
-    <Attribute name="mousechild" default="true" type="BOOL" comment="本控件的子控件是否可以响应用户操作,如(true)" />
-    <Attribute name="scrollstepsize" default="0" type="INT" comment="容器的滚动条滚动步长，0代表使用默认步长" />
-    <Attribute name="showscrollbar" default="true" type="BOOL" comment="是否显示滚动条,同时控制横向与竖向滚动条" />
-    <Attribute name="vscrollbar" default="false" type="BOOL" comment="是否使用竖向滚动条,如(true)" />
-    <Attribute name="vscrollbarstyle" default="" type="STRING" comment="设置本容器的纵向滚动条的样式" />
-    <!-- 自有属性 -->
-    <Attribute name="orientation" default="h" type="STRING" comment="布局方向,横向(h/horizontal),垂直(v/vertical)" />
-    <Attribute name="sep" default="0" type="INT" comment="分隔符尺寸,别名sepsize,正负表示分隔符在左边(顶部)还是右边(底部),如(4)" />
-    <Attribute name="sepimm" default="false" type="BOOL" comment="拖动分隔符是否立即改变大小,如(false)" />
-  </LinearLayout>
-  <HorizontalLayout parent="Container" notifies="setfocus killfocus timer menu windowinit(root)">
+  <HorizontalLayout parent="Container" notifies="setfocus killfocus timer menu windowinit(root)" comment="别名HBox">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -329,7 +266,7 @@
     <Attribute name="sep" default="0" type="INT" comment="分隔符宽,别名sepwidth,正负表示分隔符在左边还是右边,如(-4)" />
     <Attribute name="sepimm" default="false" type="BOOL" comment="拖动分隔符是否立即改变大小,如(false)" />
   </HorizontalLayout>
-  <VerticalLayout parent="Container" notifies="setfocus killfocus timer menu windowinit(root)">
+  <VerticalLayout parent="Container" notifies="setfocus killfocus timer menu windowinit(root)" comment="别名VBox">>
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -1638,7 +1575,7 @@
     <Attribute name="thumbpushedimage" default="" type="STRING" comment="滑块鼠标按下状态图片" />
     <Attribute name="value" default="0" type="INT" comment="滚动位置，如(0)" />
   </ScrollBar>
-  <List parent="LinearLayout" notifies="setfocus killfocus timer menu itemselect windowinit(root)">
+  <List parent="VerticalLayout" notifies="setfocus killfocus timer menu itemselect windowinit(root)">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -1731,7 +1668,7 @@
     <Attribute name="multiselect" default="false" type="BOOL" comment="是否允许item多选" />
     <Attribute name="scrollselect" default="false" type="BOOL" comment="是否随滚动改变选中项,如(false)" />
   </List>
-  <ListHeader parent="LinearLayout" notifies="setfocus killfocus timer windowinit(root)">
+  <ListHeader parent="HorizontalLayout" notifies="setfocus killfocus timer windowinit(root)">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -1794,7 +1731,7 @@
     <!-- 自有属性 -->
     <Attribute name="scaleheader" default="false" type="BOOL" comment="每个表头的宽度是否按照百分比来设置" />
   </ListHeader>
-  <ListHeaderItem parent="LinearLayout" notifies="setfocus killfocus timer headerclick windowinit(root)">
+  <ListHeaderItem parent="HorizontalLayout" notifies="setfocus killfocus timer headerclick windowinit(root)">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -1869,7 +1806,7 @@
     <Attribute name="textcolor" default="0x00000000" type="DWORD" comment="字体颜色，0表示使用默认字体颜色,如(0xFFFF0000)" />
     <Attribute name="textpadding" default="2,0,2,0" type="RECT" comment="文字显示的边距,如(2,2,2,2)" />
   </ListHeaderItem>
-  <ListContainerHeaderItem parent="LinearLayout">
+  <ListContainerHeaderItem parent="HorizontalLayout">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -2103,7 +2040,7 @@
     <Attribute name="selected" default="false" type="BOOL" comment="是否选中,如(true)" />
     <!-- 无自有属性 -->
   </ListTextElement>
-  <ListContainerElement parent="LinearLayout" notifies="setfocus killfocus timer itemactivate itemclick itemexpanded itemcollapsed windowinit(root)">
+  <ListContainerElement parent="HorizontalLayout" notifies="setfocus killfocus timer itemactivate itemclick itemexpanded itemcollapsed windowinit(root)">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -2874,7 +2811,7 @@
     <Attribute name="stateimage" type="STRING" comment="多状态切分图片,配合statecount横向按状态数切分" />
     <!-- 自有属性 -->
   </FadeButton>
-  <GroupBox parent="LinearLayout">
+  <GroupBox parent="VerticalLayout">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
@@ -3225,7 +3162,7 @@
     <Attribute name="thickness" default="4" type="INT" comment="扇叶厚度,如(4)" />
     <Attribute name="time" default="100" type="INT" comment="动画帧间隔时间(毫秒),如(100)" />
   </Loading>
-  <PageControl parent="LinearLayout">
+  <PageControl parent="HorizontalLayout">
     <Attribute name="bkcolor" default="0x00000000" type="DWORD" comment="背景颜色,如(0xFFFF0000),别名bkcolor1" />
     <Attribute name="bkcolor2" default="0x00000000" type="DWORD" comment="背景渐变色2,和bkcolor配合使用,如(0xFFFFFF00)" />
     <Attribute name="bkcolor3" default="0x00000000" type="DWORD" comment="背景渐变色3,和bkcolor、bkcolor2配合使用,如(0xFFFF00FF)" />
