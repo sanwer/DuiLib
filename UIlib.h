@@ -153,6 +153,7 @@
 // ===========================================================================
 // 核心模块
 // ===========================================================================
+#include "Layout/UILinearLayout.h"
 #include "Layout/UIVerticalLayout.h"
 #include "Layout/UIHorizontalLayout.h"
 #include "Layout/UITabLayout.h"

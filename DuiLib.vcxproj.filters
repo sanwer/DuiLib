@@ -86,10 +86,16 @@
     <ClCompile Include="Control\UIListEx.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
+    <ClCompile Include="Control\UILoading.cpp">
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
     <ClCompile Include="Control\UIMenu.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\UIOption.cpp">
+      <Filter>Source Files\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Control\UIPageControl.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
     <ClCompile Include="Control\UIProgress.cpp">
@@ -152,6 +158,9 @@
     <ClCompile Include="Layout\UIHorizontalLayout.cpp">
       <Filter>Source Files\Layout</Filter>
     </ClCompile>
+    <ClCompile Include="Layout\UILinearLayout.cpp">
+      <Filter>Source Files\Layout</Filter>
+    </ClCompile>
     <ClCompile Include="Layout\UITabLayout.cpp">
       <Filter>Source Files\Layout</Filter>
     </ClCompile>
@@ -189,12 +198,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StdAfx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Control\UIPageControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Control\UILoading.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,6 +320,9 @@
       <Filter>Header Files\Layout</Filter>
     </ClInclude>
     <ClInclude Include="Layout\UIHorizontalLayout.h">
+      <Filter>Header Files\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout\UILinearLayout.h">
       <Filter>Header Files\Layout</Filter>
     </ClInclude>
     <ClInclude Include="Layout\UITabLayout.h">

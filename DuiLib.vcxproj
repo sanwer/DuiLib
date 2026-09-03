@@ -247,6 +247,7 @@
     <ClCompile Include="Layout\UIAnimationTabLayout.cpp" />
     <ClCompile Include="Layout\UIChildLayout.cpp" />
     <ClCompile Include="Layout\UIHorizontalLayout.cpp" />
+    <ClCompile Include="Layout\UILinearLayout.cpp" />
     <ClCompile Include="Layout\UITabLayout.cpp" />
     <ClCompile Include="Layout\UITileLayout.cpp" />
     <ClCompile Include="Layout\UIVerticalLayout.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Layout\UIAnimationTabLayout.h" />
     <ClInclude Include="Layout\UIChildLayout.h" />
     <ClInclude Include="Layout\UIHorizontalLayout.h" />
+    <ClInclude Include="Layout\UILinearLayout.h" />
     <ClInclude Include="Layout\UITabLayout.h" />
     <ClInclude Include="Layout\UITileLayout.h" />
     <ClInclude Include="Layout\UIVerticalLayout.h" />
