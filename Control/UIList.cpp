@@ -1890,7 +1890,7 @@ namespace DuiLib {
 	void CListHeaderItemUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if (_tcsicmp(pstrName, _T("dragable")) == 0) SetDragable(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if (_tcsicmp(pstrName, _T("sepwidth")) == 0) SetSepWidth(_ttoi(pstrValue));
+		else if (_tcsicmp(pstrValue, _T("sep")) == 0 || _tcsicmp(pstrName, _T("sepwidth")) == 0) SetSepWidth(_ttoi(pstrValue));
 		else if (_tcsicmp(pstrName, _T("align")) == 0) {
 			if (_tcsstr(pstrValue, _T("left")) != NULL) {
 				m_uTextStyle &= ~(DT_CENTER | DT_RIGHT);
