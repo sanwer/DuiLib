@@ -404,7 +404,7 @@ namespace DuiLib
 
 	void CCheckBoxUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
-		if( _tcsicmp(pstrName, _T("EnableAutoCheck")) == 0 ) SetAutoCheck(_tcsicmp(pstrValue, _T("true")) == 0);
+		if( _tcsicmp(pstrName, _T("autocheck")) == 0 ) SetAutoCheck(_tcsicmp(pstrValue, _T("true")) == 0);
 
 		COptionUI::SetAttribute(pstrName, pstrValue);
 	}

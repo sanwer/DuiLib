@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIVerticalLayout.h"
 
 namespace DuiLib
@@ -235,7 +235,7 @@ namespace DuiLib
 
 	void CVerticalLayoutUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
-		if( _tcsicmp(pstrName, _T("sepheight")) == 0 ) SetSepHeight(_ttoi(pstrValue));
+		if( _tcsicmp(pstrValue, _T("sep")) == 0 || _tcsicmp(pstrName, _T("sepheight")) == 0 ) SetSepHeight(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("sepimm")) == 0 ) SetSepImmMode(_tcsicmp(pstrValue, _T("true")) == 0);
 		else CContainerUI::SetAttribute(pstrName, pstrValue);
 	}
