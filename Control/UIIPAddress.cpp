@@ -180,7 +180,7 @@ namespace DuiLib
 
 	LPCTSTR CIPAddressUI::GetClass() const
 	{
-		return _T("DateTimeUI");
+		return _T("IPAddressUI");
 	}
 
 	LPVOID CIPAddressUI::GetInterface(LPCTSTR pstrName)
