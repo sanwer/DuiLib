@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_FADEBUTTON
 #include "UIFadeButton.h"
 
@@ -17,12 +17,12 @@ namespace DuiLib {
 
 	LPCTSTR CFadeButtonUI::GetClass() const
 	{
-		return _T("FadeButtonUI");
+		return DUI_CTR_FADEBUTTON;
 	}
 
 	LPVOID CFadeButtonUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("FadeButton")) == 0 )
+		if( _tcsicmp(pstrName, DUI_CTR_FADEBUTTON) == 0 )
 			return static_cast<CFadeButtonUI*>(this);
 		return CButtonUI::GetInterface(pstrName);
 	}

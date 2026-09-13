@@ -1,11 +1,11 @@
-﻿#ifndef __UIBUTTON_H__
+#ifndef __UIBUTTON_H__
 #define __UIBUTTON_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CButtonUI : public CLabelUI
+	class DUILIB_API CButtonUI : public CLabelUI
 	{
 		DECLARE_DUICONTROL(CButtonUI)
 
@@ -73,6 +73,11 @@ namespace DuiLib
 		void SetDisabledBorderColor(DWORD dwColor);
 		DWORD GetDisabledBorderColor() const;
 
+		//Five-state merged image attribute + gradient
+		void SetFiveStatusImage(LPCTSTR pStrImage);
+		void SetFadeAlphaDelta(BYTE uDelta);
+		BYTE GetFadeAlphaDelta();
+
 		void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
 		void PaintText(HDC hDC);
@@ -84,7 +89,15 @@ namespace DuiLib
 
 		void DrawBorder(HDC hDC, const RECT& rcItem, const DWORD& dwBorderColor, const int& nBorderSize, const RECT& rcBorderSize, const SIZE& cxyBorderRound, const int& nBorderStyle);
 	protected:
+		enum
+		{
+			FADE_TIMERID = 11,
+			FADE_ELLAPSE = 30,
+		};
+
 		UINT m_uButtonState;
+		BYTE m_uFadeAlpha;
+		BYTE m_uFadeAlphaDelta;
 
 		int m_iHotFont;
 		int m_iPushedFont;

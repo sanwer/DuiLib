@@ -1,18 +1,18 @@
-﻿#ifndef UI_PALLET_H
+#ifndef UI_PALLET_H
 #define UI_PALLET_H
 #pragma once
 
 namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
-	class UILIB_API CColorPaletteUI : public CControlUI
+	class DUILIB_API CColorPaletteUI : public CControlUI
 	{
 		DECLARE_DUICONTROL(CColorPaletteUI)
 	public:
 		CColorPaletteUI();
 		virtual ~CColorPaletteUI();
 
-		//获取最终被选择的颜色，可以直接用于设置DuiLib背景色
+		//Get the final selected color, usable directly as DuiLib background color
 		DWORD GetSelectColor();
 		void SetSelectColor(DWORD dwColor);
 
@@ -20,14 +20,14 @@ namespace DuiLib {
 		virtual LPVOID GetInterface(LPCTSTR pstrName);
 		virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
-		//设置/获取 Pallet（调色板主界面）的高度
+		//Set/get height of the pallet (main palette window)
 		void SetPalletHeight(int nHeight);
 		int GetPalletHeight() const;
 
-		//设置/获取 下方Bar（亮度选择栏）的高度
+		//Set/get height of the bottom bar (brightness bar)
 		void SetBarHeight(int nHeight);
 		int GetBarHeight() const;
-		//设置/获取 选择图标的路径
+		//Set/get path of the selected icon
 		void SetThumbImage(LPCTSTR pszImage);
 		LPCTSTR GetThumbImage() const;
 
@@ -38,7 +38,7 @@ namespace DuiLib {
 		virtual void PaintPallet(HDC hDC);
 
 	protected:
-		//更新数据
+		//Update data
 		void UpdatePalletData();
 		void UpdateBarData();
 

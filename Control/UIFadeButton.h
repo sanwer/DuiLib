@@ -1,4 +1,4 @@
-﻿#ifndef __UIFADEBUTTON_H__
+#ifndef __UIFADEBUTTON_H__
 #define __UIFADEBUTTON_H__
 
 #include "UIAnimation.h"
@@ -6,7 +6,7 @@
 
 namespace DuiLib {
 
-	class UILIB_API CFadeButtonUI : public CButtonUI, public CUIAnimation
+	class DUILIB_API CFadeButtonUI : public CButtonUI, public CUIAnimation
 	{
 		DECLARE_DUICONTROL(CFadeButtonUI)
 	public:

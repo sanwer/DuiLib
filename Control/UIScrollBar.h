@@ -1,11 +1,11 @@
-﻿#ifndef __UISCROLLBAR_H__
+#ifndef __UISCROLLBAR_H__
 #define __UISCROLLBAR_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CScrollBarUI : public CControlUI
+	class DUILIB_API CScrollBarUI : public CControlUI
 	{
 		DECLARE_DUICONTROL(CScrollBarUI)
 	public:
@@ -29,6 +29,11 @@ namespace DuiLib
 		void SetScrollPos(int nPos);
 		int GetLineSize() const;
 		void SetLineSize(int nSize);
+		int GetScrollUnit() const;
+		void SetScrollUnit(int iUnit);
+
+		DWORD GetButton1Color() const;
+		void SetButton1Color(DWORD dwColor);
 
 		bool GetShowButton1();
 		void SetShowButton1(bool bShow);
@@ -43,6 +48,8 @@ namespace DuiLib
 
 		bool GetShowButton2();
 		void SetShowButton2(bool bShow);
+		DWORD GetButton2Color() const;
+		void SetButton2Color(DWORD dwColor);
 		LPCTSTR GetButton2NormalImage();
 		void SetButton2NormalImage(LPCTSTR pStrImage);
 		LPCTSTR GetButton2HotImage();
@@ -51,6 +58,9 @@ namespace DuiLib
 		void SetButton2PushedImage(LPCTSTR pStrImage);
 		LPCTSTR GetButton2DisabledImage();
 		void SetButton2DisabledImage(LPCTSTR pStrImage);
+
+		DWORD GetThumbColor() const;
+		void SetThumbColor(DWORD dwColor);
 
 		LPCTSTR GetThumbNormalImage();
 		void SetThumbNormalImage(LPCTSTR pStrImage);
@@ -105,6 +115,7 @@ namespace DuiLib
 		__int64 m_nRange;
 		__int64 m_nScrollPos;
 		int m_nLineSize;
+		int m_nScrollUnit;
 		CContainerUI* m_pOwner;
 		POINT m_ptLastMouse;
 		int m_nLastScrollPos;
@@ -119,6 +130,7 @@ namespace DuiLib
 		bool m_bShowButton1;
 		RECT m_rcButton1;
 		UINT m_uButton1State;
+		DWORD m_dwButton1Color;
 		CDuiString m_sButton1NormalImage;
 		CDuiString m_sButton1HotImage;
 		CDuiString m_sButton1PushedImage;
@@ -127,6 +139,7 @@ namespace DuiLib
 		bool m_bShowButton2;
 		RECT m_rcButton2;
 		UINT m_uButton2State;
+		DWORD m_dwButton2Color;
 		CDuiString m_sButton2NormalImage;
 		CDuiString m_sButton2HotImage;
 		CDuiString m_sButton2PushedImage;
@@ -134,6 +147,7 @@ namespace DuiLib
 
 		RECT m_rcThumb;
 		UINT m_uThumbState;
+		DWORD m_dwThumbColor;
 		CDuiString m_sThumbNormalImage;
 		CDuiString m_sThumbHotImage;
 		CDuiString m_sThumbPushedImage;

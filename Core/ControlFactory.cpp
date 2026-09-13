@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "ControlFactory.h"
 
 namespace DuiLib
@@ -18,6 +18,7 @@ namespace DuiLib
 		INNER_REGISTER_DUICONTROL(CListContainerElementUI);
 		INNER_REGISTER_DUICONTROL(CListHeaderItemUI);
 		INNER_REGISTER_DUICONTROL(CListHeaderUI);
+		INNER_REGISTER_DUICONTROL(CListHBoxElementUI);
 		INNER_REGISTER_DUICONTROL(CListLabelElementUI);
 		INNER_REGISTER_DUICONTROL(CListTextElementUI);
 		INNER_REGISTER_DUICONTROL(CListUI);
@@ -33,6 +34,9 @@ namespace DuiLib
 
 #ifdef DUIMOD_ACTIVEX
 		INNER_REGISTER_DUICONTROL(CActiveXUI);
+#endif
+#ifdef DUIMOD_WEBBROWSER
+		INNER_REGISTER_DUICONTROL(CWebBrowserUI);
 #endif
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
 		INNER_REGISTER_DUICONTROL(CAnimationTabLayoutUI);
@@ -99,10 +103,10 @@ namespace DuiLib
 	{
 	}
 
-	CControlUI* CControlFactory::CreateControl(CDuiString strClassName)
+	CControlUI* CControlFactory::CreateControl(LPCTSTR pstrClassName)
 	{
-		strClassName.MakeLower();
-		MAP_DUI_CTRATECLASS::iterator iter = m_mapControl.find(strClassName);
+		if( pstrClassName == NULL || *pstrClassName == _T('\0') ) return NULL;
+		MAP_DUI_CTRATECLASS::iterator iter = m_mapControl.find(pstrClassName);
 		if ( iter == m_mapControl.end()) {
 			return NULL;
 		}
@@ -111,20 +115,25 @@ namespace DuiLib
 		}
 	}
 
+	CControlUI* CControlFactory::CreateControl(CDuiString strClassName)
+	{
+		return CreateControl(strClassName.GetData());
+	}
+
 	void CControlFactory::RegistControl(CDuiString strClassName, CreateClass pFunc)
 	{
-		strClassName.MakeLower();
 		m_mapControl.insert(MAP_DUI_CTRATECLASS::value_type(strClassName, pFunc));
 	}
 
 	CControlFactory* CControlFactory::GetInstance()
 	{
-		static CControlFactory* pInstance = new CControlFactory;
-		return pInstance;
+		// Meyers singleton: thread-safe and auto-destroyed (C++11)
+		static CControlFactory instance;
+		return &instance;
 	}
 
 	void CControlFactory::Release()
 	{
-		delete this;
+		// Kept for backward compatibility; lifetime is managed by the singleton itself
 	}
 }

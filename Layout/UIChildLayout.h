@@ -1,11 +1,11 @@
-﻿#ifndef __UICHILDLAYOUT_H__
+#ifndef __UICHILDLAYOUT_H__
 #define __UICHILDLAYOUT_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CChildLayoutUI : public CContainerUI
+	class DUILIB_API CChildLayoutUI : public CContainerUI
 	{
 		DECLARE_DUICONTROL(CChildLayoutUI)
 	public:

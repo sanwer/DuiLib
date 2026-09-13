@@ -1,4 +1,4 @@
-﻿#ifndef __UIEDIT_H__
+#ifndef __UIEDIT_H__
 #define __UIEDIT_H__
 
 #pragma once
@@ -7,7 +7,7 @@ namespace DuiLib
 {
 	class CEditWnd;
 
-	class UILIB_API CEditUI : public CLabelUI
+	class DUILIB_API CEditUI : public CLabelUI
 	{
 		DECLARE_DUICONTROL(CEditUI)
 		friend class CEditWnd;

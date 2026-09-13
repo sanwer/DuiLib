@@ -1,4 +1,4 @@
-﻿#ifndef __UIANIMATION_H__
+#ifndef __UIANIMATION_H__
 #define __UIANIMATION_H__
 
 #include "UIButton.h"
@@ -6,7 +6,7 @@
 
 namespace DuiLib {
 
-	class UILIB_API IUIAnimation
+	class DUILIB_API IUIAnimation
 	{
 	public:
 		virtual ~IUIAnimation() { NULL; }
@@ -24,7 +24,7 @@ namespace DuiLib {
 		virtual void OnAnimationElapse(int nAnimationID) = 0;
 	};
 
-	class UILIB_API CAnimationData
+	class DUILIB_API CAnimationData
 	{
 	public:
 		CAnimationData(int nElipse, int nFrame, int nID, BOOL bLoop)
@@ -51,7 +51,7 @@ namespace DuiLib {
 		BOOL m_bFirstLoop;
 	};
 
-	class UILIB_API CUIAnimation: public IUIAnimation
+	class DUILIB_API CUIAnimation: public IUIAnimation
 	{
 		struct Imp;
 	public:

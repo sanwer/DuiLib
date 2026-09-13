@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_IPADDRESS
 #pragma comment(lib, "ws2_32.lib")
 
@@ -61,7 +61,7 @@ namespace DuiLib
 		{
 			INITCOMMONCONTROLSEX   CommCtrl;
 			CommCtrl.dwSize=sizeof(CommCtrl);
-			CommCtrl.dwICC=ICC_INTERNET_CLASSES;//指定Class
+			CommCtrl.dwICC=ICC_INTERNET_CLASSES;//Specify class
 			if(InitCommonControlsEx(&CommCtrl))
 			{
 				RECT rcPos = CalPos();
@@ -180,7 +180,7 @@ namespace DuiLib
 
 	LPCTSTR CIPAddressUI::GetClass() const
 	{
-		return _T("IPAddressUI");
+		return DUI_CTR_IPADDRESS;
 	}
 
 	LPVOID CIPAddressUI::GetInterface(LPCTSTR pstrName)

@@ -1,4 +1,4 @@
-﻿#ifndef __UIACTIVEX_H__
+#ifndef __UIACTIVEX_H__
 #define __UIACTIVEX_H__
 
 #pragma once
@@ -25,7 +25,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CActiveXUI : public CControlUI, public IMessageFilterUI
+	class DUILIB_API CActiveXUI : public CControlUI, public IMessageFilterUI
 	{
 		DECLARE_DUICONTROL(CActiveXUI)
 

@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_PROGRESS
 #include "UIProgress.h"
 
@@ -14,7 +14,7 @@ namespace DuiLib
 
 	LPCTSTR CProgressUI::GetClass() const
 	{
-		return _T("ProgressUI");
+		return DUI_CTR_PROGRESS;
 	}
 
 	LPVOID CProgressUI::GetInterface(LPCTSTR pstrName)

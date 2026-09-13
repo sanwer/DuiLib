@@ -1,17 +1,17 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UITileLayout.h"
 
 namespace DuiLib
 {
 	IMPLEMENT_DUICONTROL(CTileLayoutUI)
-	CTileLayoutUI::CTileLayoutUI() : m_nColumns(1)
+	CTileLayoutUI::CTileLayoutUI() : m_nColumns(1), m_iChildHPadding(0), m_iChildVPadding(0)
 	{
 		m_szItem.cx = m_szItem.cy = 0;
 	}
 
 	LPCTSTR CTileLayoutUI::GetClass() const
 	{
-		return _T("TileLayoutUI");
+		return DUI_CTR_TILELAYOUT;
 	}
 
 	LPVOID CTileLayoutUI::GetInterface(LPCTSTR pstrName)
@@ -46,6 +46,38 @@ namespace DuiLib
 		NeedUpdate();
 	}
 
+	int CTileLayoutUI::GetChildHPadding() const
+	{
+		// Column Spacing = childpadding + childhpadding, >= 0
+		int nPadding = m_iChildPadding + m_iChildHPadding;
+		if (nPadding < 0) nPadding = 0;
+
+		if (m_pManager != NULL) return m_pManager->GetDPIObj()->Scale(nPadding);
+		return nPadding;
+	}
+
+	void CTileLayoutUI::SetChildHPadding(int iPadding)
+	{
+		m_iChildHPadding = iPadding;
+		NeedUpdate();
+	}
+
+	int CTileLayoutUI::GetChildVPadding() const
+	{
+		// Row Spacing = childpadding + childvpadding, >= 0
+		int nPadding = m_iChildPadding + m_iChildVPadding;
+		if (nPadding < 0) nPadding = 0;
+
+		if (m_pManager != NULL) return m_pManager->GetDPIObj()->Scale(nPadding);
+		return nPadding;
+	}
+
+	void CTileLayoutUI::SetChildVPadding(int iPadding)
+	{
+		m_iChildVPadding = iPadding;
+		NeedUpdate();
+	}
+
 	void CTileLayoutUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if( _tcsicmp(pstrName, _T("itemsize")) == 0 ) {
@@ -56,6 +88,8 @@ namespace DuiLib
 			SetItemSize(szItem);
 		}
 		else if( _tcsicmp(pstrName, _T("columns")) == 0 ) SetColumns(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("childhpadding")) == 0 ) SetChildHPadding(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("childvpadding")) == 0 ) SetChildVPadding(_ttoi(pstrValue));
 		else CContainerUI::SetAttribute(pstrName, pstrValue);
 	}
 
@@ -78,6 +112,10 @@ namespace DuiLib
 
 		if( m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible() ) rc.right -= m_pVerticalScrollBar->GetFixedWidth();
 		if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) rc.bottom -= m_pHorizontalScrollBar->GetFixedHeight();
+
+		// Effective Row/Column Spacing
+		int nHPadding = GetChildHPadding();
+		int nVPadding = GetChildVPadding();
 
 		SIZE szItem = GetItemSize();
 		// Position the elements
@@ -121,10 +159,10 @@ namespace DuiLib
 					RECT rcPadding = pLineControl->GetPadding();
 					SIZE szAvailable = { rcTile.right - rcTile.left - rcPadding.left - rcPadding.right, 9999 };
 					if( iIndex == iCount || (iIndex + 1) % m_nColumns == 0 ) {
-						szAvailable.cx -= m_iChildPadding / 2;
+						szAvailable.cx -= nHPadding / 2;
 					}
 					else {
-						szAvailable.cx -= m_iChildPadding;
+						szAvailable.cx -= nHPadding;
 					}
 
 					if( szAvailable.cx < pControl->GetMinWidth() ) szAvailable.cx = pControl->GetMinWidth();
@@ -143,14 +181,14 @@ namespace DuiLib
 
 			RECT rcPadding = pControl->GetPadding();
 
-			rcTile.left += rcPadding.left + m_iChildPadding / 2;
-			rcTile.right -= rcPadding.right + m_iChildPadding / 2;
+			rcTile.left += rcPadding.left + nHPadding / 2;
+			rcTile.right -= rcPadding.right + nHPadding / 2;
 			if( (iCount % m_nColumns) == 0 ) {
-				rcTile.left -= m_iChildPadding / 2;
+				rcTile.left -= nHPadding / 2;
 			}
 
 			if( ( (iCount + 1) % m_nColumns) == 0 ) {
-				rcTile.right += m_iChildPadding / 2;
+				rcTile.right += nHPadding / 2;
 			}
 
 			// Set position
@@ -171,7 +209,7 @@ namespace DuiLib
 
 			if( (++iCount % m_nColumns) == 0 ) {
 				ptTile.x = iPosX;
-				ptTile.y += cyHeight + m_iChildPadding;
+				ptTile.y += cyHeight + nVPadding;
 				cyHeight = 0;
 			}
 			else {

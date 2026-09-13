@@ -1,14 +1,14 @@
-﻿#ifndef __UICOMBOBOX_H__
+#ifndef __UICOMBOBOX_H__
 #define __UICOMBOBOX_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	/// 扩展下拉列表框
-	/// 增加arrowimage属性,一张图片平均分成5份,Normal/Hot/Pushed/Focused/Disabled(必须有source属性)
+	// Extended combo box
+	// Add arrowimage attribute: one image split into 5 parts, Normal/Hot/Pushed/Focused/Disabled (requires source attribute)
 	/// <Default name="ComboBox" value="arrowimage=&quot;file='sys_combo_btn.png' source='0,0,16,16'&quot; "/>
-	class UILIB_API CComboBoxUI : public CComboUI
+	class DUILIB_API CComboBoxUI : public CComboUI
 	{
 		DECLARE_DUICONTROL(CComboBoxUI)
 	public:

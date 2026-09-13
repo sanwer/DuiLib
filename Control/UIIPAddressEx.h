@@ -1,15 +1,15 @@
-﻿#ifndef __UIIPADDRESSEX_H__
+#ifndef __UIIPADDRESSEX_H__
 #define __UIIPADDRESSEX_H__
 
 #pragma once
 
-//给该控件添加一个属性dtstyle
+//Add attribute dtstyle to this control
 
 namespace DuiLib
 {
 
-	/// IP输入控件
-	class UILIB_API CIPAddressExUI : public CEditUI
+	// IP address input control
+	class DUILIB_API CIPAddressExUI : public CEditUI
 	{
 		DECLARE_DUICONTROL(CIPAddressExUI)
 	public:

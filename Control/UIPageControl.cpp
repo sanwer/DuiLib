@@ -7,6 +7,11 @@ namespace DuiLib
 {
 	IMPLEMENT_DUICONTROL(CPageControlUI)
 
+	LPCTSTR CPageControlUI::GetClass() const
+	{
+		return DUI_CTR_PAGECONTROL;
+	}
+
 #define TEXT_MORE _T("...")
 #define PAGE_OPT_GROUP _T("PAGE_OPT_GROUP")
 
@@ -372,7 +377,7 @@ namespace DuiLib
 		m_EdtPageNo->SetFixedHeight(m_szGotoEdit.cy);
 		controlWidth += m_szGotoEdit.cx + 5;
 
-		SetFixedWidth(controlWidth + GetBorderSize() * 2);
+		SetFixedWidth(controlWidth + GetBorderSize().left + GetBorderSize().right);
 	}
 
 

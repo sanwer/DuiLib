@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIOption.h"
 
 namespace DuiLib
@@ -15,7 +15,7 @@ namespace DuiLib
 
 	LPCTSTR COptionUI::GetClass() const
 	{
-		return _T("OptionUI");
+		return DUI_CTR_OPTION;
 	}
 
 	LPVOID COptionUI::GetInterface(LPCTSTR pstrName)
@@ -91,7 +91,7 @@ namespace DuiLib
 		if( m_pManager != NULL ) {
 			if( !m_sGroupName.IsEmpty() ) {
 				if( m_bSelected ) {
-					CStdPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
+					CDuiPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
 					for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
 						COptionUI* pControl = static_cast<COptionUI*>(aOptionGroup->GetAt(i));
 						if( pControl != this && (m_sGroupType.IsEmpty() || m_sGroupType.CompareNoCase(pControl->GetGroupType()) != 0)) {
@@ -384,7 +384,7 @@ namespace DuiLib
 
 	LPCTSTR CCheckBoxUI::GetClass() const
 	{
-		return _T("CheckBoxUI");
+		return DUI_CTR_CHECKBOX;
 	}
 	LPVOID CCheckBoxUI::GetInterface(LPCTSTR pstrName)
 	{
@@ -444,7 +444,7 @@ namespace DuiLib
 		if( m_pManager != NULL ) {
 			if( !m_sGroupName.IsEmpty() ) {
 				if( m_bSelected ) {
-					CStdPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
+					CDuiPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
 					for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
 						COptionUI* pControl = static_cast<COptionUI*>(aOptionGroup->GetAt(i));
 						if( pControl != this ) {

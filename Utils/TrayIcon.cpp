@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_TRAYICON
 #include "TrayIcon.h"
 

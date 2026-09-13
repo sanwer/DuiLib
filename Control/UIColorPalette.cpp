@@ -160,7 +160,7 @@ namespace DuiLib {
 
 	LPCTSTR CColorPaletteUI::GetClass() const
 	{
-		return _T("ColorPaletteUI");
+		return DUI_CTR_COLORPALETTE;
 	}
 
 	LPVOID CColorPaletteUI::GetInterface(LPCTSTR pstrName)

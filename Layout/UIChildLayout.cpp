@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIChildLayout.h"
 
 namespace DuiLib
@@ -53,6 +53,6 @@ namespace DuiLib
 
 	LPCTSTR CChildLayoutUI::GetClass() const
 	{
-		return _T("ChildLayoutUI");
+		return DUI_CTR_CHILDLAYOUT;
 	}
 } // namespace DuiLib

@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_ACTIVEX
 
 namespace DuiLib {
@@ -933,7 +933,7 @@ namespace DuiLib {
 
 	LPCTSTR CActiveXUI::GetClass() const
 	{
-		return _T("ActiveXUI");
+		return DUI_CTR_ACTIVEX;
 	}
 
 	LPVOID CActiveXUI::GetInterface(LPCTSTR pstrName)
@@ -1125,7 +1125,7 @@ namespace DuiLib {
 
 	void CActiveXUI::ReleaseControl()
 	{
-		// 移除消息链
+		//Remove event sink from chain
 		if(m_pManager != NULL) m_pManager->RemoveMessageFilter(this);
 
 		if( m_pUnk != NULL ) {
@@ -1142,7 +1142,7 @@ namespace DuiLib {
 			m_pUnk->Release();
 			m_pUnk = NULL;
 		}
-		// 销毁CActiveXCtrl
+		//Destroy CActiveXCtrl
 		if( m_pControl != NULL ) {
 			m_pControl->m_pOwner = NULL;
 			m_pControl->Release();

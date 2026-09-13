@@ -40,12 +40,12 @@ namespace DuiLib
 
 	LPCTSTR CContainerUI::GetClass() const
 	{
-		return _T("ContainerUI");
+		return DUI_CTR_CONTAINER;
 	}
 
 	LPVOID CContainerUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("IContainer")) == 0 ) return static_cast<IContainerUI*>(this);
+		if( _tcsicmp(pstrName, DUI_CTR_ICONTAINER) == 0 ) return static_cast<IContainerUI*>(this);
 		else if( _tcsicmp(pstrName, DUI_CTR_CONTAINER) == 0 ) return static_cast<CContainerUI*>(this);
 		return CControlUI::GetInterface(pstrName);
 	}
@@ -105,16 +105,16 @@ namespace DuiLib
 		return m_items.InsertAt(iIndex, pControl);
 	}
 
-	bool CContainerUI::Remove(CControlUI* pControl)
+	bool CContainerUI::Remove(CControlUI* pControl, bool bDoNotDestroy)
 	{
 		if( pControl == NULL) return false;
 
 		for( int it = 0; it < m_items.GetSize(); it++ ) {
 			if( static_cast<CControlUI*>(m_items[it]) == pControl ) {
 				NeedUpdate();
-				if( m_bAutoDestroy ) {
+				if( !bDoNotDestroy && m_bAutoDestroy ) {
 					if( m_bDelayedDestroy && m_pManager ) m_pManager->AddDelayedCleanup(pControl);
-					else delete pControl;
+					else pControl->Delete();
 				}
 				return m_items.Remove(it);
 			}
@@ -122,11 +122,11 @@ namespace DuiLib
 		return false;
 	}
 
-	bool CContainerUI::RemoveAt(int iIndex)
+	bool CContainerUI::RemoveAt(int iIndex, bool bDoNotDestroy)
 	{
 		CControlUI* pControl = GetItemAt(iIndex);
 		if (pControl != NULL) {
-			return CContainerUI::Remove(pControl);
+			return CContainerUI::Remove(pControl, bDoNotDestroy);
 		}
 
 		return false;
@@ -639,7 +639,7 @@ namespace DuiLib
 		iIndex = CLAMP(iIndex, 0, GetCount() - 1);
 		if( bForward ) {
 			for( int i = iIndex; i < GetCount(); i++ ) {
-				if( GetItemAt(i)->GetInterface(_T("ListItem")) != NULL
+				if( GetItemAt(i)->GetInterface(DUI_CTR_LISTITEM) != NULL
 					&& GetItemAt(i)->IsVisible()
 					&& GetItemAt(i)->IsEnabled() ) return i;
 			}
@@ -647,7 +647,7 @@ namespace DuiLib
 		}
 		else {
 			for( int i = iIndex; i >= 0; --i ) {
-				if( GetItemAt(i)->GetInterface(_T("ListItem")) != NULL
+				if( GetItemAt(i)->GetInterface(DUI_CTR_LISTITEM) != NULL
 					&& GetItemAt(i)->IsVisible()
 					&& GetItemAt(i)->IsEnabled() ) return i;
 			}

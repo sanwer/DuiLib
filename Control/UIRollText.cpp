@@ -17,13 +17,15 @@ namespace DuiLib
 
 	CRollTextUI::~CRollTextUI(void)
 	{
-		m_pManager->KillTimer(this, ROLLTEXT_ROLL_END);
-		m_pManager->KillTimer(this, ROLLTEXT_TIMERID);
+		if( m_pManager ) {
+			m_pManager->KillTimer(this, ROLLTEXT_ROLL_END);
+			m_pManager->KillTimer(this, ROLLTEXT_TIMERID);
+		}
 	}
 
 	LPCTSTR CRollTextUI::GetClass() const
 	{
-		return _T("RollTextUI");
+		return DUI_CTR_ROLLTEXT;
 	}
 
 	LPVOID CRollTextUI::GetInterface(LPCTSTR pstrName)

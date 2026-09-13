@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_RING
 #include "UIRing.h"
 
@@ -19,7 +19,7 @@ namespace DuiLib
 
 	LPCTSTR CRingUI::GetClass() const
 	{
-		return _T("RingUI");
+		return DUI_CTR_RING;
 	}
 
 	LPVOID CRingUI::GetInterface( LPCTSTR pstrName )
@@ -54,14 +54,14 @@ namespace DuiLib
 			int iHeight = rcItem.bottom - rcItem.top;
 			Gdiplus::PointF centerPos(rcItem.left + iWidth/2, rcItem.top + iHeight/2);
 
-			// 解决偶数时抖动问题
+			//Fix jitter when the count is even
 			if ((iWidth % 2) == 0) centerPos.X -= 0.5;
 			if ((iHeight % 2) == 0) centerPos.Y -= 0.5;
 
 			Gdiplus::Graphics graphics(hDC);
 			graphics.TranslateTransform(centerPos.X,centerPos.Y);
 			graphics.RotateTransform(m_fCurAngle);
-			graphics.TranslateTransform(-centerPos.X, -centerPos.Y);//还原源点
+			graphics.TranslateTransform(-centerPos.X, -centerPos.Y);//Restore origin
 			graphics.DrawImage(m_pBkimage,rcItem.left,rcItem.top,iWidth,iHeight);
 		}
 	}

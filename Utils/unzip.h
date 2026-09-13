@@ -1,6 +1,15 @@
-﻿#ifndef _unzip_H
+#ifndef _unzip_H
 #define _unzip_H
-#pragma once
+//
+
+// Export macros when building/using DuiLib.dll; plain linkage otherwise
+#ifndef ZIP_API
+#if defined(UILIB_EXPORTS)
+#define ZIP_API __declspec(dllexport)
+#else
+#define ZIP_API
+#endif
+#endif
 
 // UNZIPPING functions -- for unzipping.
 // This file is a repackaged form of extracts from the zlib code available
@@ -28,9 +37,9 @@ typedef struct
 } ZIPENTRY;
 
 
-HZIP OpenZip(const TCHAR *fn, const char *password=NULL);
-HZIP OpenZip(void *z, unsigned int len, const char *password=NULL);
-HZIP OpenZipHandle(HANDLE h, const char *password);
+HZIP ZIP_API OpenZip(const TCHAR *fn, const char *password);
+HZIP ZIP_API OpenZip(void *z,unsigned int len, const char *password);
+HZIP ZIP_API OpenZipHandle(HANDLE h, const char *password);
 // OpenZip - opens a zip file and returns a handle with which you can
 // subsequently examine its contents. You can open a zip file from:
 // from a pipe:             OpenZipHandle(hpipe_read,0);
@@ -47,7 +56,7 @@ HZIP OpenZipHandle(HANDLE h, const char *password);
 // but for real windows, the zip makes its own copy of your handle, so you
 // can close yours anytime.
 
-ZRESULT GetZipItem(HZIP hz, int index, ZIPENTRY *ze);
+ZRESULT ZIP_API GetZipItem(HZIP hz, int index, ZIPENTRY *ze);
 // GetZipItem - call this to get information about an item in the zip.
 // If index is -1 and the file wasn't opened through a pipe,
 // then it returns information about the whole zipfile
@@ -62,15 +71,15 @@ ZRESULT GetZipItem(HZIP hz, int index, ZIPENTRY *ze);
 // then then comp_size and sometimes unc_size as well may not be known until
 // after the item has been unzipped.
 
-ZRESULT FindZipItem(HZIP hz, const TCHAR *name, bool ic, int *index, ZIPENTRY *ze);
+ZRESULT ZIP_API FindZipItem(HZIP hz, const TCHAR *name, bool ic, int *index, ZIPENTRY *ze);
 // FindZipItem - finds an item by name. ic means 'insensitive to case'.
 // It returns the index of the item, and returns information about it.
 // If nothing was found, then index is set to -1 and the function returns
 // an error code.
 
-ZRESULT UnzipItem(HZIP hz, int index, const TCHAR *fn);
-ZRESULT UnzipItem(HZIP hz, int index, void *z, unsigned int len);
-ZRESULT UnzipItemHandle(HZIP hz, int index, HANDLE h);
+ZRESULT ZIP_API UnzipItem(HZIP hz, int index, const TCHAR *fn);
+ZRESULT ZIP_API UnzipItem(HZIP hz, int index, void *z,unsigned int len);
+ZRESULT ZIP_API UnzipItemHandle(HZIP hz, int index, HANDLE h);
 // UnzipItem - given an index to an item, unzips it. You can unzip to:
 // to a pipe:             UnzipItemHandle(hz,i, hpipe_write);
 // to a file (by handle): UnzipItemHandle(hz,i, hfile);
@@ -86,7 +95,7 @@ ZRESULT UnzipItemHandle(HZIP hz, int index, HANDLE h);
 // If you unzip a directory with ZIP_FILENAME, then the directory gets created.
 // If you unzip it to a handle or a memory block, then nothing gets created
 // and it emits 0 bytes.
-ZRESULT SetUnzipBaseDir(HZIP hz, const TCHAR *dir);
+ZRESULT ZIP_API SetUnzipBaseDir(HZIP hz, const TCHAR *dir);
 // if unzipping to a filename, and it's a relative filename, then it will be relative to here.
 // (defaults to current-directory).
 
@@ -94,7 +103,7 @@ ZRESULT SetUnzipBaseDir(HZIP hz, const TCHAR *dir);
 ZRESULT CloseZip(HZIP hz);
 // CloseZip - the zip handle must be closed with this function.
 
-unsigned int FormatZipMessage(ZRESULT code, TCHAR *buf, unsigned int len);
+unsigned int FormatZipMessage(ZRESULT code, TCHAR *buf,unsigned int len);
 // FormatZipMessage - given an error code, formats it as a string.
 // It returns the length of the error message. If buf/len points
 // to a real buffer, then it also writes as much as possible into there.
@@ -123,7 +132,7 @@ unsigned int FormatZipMessage(ZRESULT code, TCHAR *buf, unsigned int len);
 #define ZR_ENDED      0x00050000     // the zip creation has already been closed
 #define ZR_MISSIZE    0x00060000     // the indicated input file size turned out mistaken
 #define ZR_PARTIALUNZ 0x00070000     // the file had already been partially unzipped
-#define ZR_ZMODE      0x00080000     // tried to mix creating/opening a zip
+#define ZR_ZMODE      0x00080000     // tried to mix creating/opening a zip 
 // The following come from bugs within the zip library itself
 #define ZR_BUGMASK    0xFF000000
 #define ZR_NOTINITED  0x01000000     // initialisation didn't work
@@ -199,9 +208,9 @@ unsigned int FormatZipMessage(ZRESULT code, TCHAR *buf, unsigned int len);
 // the cpp files for zip and unzip are both present, so we will call
 // one or the other of them based on a dynamic choice. If the header file
 // for only one is present, then we will bind to that particular one.
-ZRESULT CloseZipU(HZIP hz);
-unsigned int FormatZipMessageU(ZRESULT code, TCHAR *buf, unsigned int len);
-bool IsZipHandleU(HZIP hz);
+ZRESULT ZIP_API CloseZipU(HZIP hz);
+unsigned int ZIP_API FormatZipMessageU(ZRESULT code, TCHAR *buf,unsigned int len);
+bool ZIP_API IsZipHandleU(HZIP hz);
 #ifdef _zip_H
 #undef CloseZip
 #define CloseZip(hz) (IsZipHandleU(hz)?CloseZipU(hz):CloseZipZ(hz))

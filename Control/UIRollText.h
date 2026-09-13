@@ -1,4 +1,4 @@
-﻿#ifndef __UITEXTSCROLLH__
+#ifndef __UITEXTSCROLLH__
 #define __UITEXTSCROLLH__
 
 #pragma once
@@ -16,7 +16,7 @@ namespace DuiLib
 	#define ROLLTEXT_ROLL_END       21
 	#define ROLLTEXT_ROLL_END_SPAN  1000*6U
 
-	class UILIB_API CRollTextUI : public CLabelUI
+	class DUILIB_API CRollTextUI : public CLabelUI
 	{
 		DECLARE_DUICONTROL(CRollTextUI)
 	public:

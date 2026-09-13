@@ -12,15 +12,6 @@ namespace DuiLib {
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
-	enum UILIB_RESTYPE
-	{
-		UILIB_FILE=1,       // 来自磁盘文件
-		UILIB_ZIP,          // 来自磁盘zip压缩包
-		UILIB_RESOURCE,     // 来自资源
-		UILIB_ZIPRESOURCE,  // 来自资源的zip压缩包
-	};
-	/////////////////////////////////////////////////////////////////////////////////////
-	//
 
 	typedef enum EVENTTYPE_UI
 	{
@@ -95,7 +86,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	typedef struct UILIB_API tagTFontInfo
+	typedef struct DUILIB_API tagTFontInfo
 	{
 		HFONT hFont;
 		CDuiString sFontName;
@@ -107,7 +98,7 @@ namespace DuiLib {
 		TEXTMETRIC tm;
 	} TFontInfo;
 
-	typedef struct UILIB_API tagTImageInfo
+	typedef struct DUILIB_API tagTImageInfo
 	{
 		tagTImageInfo();
 		Gdiplus::Image* pImage;
@@ -123,7 +114,7 @@ namespace DuiLib {
 
 	} TImageInfo;
 
-	typedef struct UILIB_API tagTDrawInfo
+	typedef struct DUILIB_API tagTDrawInfo
 	{
 		tagTDrawInfo();
 		void Parse(LPCTSTR pStrImage, LPCTSTR pStrModify, CPaintManagerUI *pManager);
@@ -150,7 +141,7 @@ namespace DuiLib {
 		CDuiString sAlign;
 	} TDrawInfo;
 
-	typedef struct UILIB_API tagTPercentInfo
+	typedef struct DUILIB_API tagTPercentInfo
 	{
 		double left;
 		double top;
@@ -158,7 +149,7 @@ namespace DuiLib {
 		double bottom;
 	} TPercentInfo;
 
-	typedef struct UILIB_API tagTResInfo
+	typedef struct DUILIB_API tagTResInfo
 	{
 		DWORD m_dwDefaultDisabledColor;
 		DWORD m_dwDefaultFontColor;
@@ -166,16 +157,16 @@ namespace DuiLib {
 		DWORD m_dwDefaultLinkHoverFontColor;
 		DWORD m_dwDefaultSelectedBkColor;
 		TFontInfo m_DefaultFontInfo;
-		CStdStringPtrMap m_CustomFonts;
-		CStdStringPtrMap m_ImageHash;
-		CStdStringPtrMap m_AttrHash;
-		CStdStringPtrMap m_StyleHash;
-		CStdStringPtrMap m_DrawInfoHash;
+		CDuiStringPtrMap m_CustomFonts;
+		CDuiStringPtrMap m_ImageHash;
+		CDuiStringPtrMap m_AttrHash;
+		CDuiStringPtrMap m_StyleHash;
+		CDuiStringPtrMap m_DrawInfoHash;
 	} TResInfo;
 
 	// Structure for notifications from the system
 	// to the control implementation.
-	typedef struct UILIB_API tagTEventUI
+	typedef struct DUILIB_API tagTEventUI
 	{
 		int Type;
 		CControlUI* pSender;
@@ -190,7 +181,7 @@ namespace DuiLib {
 	// Drag&Drop control
 	const TCHAR* const CF_MOVECONTROL = _T("CF_MOVECONTROL");
 
-	typedef struct UILIB_API tagTCFMoveUI
+	typedef struct DUILIB_API tagTCFMoveUI
 	{
 		CControlUI* pControl;
 	} TCFMoveUI;
@@ -224,7 +215,7 @@ namespace DuiLib {
 	//
 	typedef CControlUI* (*LPCREATECONTROL)(LPCTSTR pstrType);
 
-	class UILIB_API CPaintManagerUI : public CIDropTarget
+	class DUILIB_API CPaintManagerUI : public CIDropTarget
 	{
 	public:
 		CPaintManagerUI();
@@ -298,15 +289,13 @@ namespace DuiLib {
 		static void SetResourceZip(LPVOID pVoid, unsigned int len, LPCTSTR password = NULL);
 		static void SetResourceZip(LPCTSTR pstrZip, bool bCachedResourceZip = false, LPCTSTR password = NULL);
 		static void SetResourceZip(LPCTSTR lpResourceName, LPCTSTR lpResourceType);
-		static void SetResourceType(int nType);
-		static int GetResourceType();
 		static bool GetHSL(short* H, short* S, short* L);
 		static void SetHSL(bool bUseHSL, short H, short S, short L); // H:0~360, S:0~200, L:0~200
 		static void ReloadSkin();
 		static CPaintManagerUI* GetPaintManager(LPCTSTR pstrName);
-		static CStdPtrArray* GetPaintManagers();
+		static CDuiPtrArray* GetPaintManagers();
 		static bool LoadPlugin(LPCTSTR pstrModuleName);
-		static CStdPtrArray* GetPlugins();
+		static CDuiPtrArray* GetPlugins();
 
 		bool IsForceUseSharedRes() const;
 		void SetForceUseSharedRes(bool bForce);
@@ -365,7 +354,7 @@ namespace DuiLib {
 		void AddStyle(LPCTSTR pName, LPCTSTR pStyle, bool bShared = false);
 		LPCTSTR GetStyle(LPCTSTR pName) const;
 		BOOL RemoveStyle(LPCTSTR pName, bool bShared = false);
-		const CStdStringPtrMap& GetStyles(bool bShared = false) const;
+		const CDuiStringPtrMap& GetStyles(bool bShared = false) const;
 		void RemoveAllStyle(bool bShared = false);
 
 		const TImageInfo* GetImageString(LPCTSTR pStrImage, LPCTSTR pStrModify = NULL);
@@ -381,7 +370,7 @@ namespace DuiLib {
 		void ReapObjects(CControlUI* pControl);
 
 		bool AddOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl);
-		CStdPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
+		CDuiPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
 		void RemoveOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl);
 		void RemoveAllOptionGroups();
 
@@ -439,7 +428,7 @@ namespace DuiLib {
 		CControlUI* FindSubControlByPoint(CControlUI* pParent, POINT pt) const;
 		CControlUI* FindSubControlByName(CControlUI* pParent, LPCTSTR pstrName) const;
 		CControlUI* FindSubControlByClass(CControlUI* pParent, LPCTSTR pstrClass, int iIndex = 0);
-		CStdPtrArray* FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass);
+		CDuiPtrArray* FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass);
 
 		static void MessageLoop();
 		static bool TranslateMessage(const LPMSG pMsg);
@@ -456,7 +445,7 @@ namespace DuiLib {
 		void UsedVirtualWnd(bool bUsed);
 
 	private:
-		CStdPtrArray* GetFoundControls();
+		CDuiPtrArray* GetFoundControls();
 		static CControlUI* CALLBACK __FindControlFromNameHash(CControlUI* pThis, LPVOID pData);
 		static CControlUI* CALLBACK __FindControlFromCount(CControlUI* pThis, LPVOID pData);
 		static CControlUI* CALLBACK __FindControlFromPoint(CControlUI* pThis, LPVOID pData);
@@ -525,22 +514,22 @@ namespace DuiLib {
 		bool m_bAsyncNotifyPosted;
 
 		//
-		CStdPtrArray m_aNotifiers;
-		CStdPtrArray m_aTimers;
-		CStdPtrArray m_aTranslateAccelerator;
-		CStdPtrArray m_aPreMessageFilters;
-		CStdPtrArray m_aMessageFilters;
-		CStdPtrArray m_aPostPaintControls;
-		CStdPtrArray m_aNativeWindow;
-		CStdPtrArray m_aNativeWindowControl;
-		CStdPtrArray m_aDelayedCleanup;
-		CStdPtrArray m_aAsyncNotify;
-		CStdPtrArray m_aFoundControls;
-		CStdPtrArray m_aFonts;
-		CStdPtrArray m_aNeedMouseLeaveNeeded;
-		CStdStringPtrMap m_mNameHash;
-		CStdStringPtrMap m_mWindowCustomAttrHash;
-		CStdStringPtrMap m_mOptionGroup;
+		CDuiPtrArray m_aNotifiers;
+		CDuiPtrArray m_aTimers;
+		CDuiPtrArray m_aTranslateAccelerator;
+		CDuiPtrArray m_aPreMessageFilters;
+		CDuiPtrArray m_aMessageFilters;
+		CDuiPtrArray m_aPostPaintControls;
+		CDuiPtrArray m_aNativeWindow;
+		CDuiPtrArray m_aNativeWindowControl;
+		CDuiPtrArray m_aDelayedCleanup;
+		CDuiPtrArray m_aAsyncNotify;
+		CDuiPtrArray m_aFoundControls;
+		CDuiPtrArray m_aFonts;
+		CDuiPtrArray m_aNeedMouseLeaveNeeded;
+		CDuiStringPtrMap m_mNameHash;
+		CDuiStringPtrMap m_mWindowCustomAttrHash;
+		CDuiStringPtrMap m_mOptionGroup;
 
 		bool m_bForceUseSharedRes;
 		TResInfo m_ResInfo;
@@ -571,14 +560,13 @@ namespace DuiLib {
 		static BYTE* m_cbZipBuf;
 
 		static bool m_bCachedResourceZip;
-		static int m_nResType;
 		static TResInfo m_SharedResInfo;
 		static bool m_bUseHSL;
 		static short m_H;
 		static short m_S;
 		static short m_L;
-		static CStdPtrArray m_aPreMessages;
-		static CStdPtrArray m_aPlugins;
+		static CDuiPtrArray m_aPreMessages;
+		static CDuiPtrArray m_aPlugins;
 	};
 
 } // namespace DuiLib

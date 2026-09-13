@@ -1,11 +1,11 @@
-﻿#ifndef __UIROTATE_H__
+#ifndef __UIROTATE_H__
 #define __UIROTATE_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class CRingUI : public CLabelUI
+	class DUILIB_API CRingUI : public CLabelUI
 	{
 		enum
 		{

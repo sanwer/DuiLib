@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 
 #ifndef TRACE
 #define TRACE
@@ -532,19 +532,19 @@ void CMarkup::_SkipWhitespace(LPTSTR& pstr) const
 
 void CMarkup::_SkipIdentifier(LPCTSTR& pstr) const
 {
-	// 属性只能用英文，所以这样处理没有问题
+	//Attributes are ASCII-only, so this is safe
 	while( *pstr != _T('\0') && (*pstr == _T('_') || *pstr == _T(':') || _istalnum(*pstr)) ) pstr = ::CharNext(pstr);
 }
 
 void CMarkup::_SkipIdentifier(LPTSTR& pstr) const
 {
-	// 属性只能用英文，所以这样处理没有问题
+	//Attributes are ASCII-only, so this is safe
 	while( *pstr != _T('\0') && (*pstr == _T('_') || *pstr == _T(':') || _istalnum(*pstr)) ) pstr = ::CharNext(pstr);
 }
 
 bool CMarkup::_ParseAttributes(LPTSTR& pstrText)
 {
-	// 无属性
+	//No attributes
 	LPTSTR pstrIdentifier = pstrText;
 	if( *pstrIdentifier == _T('/') && *++pstrIdentifier == _T('>') ) return true;
 	if( *pstrText == _T('>') ) return true;

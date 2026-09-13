@@ -1,11 +1,11 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_SLIDER
 #include "UISlider.h"
 
 namespace DuiLib
 {
 	IMPLEMENT_DUICONTROL(CSliderUI)
-		CSliderUI::CSliderUI() : m_uButtonState(0), m_nStep(1),m_bSendMove(false)
+		CSliderUI::CSliderUI() : m_uButtonState(0), m_nStep(1),m_bSendMove(false), m_bImmMode(false)
 	{
 		m_uTextStyle = DT_SINGLELINE | DT_CENTER;
 		m_szThumb.cx = m_szThumb.cy = 10;
@@ -13,7 +13,7 @@ namespace DuiLib
 
 	LPCTSTR CSliderUI::GetClass() const
 	{
-		return _T("SliderUI");
+		return DUI_CTR_SLIDER;
 	}
 
 	UINT CSliderUI::GetControlFlags() const
@@ -205,6 +205,7 @@ namespace DuiLib
 					UpdateText();
 					m_pManager->SendNotify(this, DUI_MSGTYPE_VALUECHANGED_MOVE);
 				}
+				if( m_bImmMode ) m_pManager->SendNotify(this, DUI_MSGTYPE_VALUECHANGED);
 				Invalidate();
 			}
 
@@ -248,6 +249,16 @@ namespace DuiLib
 		return m_bSendMove;
 	}
 
+	bool CSliderUI::IsImmMode() const
+	{
+		return m_bImmMode;
+	}
+
+	void CSliderUI::SetImmMode(bool bImmMode)
+	{
+		m_bImmMode = bImmMode;
+	}
+
 	void CSliderUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if( _tcsicmp(pstrName, _T("thumbimage")) == 0 ) SetThumbImage(pstrValue);
@@ -266,6 +277,7 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("sendmove")) == 0 ) {
 			SetCanSendMove(_tcsicmp(pstrValue, _T("true")) == 0);
 		}
+		else if( _tcsicmp(pstrName, _T("imm")) == 0 ) SetImmMode(_tcsicmp(pstrValue, _T("true")) == 0);
 		else CProgressUI::SetAttribute(pstrName, pstrValue);
 	}
 

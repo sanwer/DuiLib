@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_GIFANIM
 #include "UIGifAnim.h"
 
@@ -23,13 +23,12 @@ namespace DuiLib
 	CGifAnimUI::~CGifAnimUI(void)
 	{
 		DeleteGif();
-		m_pManager->KillTimer( this, EVENT_TIEM_ID );
-
+		if( m_pManager ) m_pManager->KillTimer( this, EVENT_TIEM_ID );
 	}
 
 	LPCTSTR CGifAnimUI::GetClass() const
 	{
-		return _T("GifAnimUI");
+		return DUI_CTR_GIFANIM;
 	}
 
 	LPVOID CGifAnimUI::GetInterface( LPCTSTR pstrName )

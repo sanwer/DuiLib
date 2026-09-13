@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #ifdef DUIMOD_LOADING
 #include "UILoading.h"
 #include <Gdiplus.h>
@@ -149,9 +149,9 @@ void CLoadingUI::PaintBkImage(HDC hDC)
 				m_Colors[intCounter], m_SpokeThickness);
 			intPosition++;
 		}
-		// 获得窗口的Graphics对象
+		//Get window Graphics object
 		Graphics gh(hDC);
-		// 将描画好的CacheImage画到窗口上
+		//Draw the rendered CacheImage onto the window
 		gh.DrawImage(img, (INT)m_rcItem.left, (INT)m_rcItem.top);
 		delete img;
 	}

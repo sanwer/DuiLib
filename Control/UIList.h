@@ -1,4 +1,4 @@
-﻿#ifndef __UILIST_H__
+#ifndef __UILIST_H__
 #define __UILIST_H__
 #pragma once
 
@@ -16,6 +16,7 @@ namespace DuiLib {
 	{
 		int nColumns;
 		RECT rcColumn[UILIST_MAX_COLUMNS];
+		UINT uFixedHeight;
 		int nFont;
 		UINT uTextStyle;
 		RECT rcTextPadding;
@@ -42,6 +43,11 @@ namespace DuiLib {
 		bool bShowHtml;
 		bool bMultiExpandable;
 		bool bRSelected;
+
+		int iHLineSize;
+		DWORD dwHLineColor;
+		int iVLineSize;
+		DWORD dwVLineColor;
 	} TListInfoUI;
 
 
@@ -52,7 +58,7 @@ namespace DuiLib {
 	{
 	public:
 		virtual LPCTSTR GetItemText(CControlUI* pList, int iItem, int iSubItem) = 0;
-		virtual DWORD GetItemTextColor(CControlUI* pList, int iItem, int iSubItem, int iState) = 0;// iState：0-正常、1-激活、2-选择、3-禁用
+		virtual DWORD GetItemTextColor(CControlUI* pList, int iItem, int iSubItem, int iState) = 0;//iState: 0-normal, 1-active, 2-selected, 3-disabled
 	};
 
 	class IListOwnerUI
@@ -108,7 +114,7 @@ namespace DuiLib {
 	class CListHeaderUI;
 	class CEditUI;
 	class CComboBoxUI;
-	class UILIB_API CListUI : public CVerticalLayoutUI, public IListUI
+	class DUILIB_API CListUI : public CVerticalLayoutUI, public IListUI
 	{
 		DECLARE_DUICONTROL(CListUI)
 
@@ -124,7 +130,7 @@ namespace DuiLib {
 		int GetCurSel() const;
 		int GetCurSelActivate() const;
 		bool SelectItem(int iIndex, bool bTakeFocus = false);
-		bool SelectItemActivate(int iIndex);    // 双击选中
+		bool SelectItemActivate(int iIndex);    //Select on double click
 
 		bool SelectMultiItem(int iIndex, bool bTakeFocus = false);
 		void SetMultiSelect(bool bMultiSel);
@@ -146,8 +152,8 @@ namespace DuiLib {
 		int GetCount() const;
 		bool Add(CControlUI* pControl);
 		bool AddAt(CControlUI* pControl, int iIndex);
-		bool Remove(CControlUI* pControl);
-		bool RemoveAt(int iIndex);
+		bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
+		bool RemoveAt(int iIndex, bool bDoNotDestroy=false);
 		void RemoveAll();
 
 		void EnsureVisible(int iIndex);
@@ -196,6 +202,14 @@ namespace DuiLib {
 		DWORD GetDisabledItemBkColor() const;
 		LPCTSTR GetDisabledItemImage() const;
 		DWORD GetItemLineColor() const;
+		int GetItemVLineSize() const;
+		void SetItemVLineSize(int nSize);
+		DWORD GetItemVLineColor() const;
+		void SetItemVLineColor(DWORD dwLineColor);
+		int GetItemHLineSize() const;
+		void SetItemHLineSize(int nSize);
+		DWORD GetItemHLineColor() const;
+		void SetItemHLineColor(DWORD dwLineColor);
 
 		void SetMultiExpanding(bool bMultiExpandable);
 		int GetExpandedItem() const;
@@ -243,8 +257,8 @@ namespace DuiLib {
 		bool m_bMultiSel;
 		int m_iCurSel;
 		int m_iFirstSel;
-		CStdPtrArray m_aSelItems;
-		int m_iCurSelActivate;  // 双击的列
+		CDuiPtrArray m_aSelItems;
+		int m_iCurSelActivate;  //Double-clicked column
 		int m_iExpandedItem;
 		IListCallbackUI* m_pCallback;
 		CListBodyUI* m_pList;
@@ -255,7 +269,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListBodyUI : public CVerticalLayoutUI
+	class DUILIB_API CListBodyUI : public CVerticalLayoutUI
 	{
 	public:
 		CListBodyUI(CListUI* pOwner);
@@ -278,7 +292,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListHeaderUI : public CHorizontalLayoutUI
+	class DUILIB_API CListHeaderUI : public CHorizontalLayoutUI
 	{
 		DECLARE_DUICONTROL(CListHeaderUI)
 	public:
@@ -305,7 +319,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListHeaderItemUI : public CHorizontalLayoutUI
+	class DUILIB_API CListHeaderItemUI : public CHorizontalLayoutUI
 	{
 		DECLARE_DUICONTROL(CListHeaderItemUI)
 
@@ -322,6 +336,8 @@ namespace DuiLib {
 		void SetDragable(bool bDragable);
 		DWORD GetSepWidth() const;
 		void SetSepWidth(int iWidth);
+		DWORD GetSepColor() const;
+		void SetSepColor(DWORD dwSepColor);
 		DWORD GetTextStyle() const;
 		void SetTextStyle(UINT uStyle);
 		DWORD GetTextColor() const;
@@ -357,6 +373,7 @@ namespace DuiLib {
 		bool m_bDragable;
 		UINT m_uButtonState;
 		int m_iSepWidth;
+		DWORD m_dwSepColor;
 		DWORD m_dwTextColor;
 		int m_iFont;
 		UINT m_uTextStyle;
@@ -375,7 +392,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListElementUI : public CControlUI, public IListItemUI
+	class DUILIB_API CListElementUI : public CControlUI, public IListItemUI
 	{
 	public:
 		CListElementUI();
@@ -399,7 +416,7 @@ namespace DuiLib {
 		bool IsExpanded() const;
 		bool Expand(bool bExpand = true);
 
-		void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
+		void Invalidate(); //CControl::Invalidate would refresh scrollbars; override reduces the invalidate region
 		bool Activate();
 
 		void DoEvent(TEventUI& event);
@@ -418,7 +435,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListLabelElementUI : public CListElementUI
+	class DUILIB_API CListLabelElementUI : public CListElementUI
 	{
 		DECLARE_DUICONTROL(CListLabelElementUI)
 	public:
@@ -438,7 +455,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListTextElementUI : public CListLabelElementUI
+	class DUILIB_API CListTextElementUI : public CListLabelElementUI
 	{
 		DECLARE_DUICONTROL(CListTextElementUI)
 	public:
@@ -470,14 +487,14 @@ namespace DuiLib {
 		CDuiString m_sLinks[MAX_LINK];
 		int m_nHoverLink;
 		IListUI* m_pOwner;
-		CStdPtrArray m_aTexts;
-		CStdPtrArray m_aTextColors;
+		CDuiPtrArray m_aTexts;
+		CDuiPtrArray m_aTextColors;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CListContainerElementUI : public CHorizontalLayoutUI, public IListItemUI
+	class DUILIB_API CListContainerElementUI : public CHorizontalLayoutUI, public IListItemUI
 	{
 		DECLARE_DUICONTROL(CListContainerElementUI)
 	public:
@@ -500,8 +517,10 @@ namespace DuiLib {
 		bool SelectMulti(bool bSelect = true);
 		bool IsExpanded() const;
 		bool Expand(bool bExpand = true);
+		bool GetExpandable() const;
+		void SetExpandable(bool bExpandable);
 
-		void Invalidate(); // 直接CControl::Invalidate会导致滚动条刷新，重写减少刷新区域
+		void Invalidate(); //CControl::Invalidate would refresh scrollbars; override reduces the invalidate region
 		bool Activate();
 
 		void DoEvent(TEventUI& event);
@@ -516,8 +535,25 @@ namespace DuiLib {
 	protected:
 		int m_iIndex;
 		bool m_bSelected;
+		bool m_bExpandable;
 		UINT m_uButtonState;
 		IListOwnerUI* m_pOwner;
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	//
+
+	class DUILIB_API CListHBoxElementUI : public CListContainerElementUI
+	{
+		DECLARE_DUICONTROL(CListHBoxElementUI)
+	public:
+		CListHBoxElementUI();
+
+		LPCTSTR GetClass() const;
+		LPVOID GetInterface(LPCTSTR pstrName);
+
+		void SetPos(RECT rc, bool bNeedInvalidate = true);
+		bool DoPaint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl);
 	};
 
 } // namespace DuiLib

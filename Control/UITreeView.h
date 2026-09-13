@@ -1,4 +1,4 @@
-﻿#ifndef UITreeView_h__
+#ifndef UITreeView_h__
 #define UITreeView_h__
 
 #include <vector>
@@ -13,7 +13,7 @@ namespace DuiLib
 	class CLabelUI;
 	class COptionUI;
 
-	class UILIB_API CTreeNodeUI : public CListContainerElementUI
+	class DUILIB_API CTreeNodeUI : public CListContainerElementUI
 	{
 		DECLARE_DUICONTROL(CTreeNodeUI)
 	public:
@@ -30,7 +30,7 @@ namespace DuiLib
 
 		bool Add(CControlUI* _pTreeNodeUI);
 		bool AddAt(CControlUI* pControl, int iIndex);
-		bool Remove(CControlUI* pControl);
+		bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
 
 		void SetVisibleTag(bool _IsVisible);
 		bool GetVisibleTag();
@@ -41,7 +41,7 @@ namespace DuiLib
 		bool IsHasChild() const;
 		long GetTreeLevel();
 		bool AddChildNode(CTreeNodeUI* _pTreeNodeUI);
-		bool RemoveAt(CTreeNodeUI* _pTreeNodeUI);
+		bool RemoveAt(CTreeNodeUI* _pTreeNodeUI, bool bDoNotDestroy=false);
 		void SetParentNode(CTreeNodeUI* _pParentTreeNode);
 		CTreeNodeUI* GetParentNode();
 		long GetCountChild();
@@ -62,7 +62,7 @@ namespace DuiLib
 		DWORD GetSelItemHotTextColor() const;
 		void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 
-		CStdPtrArray GetTreeNodes();
+		CDuiPtrArray GetTreeNodes();
 		int GetTreeIndex();
 		int GetNodeIndex();
 
@@ -93,10 +93,10 @@ namespace DuiLib
 		CCheckBoxUI* pCheckBox;
 		COptionUI* pItemButton;
 		CTreeNodeUI* pParentTreeNode;
-		CStdPtrArray mTreeNodes;
+		CDuiPtrArray mTreeNodes;
 	};
 
-	class UILIB_API CTreeViewUI : public CListUI,public INotifyUI
+	class DUILIB_API CTreeViewUI : public CListUI,public INotifyUI
 	{
 		DECLARE_DUICONTROL(CTreeViewUI)
 	public:
@@ -111,8 +111,8 @@ namespace DuiLib
 		virtual bool Add(CTreeNodeUI* pControl );
 		virtual long AddAt(CTreeNodeUI* pControl, int iIndex );
 		virtual bool AddAt(CTreeNodeUI* pControl,CTreeNodeUI* _IndexNode);
-		virtual bool Remove(CTreeNodeUI* pControl);
-		virtual bool RemoveAt(int iIndex);
+		virtual bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
+		virtual bool RemoveAt(int iIndex, bool bDoNotDestroy=false);
 		virtual void RemoveAll();
 		virtual bool OnCheckBoxChanged(void* param);
 		virtual bool OnFolderChanged(void* param);

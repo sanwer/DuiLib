@@ -1,11 +1,11 @@
-﻿#ifndef __UIVERTICALLAYOUT_H__
+#ifndef __UIVERTICALLAYOUT_H__
 #define __UIVERTICALLAYOUT_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CVerticalLayoutUI : public CContainerUI
+	class DUILIB_API CVerticalLayoutUI : public CContainerUI
 	{
 		DECLARE_DUICONTROL(CVerticalLayoutUI)
 	public:
@@ -30,7 +30,7 @@ namespace DuiLib
 	protected:
 		int m_iSepHeight;
 		UINT m_uButtonState;
-		POINT ptLastMouse;
+		POINT m_ptLastMouse;
 		RECT m_rcNewPos;
 		bool m_bImmMode;
 	};

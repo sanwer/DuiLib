@@ -1,11 +1,11 @@
-﻿#ifndef __UITEXT_H__
+#ifndef __UITEXT_H__
 #define __UITEXT_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CTextUI : public CLabelUI
+	class DUILIB_API CTextUI : public CLabelUI
 	{
 		DECLARE_DUICONTROL(CTextUI)
 	public:

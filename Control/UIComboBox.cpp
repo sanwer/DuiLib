@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIComboBox.h"
 
 namespace DuiLib
@@ -12,7 +12,7 @@ namespace DuiLib
 
 	LPCTSTR CComboBoxUI::GetClass() const
 	{
-		return _T("ComboBoxUI");
+		return DUI_CTR_COMBOBOX;
 	}
 
 	void CComboBoxUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
@@ -66,7 +66,7 @@ namespace DuiLib
 			rcBmpPart.right = rcBmpPart.left + m_nArrowWidth;
 
 			CDuiRect rcDest(0, 0, m_rcItem.right - m_rcItem.left, m_rcItem.bottom - m_rcItem.top);
-			rcDest.Deflate(GetBorderSize(), GetBorderSize());
+			rcDest.Deflate(GetBorderSize().left, GetBorderSize().top);
 			rcDest.left = rcDest.right - m_nArrowWidth;
 
 			CDuiString sSource = sModify.Mid(nPos1, nPos3 + 1 - nPos1);
@@ -95,7 +95,7 @@ namespace DuiLib
 
 		if( m_iCurSel >= 0 ) {
 			CControlUI* pControl = static_cast<CControlUI*>(m_items[m_iCurSel]);
-			IListItemUI* pElement = static_cast<IListItemUI*>(pControl->GetInterface(_T("ListItem")));
+			IListItemUI* pElement = static_cast<IListItemUI*>(pControl->GetInterface(DUI_CTR_LISTITEM));
 			if( pElement != NULL ) {
 				pElement->DrawItemText(hDC, rcText);
 			}

@@ -1,11 +1,11 @@
-﻿#ifndef __UISLIDER_H__
+#ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CSliderUI : public CProgressUI
+	class DUILIB_API CSliderUI : public CProgressUI
 	{
 		DECLARE_DUICONTROL(CSliderUI)
 	public:
@@ -35,6 +35,8 @@ namespace DuiLib
 		void SetValue(int nValue);
 		void SetCanSendMove(bool bCanSend);
 		bool GetCanSendMove() const;
+		bool IsImmMode() const;
+		void SetImmMode(bool bImmMode);
 	protected:
 		SIZE m_szThumb;
 		UINT m_uButtonState;
@@ -46,6 +48,7 @@ namespace DuiLib
 
 		CDuiString m_sImageModify;
 		bool m_bSendMove;
+		bool m_bImmMode;
 	};
 }
 

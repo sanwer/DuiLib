@@ -1,11 +1,11 @@
-﻿#ifndef __UIDELEGATE_H__
+#ifndef __UIDELEGATE_H__
 #define __UIDELEGATE_H__
 
 #pragma once
 
 namespace DuiLib {
 
-class UILIB_API CDelegateBase
+class DUILIB_API CDelegateBase
 {
 public:
 	CDelegateBase(void* pObject, void* pFn);
@@ -62,7 +62,6 @@ private:
 	Fn m_pFn;
 };
 
-
 template <class O, class T>
 CDelegate<O, T> MakeDelegate(O* pObject, bool (T::* pFn)(void*))
 {
@@ -74,7 +73,7 @@ inline CDelegateStatic MakeDelegate(bool (*pFn)(void*))
 	return CDelegateStatic(pFn);
 }
 
-class UILIB_API CEventSource
+class DUILIB_API CEventSource
 {
 	typedef bool (*FnType)(void*);
 public:
@@ -88,7 +87,7 @@ public:
 	void Clear();
 
 protected:
-	CStdPtrArray m_aDelegates;
+	CDuiPtrArray m_aDelegates;
 };
 
 } // namespace DuiLib

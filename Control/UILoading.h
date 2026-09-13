@@ -1,4 +1,4 @@
-﻿#ifndef __UILoadingCircle_H
+#ifndef __UILoadingCircle_H
 #define __UILoadingCircle_H
 #pragma once
 
@@ -13,7 +13,7 @@ enum StylePresets
 	IE7
 };
 
-class UILIB_API CLoadingUI : public CControlUI
+class DUILIB_API CLoadingUI : public CControlUI
 {
 	DECLARE_DUICONTROL(CControlUI)
 
@@ -42,12 +42,12 @@ protected:
 	int m_nTime;
 	bool m_bStop;
 
-	int m_NumberOfSpoke;//辐条数量
-	int m_SpokeThickness;//辐条粗细
+	int m_NumberOfSpoke;//Number of spokes
+	int m_SpokeThickness;//Spoke thickness
 	int m_ProgressValue;//------------------------
-	int m_OuterCircleRadius;//外圈
-	int m_InnerCircleRadius;//内圈
-	Gdiplus::PointF m_CenterPoint;//二维平面的点
+	int m_OuterCircleRadius;//Outer circle
+	int m_InnerCircleRadius;//Inner circle
+	Gdiplus::PointF m_CenterPoint;//2D point
 	Gdiplus::Color m_Color;
 	Gdiplus::Color* m_Colors;
 	double* m_Angles;

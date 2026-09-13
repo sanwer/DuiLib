@@ -7,7 +7,7 @@
 namespace DuiLib
 {
 
-class UILIB_API CShadowUI
+class DUILIB_API CShadowUI
 {
 public:
 	friend class CPaintManagerUI;

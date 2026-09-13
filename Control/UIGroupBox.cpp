@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIGroupBox.h"
 
 namespace DuiLib
@@ -19,12 +19,12 @@ namespace DuiLib
 
 	LPCTSTR CGroupBoxUI::GetClass() const
 	{
-		return _T("GroupBoxUI");
+		return DUI_CTR_GROUPBOX;
 	}
 
 	LPVOID CGroupBoxUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("GroupBox")) == 0 ) return static_cast<CGroupBoxUI*>(this);
+		if( _tcsicmp(pstrName, DUI_CTR_GROUPBOX) == 0 ) return static_cast<CGroupBoxUI*>(this);
 		return CVerticalLayoutUI::GetInterface(pstrName);
 	}
 	void CGroupBoxUI::SetTextColor(DWORD dwTextColor)
@@ -73,7 +73,7 @@ namespace DuiLib
 		SIZE szAvailable = { rcText.right - rcText.left, rcText.bottom - rcText.top };
 		SIZE sz = CalcrectSize(szAvailable);
 
-		//计算文字区域
+		//Calculate text area
 		rcText.left = rcText.left + 15;
 		rcText.top = rcText.top - 5;
 		rcText.right = rcText.left + sz.cx;
@@ -89,12 +89,12 @@ namespace DuiLib
 		SIZE cxyBorderRound;
 		RECT rcBorderSize;
 		if (m_pManager) {
-			nBorderSize = GetManager()->GetDPIObj()->Scale(m_nBorderSize);
+			nBorderSize = GetManager()->GetDPIObj()->Scale(m_rcBorderSize.left);
 			cxyBorderRound = GetManager()->GetDPIObj()->Scale(m_cxyBorderRound);
 			rcBorderSize = GetManager()->GetDPIObj()->Scale(m_rcBorderSize);
 		}
 		else {
-			nBorderSize = m_nBorderSize;
+			nBorderSize = m_rcBorderSize.left;
 			cxyBorderRound = m_cxyBorderRound;
 			rcBorderSize = m_rcBorderSize;
 		}
@@ -104,7 +104,7 @@ namespace DuiLib
 			CDuiRect rcItem = m_rcItem;
 			rcItem.Deflate(5, 5);
 
-			if( cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0 )//画圆角边框
+			if( cxyBorderRound.cx > 0 || cxyBorderRound.cy > 0 )//Draw rounded border
 			{
 				if (IsFocused() && m_dwFocusBorderColor != 0)
 					CRenderEngine::DrawRoundRect(hDC, rcItem, nBorderSize, cxyBorderRound.cx, cxyBorderRound.cy, GetAdjustColor(m_dwFocusBorderColor));

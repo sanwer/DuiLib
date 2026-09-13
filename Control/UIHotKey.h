@@ -1,11 +1,11 @@
-﻿#ifndef __UIHOTKEY_H__
+#ifndef __UIHOTKEY_H__
 #define __UIHOTKEY_H__
 #pragma once
 
 namespace DuiLib{
 	class CHotKeyUI;
 
-	class UILIB_API CHotKeyWnd : public CWindowWnd
+	class DUILIB_API CHotKeyWnd : public CWindowWnd
 	{
 	public:
 		CHotKeyWnd(void);
@@ -32,7 +32,7 @@ namespace DuiLib{
 		bool m_bInit;
 	};
 
-	class UILIB_API CHotKeyUI : public CLabelUI
+	class DUILIB_API CHotKeyUI : public CLabelUI
 	{
 		DECLARE_DUICONTROL(CHotKeyUI)
 		friend CHotKeyWnd;

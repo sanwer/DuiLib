@@ -230,19 +230,18 @@ namespace DuiLib {
 	HINSTANCE CPaintManagerUI::m_hResourceInstance = NULL;
 	CDuiString CPaintManagerUI::m_pStrResourcePath;
 	CDuiString CPaintManagerUI::m_pStrResourceZip;
-	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //Garfield 20160325 带密码zip包解密
+	CDuiString CPaintManagerUI::m_pStrResourceZipPwd;  //带密码zip包解密
 	HANDLE CPaintManagerUI::m_hResourceZip = NULL;
 	bool CPaintManagerUI::m_bCachedResourceZip = true;
 	BYTE* CPaintManagerUI::m_cbZipBuf = NULL;
-	int CPaintManagerUI::m_nResType = UILIB_FILE;
 	TResInfo CPaintManagerUI::m_SharedResInfo;
 	HINSTANCE CPaintManagerUI::m_hInstance = NULL;
 	bool CPaintManagerUI::m_bUseHSL = false;
 	short CPaintManagerUI::m_H = 180;
 	short CPaintManagerUI::m_S = 100;
 	short CPaintManagerUI::m_L = 100;
-	CStdPtrArray CPaintManagerUI::m_aPreMessages;
-	CStdPtrArray CPaintManagerUI::m_aPlugins;
+	CDuiPtrArray CPaintManagerUI::m_aPreMessages;
+	CDuiPtrArray CPaintManagerUI::m_aPlugins;
 
 	CPaintManagerUI::CPaintManagerUI() :
 	m_hWndPaint(NULL),
@@ -513,7 +512,7 @@ namespace DuiLib {
 		}
 
 		m_bCachedResourceZip = true;
-		m_pStrResourceZipPwd = password;  //Garfield 20160325 带密码zip包解密
+		m_pStrResourceZipPwd = password;  //带密码zip包解密
 		if( m_bCachedResourceZip )
 		{
 #ifdef UNICODE
@@ -571,16 +570,6 @@ namespace DuiLib {
 		}
 	}
 
-	void CPaintManagerUI::SetResourceType(int nType)
-	{
-		m_nResType = nType;
-	}
-
-	int CPaintManagerUI::GetResourceType()
-	{
-		return m_nResType;
-	}
-
 	bool CPaintManagerUI::GetHSL(short* H, short* S, short* L)
 	{
 		*H = m_H;
@@ -626,7 +615,7 @@ namespace DuiLib {
 		return NULL;
 	}
 
-	CStdPtrArray* CPaintManagerUI::GetPaintManagers()
+	CDuiPtrArray* CPaintManagerUI::GetPaintManagers()
 	{
 		return &m_aPreMessages;
 	}
@@ -647,7 +636,7 @@ namespace DuiLib {
 		return false;
 	}
 
-	CStdPtrArray* CPaintManagerUI::GetPlugins()
+	CDuiPtrArray* CPaintManagerUI::GetPlugins()
 	{
 		return &m_aPlugins;
 	}
@@ -914,7 +903,7 @@ namespace DuiLib {
 			{
 				// Tabbing between controls
 				if( wParam == VK_TAB ) {
-					if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("RichEditUI")) != NULL ) {
+					if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), DUI_CTR_RICHEDIT) != NULL ) {
 						if( static_cast<CRichEditUI*>(m_pFocus)->IsWantTab() ) return false;
 					}
 					if( m_pFocus && m_pFocus->IsVisible() && m_pFocus->IsEnabled() && _tcsstr(m_pFocus->GetClass(), _T("WkeWebkitUI")) != NULL ) {
@@ -1588,7 +1577,7 @@ namespace DuiLib {
 						event.Type = UIEVENT_MOUSELEAVE;
 						event.pSender = m_pEventHover;
 
-						CStdPtrArray aNeedMouseLeaveNeeded(m_aNeedMouseLeaveNeeded.GetSize());
+						CDuiPtrArray aNeedMouseLeaveNeeded(m_aNeedMouseLeaveNeeded.GetSize());
 						aNeedMouseLeaveNeeded.Resize(m_aNeedMouseLeaveNeeded.GetSize());
 						::CopyMemory(aNeedMouseLeaveNeeded.GetData(), m_aNeedMouseLeaveNeeded.GetData(), m_aNeedMouseLeaveNeeded.GetSize() * sizeof(LPVOID));
 						for( int i = 0; i < aNeedMouseLeaveNeeded.GetSize(); i++ ) {
@@ -2046,7 +2035,7 @@ namespace DuiLib {
 	{
 		LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
 		if( lp ) {
-			CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+			CDuiPtrArray* aOptionGroup = static_cast<CDuiPtrArray*>(lp);
 			for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
 				if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
 					return false;
@@ -2055,17 +2044,17 @@ namespace DuiLib {
 			aOptionGroup->Add(pControl);
 		}
 		else {
-			CStdPtrArray* aOptionGroup = new CStdPtrArray(6);
+			CDuiPtrArray* aOptionGroup = new CDuiPtrArray(6);
 			aOptionGroup->Add(pControl);
 			m_mOptionGroup.Insert(pStrGroupName, aOptionGroup);
 		}
 		return true;
 	}
 
-	CStdPtrArray* CPaintManagerUI::GetOptionGroup(LPCTSTR pStrGroupName)
+	CDuiPtrArray* CPaintManagerUI::GetOptionGroup(LPCTSTR pStrGroupName)
 	{
 		LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
-		if( lp ) return static_cast<CStdPtrArray*>(lp);
+		if( lp ) return static_cast<CDuiPtrArray*>(lp);
 		return NULL;
 	}
 
@@ -2073,7 +2062,7 @@ namespace DuiLib {
 	{
 		LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
 		if( lp ) {
-			CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+			CDuiPtrArray* aOptionGroup = static_cast<CDuiPtrArray*>(lp);
 			if( aOptionGroup == NULL ) return;
 			for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
 				if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
@@ -2090,10 +2079,10 @@ namespace DuiLib {
 
 	void CPaintManagerUI::RemoveAllOptionGroups()
 	{
-		CStdPtrArray* aOptionGroup;
+		CDuiPtrArray* aOptionGroup;
 		for( int i = 0; i< m_mOptionGroup.GetSize(); i++ ) {
 			if(LPCTSTR key = m_mOptionGroup.GetAt(i)) {
-				aOptionGroup = static_cast<CStdPtrArray*>(m_mOptionGroup.Find(key));
+				aOptionGroup = static_cast<CDuiPtrArray*>(m_mOptionGroup.Find(key));
 				delete aOptionGroup;
 			}
 		}
@@ -2246,7 +2235,7 @@ namespace DuiLib {
 		}
 		RebuildFont(&m_SharedResInfo.m_DefaultFontInfo);
 
-		CStdPtrArray *richEditList = FindSubControlsByClass(GetRoot(), _T("RichEditUI"));
+		CDuiPtrArray *richEditList = FindSubControlsByClass(GetRoot(), DUI_CTR_RICHEDIT);
 		for (int i = 0; i < richEditList->GetSize(); i++)
 		{
 			CRichEditUI* pT = static_cast<CRichEditUI*>((*richEditList)[i]);
@@ -3772,7 +3761,7 @@ namespace DuiLib {
 		return pParent->FindControl(__FindControlFromClass, (LPVOID)pstrClass, UIFIND_ALL);
 	}
 
-	CStdPtrArray* CPaintManagerUI::FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass)
+	CDuiPtrArray* CPaintManagerUI::FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass)
 	{
 		if( pParent == NULL ) pParent = GetRoot();
 		ASSERT(pParent);
@@ -3781,7 +3770,7 @@ namespace DuiLib {
 		return &m_aFoundControls;
 	}
 
-	CStdPtrArray* CPaintManagerUI::GetFoundControls()
+	CDuiPtrArray* CPaintManagerUI::GetFoundControls()
 	{
 		return &m_aFoundControls;
 	}
@@ -3828,7 +3817,7 @@ namespace DuiLib {
 		if( !pThis->IsVisible() ) return NULL;
 		FINDSHORTCUT* pFS = static_cast<FINDSHORTCUT*>(pData);
 		if( pFS->ch == toupper(pThis->GetShortcut()) ) pFS->bPickNext = true;
-		if( _tcsstr(pThis->GetClass(), _T("LabelUI")) != NULL ) return NULL;   // Labels never get focus!
+		if( _tcsstr(pThis->GetClass(), DUI_CTR_LABEL) != NULL ) return NULL;   // Labels never get focus!
 		return pFS->bPickNext ? pThis : NULL;
 	}
 
@@ -3844,7 +3833,7 @@ namespace DuiLib {
 	{
 		LPCTSTR pstrType = static_cast<LPCTSTR>(pData);
 		LPCTSTR pType = pThis->GetClass();
-		CStdPtrArray* pFoundControls = pThis->GetManager()->GetFoundControls();
+		CDuiPtrArray* pFoundControls = pThis->GetManager()->GetFoundControls();
 		if( _tcsicmp(pstrType, _T("*")) == 0 || _tcsicmp(pstrType, pType) == 0 ) {
 			int iIndex = -1;
 			while( pFoundControls->GetAt(++iIndex) != NULL ) ;
@@ -4004,7 +3993,7 @@ namespace DuiLib {
 		return true;
 	}
 
-	const CStdStringPtrMap& CPaintManagerUI::GetStyles(bool bShared) const
+	const CDuiStringPtrMap& CPaintManagerUI::GetStyles(bool bShared) const
 	{
 		if(bShared) return m_SharedResInfo.m_StyleHash;
 		else return m_ResInfo.m_StyleHash;

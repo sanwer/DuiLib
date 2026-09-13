@@ -1,4 +1,4 @@
-﻿#ifndef __UIMARKUP_H__
+#ifndef __UIMARKUP_H__
 #define __UIMARKUP_H__
 
 #pragma once
@@ -16,7 +16,7 @@ namespace DuiLib {
 	class CMarkupNode;
 
 
-	class UILIB_API CMarkup
+	class DUILIB_API CMarkup
 	{
 		friend class CMarkupNode;
 	public:
@@ -68,7 +68,7 @@ namespace DuiLib {
 	};
 
 
-	class UILIB_API CMarkupNode
+	class DUILIB_API CMarkupNode
 	{
 		friend class CMarkup;
 	private:

@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIDateTime.h"
 
 namespace DuiLib
@@ -46,11 +46,11 @@ namespace DuiLib
 			Create(m_pOwner->GetManager()->GetPaintWindow(), NULL, uStyle, 0, rcPos);
 			SetWindowFont(m_hWnd, m_pOwner->GetManager()->GetFontInfo(m_pOwner->GetFont())->hFont, TRUE);
 		}
-		// 使用系统当前时间
+		//Use current system time
 		if (m_pOwner->GetText().IsEmpty()) {
 			::GetLocalTime(&m_pOwner->m_sysTime);
 		}
-		// 显示格式
+		//Display format
 		CDuiString sTimeFormat = m_pOwner->GetTimeFormat();
 		::SendMessage(m_hWnd, DTM_SETFORMAT, 0, LPARAM(sTimeFormat.GetData()));
 		memcpy(&m_oldSysTime, &m_pOwner->m_sysTime, sizeof(SYSTEMTIME));
@@ -167,7 +167,7 @@ namespace DuiLib
 
 	LPCTSTR CDateTimeUI::GetClass() const
 	{
-		return _T("DateTimeUI");
+		return DUI_CTR_DATETIME;
 	}
 
 	LPVOID CDateTimeUI::GetInterface(LPCTSTR pstrName)

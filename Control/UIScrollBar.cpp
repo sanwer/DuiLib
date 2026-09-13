@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIScrollBar.h"
 
 namespace DuiLib
@@ -6,6 +6,7 @@ namespace DuiLib
 	IMPLEMENT_DUICONTROL(CScrollBarUI)
 
 	CScrollBarUI::CScrollBarUI() : m_bHorizontal(false), m_nRange(0), m_nScrollPos(0), m_nLineSize(8),
+		m_nScrollUnit(1), m_dwButton1Color(0), m_dwButton2Color(0), m_dwThumbColor(0),
 		m_pOwner(NULL), m_nLastScrollPos(0), m_nLastScrollOffset(0), m_nScrollRepeatDelay(0), m_uButton1State(0), \
 		m_uButton2State(0), m_uThumbState(0), m_bShowButton1(true), m_bShowButton2(true), m_bShow(true)
 	{
@@ -18,7 +19,7 @@ namespace DuiLib
 
 	LPCTSTR CScrollBarUI::GetClass() const
 	{
-		return _T("ScrollBarUI");
+		return DUI_CTR_SCROLLBAR;
 	}
 
 	LPVOID CScrollBarUI::GetInterface(LPCTSTR pstrName)
@@ -115,18 +116,36 @@ namespace DuiLib
 
 		m_nScrollPos = nPos;
 		if( m_nScrollPos < 0 ) m_nScrollPos = 0;
+		if( m_nScrollUnit > 1 ) {
+			int iLeftOffset = m_nScrollPos % m_nScrollUnit;
+			if( iLeftOffset != 0 ) {
+				if( iLeftOffset >= m_nScrollUnit/2 ) m_nScrollPos += m_nScrollUnit - iLeftOffset;
+				else m_nScrollPos -= iLeftOffset;
+			}
+		}
 		if( m_nScrollPos > m_nRange ) m_nScrollPos = m_nRange;
 		SetPos(m_rcItem);
 	}
 
 	int CScrollBarUI::GetLineSize() const
 	{
+		if (m_nScrollUnit > 1) return m_nScrollUnit;
 		return m_nLineSize;
 	}
 
 	void CScrollBarUI::SetLineSize(int nSize)
 	{
 		m_nLineSize = nSize;
+	}
+
+	int CScrollBarUI::GetScrollUnit() const
+	{
+		return m_nScrollUnit;
+	}
+
+	void CScrollBarUI::SetScrollUnit(int iUnit)
+	{
+		if (iUnit >= 0) m_nScrollUnit = iUnit;
 	}
 
 	bool CScrollBarUI::GetShowButton1()
@@ -138,6 +157,18 @@ namespace DuiLib
 	{
 		m_bShowButton1 = bShow;
 		SetPos(m_rcItem);
+	}
+
+	DWORD CScrollBarUI::GetButton1Color() const
+	{
+		return m_dwButton1Color;
+	}
+
+	void CScrollBarUI::SetButton1Color(DWORD dwColor)
+	{
+		if( m_dwButton1Color == dwColor ) return;
+		m_dwButton1Color = dwColor;
+		Invalidate();
 	}
 
 	LPCTSTR CScrollBarUI::GetButton1NormalImage()
@@ -195,6 +226,18 @@ namespace DuiLib
 		SetPos(m_rcItem);
 	}
 
+	DWORD CScrollBarUI::GetButton2Color() const
+	{
+		return m_dwButton2Color;
+	}
+
+	void CScrollBarUI::SetButton2Color(DWORD dwColor)
+	{
+		if( m_dwButton2Color == dwColor ) return;
+		m_dwButton2Color = dwColor;
+		Invalidate();
+	}
+
 	LPCTSTR CScrollBarUI::GetButton2NormalImage()
 	{
 		return m_sButton2NormalImage;
@@ -236,6 +279,18 @@ namespace DuiLib
 	void CScrollBarUI::SetButton2DisabledImage(LPCTSTR pStrImage)
 	{
 		m_sButton2DisabledImage = pStrImage;
+		Invalidate();
+	}
+
+	DWORD CScrollBarUI::GetThumbColor() const
+	{
+		return m_dwThumbColor;
+	}
+
+	void CScrollBarUI::SetThumbColor(DWORD dwColor)
+	{
+		if( m_dwThumbColor == dwColor ) return;
+		m_dwThumbColor = dwColor;
 		Invalidate();
 	}
 
@@ -793,10 +848,29 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("bkdisabledimage")) == 0 ) SetBkDisabledImage(pstrValue);
 		else if( _tcsicmp(pstrName, _T("hor")) == 0 ) SetHorizontal(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if( _tcsicmp(pstrName, _T("linesize")) == 0 ) SetLineSize(_ttoi(pstrValue));
+		else if( _tcsicmp(pstrName, _T("scrollunit")) == 0 ) SetScrollUnit(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("range")) == 0 ) SetScrollRange(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("value")) == 0 ) SetScrollPos(_ttoi(pstrValue));
 		else if( _tcsicmp(pstrName, _T("showbutton1")) == 0 ) SetShowButton1(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if( _tcsicmp(pstrName, _T("showbutton2")) == 0 ) SetShowButton2(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if( _tcsicmp(pstrName, _T("button1color")) == 0 ) {
+			if( *pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
+			LPTSTR pstr = NULL;
+			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
+			SetButton1Color(clrColor);
+		}
+		else if( _tcsicmp(pstrName, _T("button2color")) == 0 ) {
+			if( *pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
+			LPTSTR pstr = NULL;
+			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
+			SetButton2Color(clrColor);
+		}
+		else if( _tcsicmp(pstrName, _T("thumbcolor")) == 0 ) {
+			if( *pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
+			LPTSTR pstr = NULL;
+			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
+			SetThumbColor(clrColor);
+		}
 		else CControlUI::SetAttribute(pstrName, pstrValue);
 	}
 
@@ -859,6 +933,11 @@ namespace DuiLib
 		m_sImageModify.Empty();
 		m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
 
+		if( m_dwButton1Color != 0 ) {
+			if( m_dwButton1Color >= 0xFF000000 ) CRenderEngine::DrawColor(hDC, m_rcButton1, GetAdjustColor(m_dwButton1Color));
+			else CRenderEngine::DrawColor(hDC, m_rcButton1, GetAdjustColor(m_dwButton1Color));
+		}
+
 		if( (m_uButton1State & UISTATE_DISABLED) != 0 ) {
 			if( !m_sButton1DisabledImage.IsEmpty() ) {
 				if( !DrawImage(hDC, (LPCTSTR)m_sButton1DisabledImage, (LPCTSTR)m_sImageModify) ) {}
@@ -901,6 +980,11 @@ namespace DuiLib
 		m_sImageModify.Empty();
 		m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"),d1 ,d2 ,d3 ,d4 );
 
+		if( m_dwButton2Color != 0 ) {
+			if( m_dwButton2Color >= 0xFF000000 ) CRenderEngine::DrawColor(hDC, m_rcButton2, GetAdjustColor(m_dwButton2Color));
+			else CRenderEngine::DrawColor(hDC, m_rcButton2, GetAdjustColor(m_dwButton2Color));
+		}
+
 		if( (m_uButton2State & UISTATE_DISABLED) != 0 ) {
 			if( !m_sButton2DisabledImage.IsEmpty() ) {
 				if( !DrawImage(hDC, (LPCTSTR)m_sButton2DisabledImage, (LPCTSTR)m_sImageModify) ) {}
@@ -941,6 +1025,11 @@ namespace DuiLib
 		int d4 = MulDiv(m_rcThumb.bottom - m_rcItem.top, 100, GetManager()->GetDPIObj()->GetScale());
 		m_sImageModify.Empty();
 		m_sImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), d1, d2, d3, d4);
+
+		if( m_dwThumbColor != 0 ) {
+			if( m_dwThumbColor >= 0xFF000000 ) CRenderEngine::DrawColor(hDC, m_rcThumb, GetAdjustColor(m_dwThumbColor));
+			else CRenderEngine::DrawColor(hDC, m_rcThumb, GetAdjustColor(m_dwThumbColor));
+		}
 
 		if( (m_uThumbState & UISTATE_DISABLED) != 0 ) {
 			if( !m_sThumbDisabledImage.IsEmpty() ) {

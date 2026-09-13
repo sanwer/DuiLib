@@ -1615,9 +1615,9 @@ namespace DuiLib {
 
 		bool bDraw = (uStyle & DT_CALCRECT) == 0;
 
-		CStdPtrArray aFontArray(10);
-		CStdPtrArray aColorArray(10);
-		CStdPtrArray aPIndentArray(10);
+		CDuiPtrArray aFontArray(10);
+		CDuiPtrArray aColorArray(10);
+		CDuiPtrArray aPIndentArray(10);
 
 		RECT rcClip = { 0 };
 		::GetClipBox(hDC, &rcClip);
@@ -1683,9 +1683,9 @@ namespace DuiLib {
 		int iLineLinkIndex = 0;
 
 		// 排版习惯是图文底部对齐，所以每行绘制都要分两步，先计算高度，再绘制
-		CStdPtrArray aLineFontArray;
-		CStdPtrArray aLineColorArray;
-		CStdPtrArray aLinePIndentArray;
+		CDuiPtrArray aLineFontArray;
+		CDuiPtrArray aLineColorArray;
+		CDuiPtrArray aLinePIndentArray;
 		LPCTSTR pstrLineBegin = pstrText;
 		bool bLineInRaw = false;
 		bool bLineInLink = false;

@@ -1,37 +1,36 @@
-﻿#ifndef __UILIB_H__
+#ifndef __UILIB_H__
 #define __UILIB_H__
 #pragma once
 
-// ===========================================================================
-// 导出/导入宏
-// ===========================================================================
+// Suppress warnings
+#ifdef _MSC_VER
+#pragma warning (disable : 4819) // chars not representable in current code page.
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#endif // _MSC_VER
+
+// Export/Import macros
 #ifdef UILIB_STATIC
-#define UILIB_API
+#define DUILIB_API
 #else
 #if defined(UILIB_EXPORTS)
 # if defined(_MSC_VER)
-#   define UILIB_API __declspec(dllexport)
+#   define DUILIB_API __declspec(dllexport)
 # else
-#   define UILIB_API
+#   define DUILIB_API
 # endif
 #else
 # if defined(_MSC_VER)
-#   define UILIB_API __declspec(dllimport)
+#   define DUILIB_API __declspec(dllimport)
 # else
-#   define UILIB_API
+#   define DUILIB_API
 # endif
 #endif
 #endif
 #define UILIB_COMDAT __declspec(selectany)
 
-// 抑制警告
-#pragma warning(disable:4505)
-#pragma warning(disable:4251)
-#pragma warning(disable:4189)
-#pragma warning(disable:4121)
-#pragma warning(disable:4100)
-
-// 清单依赖
+// Manifest dependency
 #if defined _M_IX86
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64
@@ -42,9 +41,7 @@
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
-// ===========================================================================
-// 系统头文件
-// ===========================================================================
+// System headers
 #include <windows.h>
 #include <windowsx.h>
 #include <commctrl.h>
@@ -56,60 +53,56 @@
 #include <malloc.h>
 #include <gdiplus.h>
 
-// ===========================================================================
-// 模块开关
-// 注意：所有模块默认关闭，取消下方对应模块的注释符即可启用
-// ===========================================================================
-#define DUIMOD_ACTIVEX              // CActiveXUI ActiveX容器
-#define DUIMOD_ANIMATION            // CUIAnimation 动画基类（FADEBUTTON/TABLAYOUT 自动联动）
-#define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI 动画页切换（自动启用 ANIMATION）
-#define DUIMOD_COLORPALETTE         // CColorPaletteUI 调色板
-#define DUIMOD_FADEBUTTON           // CFadeButtonUI 渐变按钮（自动启用 ANIMATION）
-#define DUIMOD_GIFANIM              // CGifAnimUI GIF动画
-#define DUIMOD_HOTKEY               // CHotKeyUI 热键
-#define DUIMOD_IPADDRESS            // CIPAddressUI IP地址
-#define DUIMOD_IPADDRESSEX          // CIPAddressExUI 扩展IP地址
-#define DUIMOD_LISTEX               // CListExUI 扩展列表（自动启用 COMBOBOX + RICHEDIT）
-#define DUIMOD_LOADING              // CLoadingUI 加载动画
-#define DUIMOD_PAGECONTROL          // CPageControlUI 分页
-#define DUIMOD_PROGRESS             // CProgressUI 进度条
-#define DUIMOD_RICHEDIT             // CRichEditUI 富文本
-#define DUIMOD_RING                 // CRingUI 环形
-#define DUIMOD_ROLLTEXT             // CRollTextUI 滚动文字
-#define DUIMOD_SLIDER               // CSliderUI 滑动条（自动启用 PROGRESS）
-#define DUIMOD_TRAYICON             // CTrayIconUI 托盘图标
-#define DUIMOD_TREEVIEW             // CTreeViewUI 树控件
+// Module switches
+// NOTE: Modules off by default; uncomment to enable.
+#define DUIMOD_ACTIVEX              // CActiveXUI
+#define DUIMOD_ANIMATION            // CUIAnimation
+#define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI (auto-enables ANIMATION)
+#define DUIMOD_COLORPALETTE         // CColorPaletteUI
+#define DUIMOD_FADEBUTTON           // CFadeButtonUI
+#define DUIMOD_GIFANIM              // CGifAnimUI
+#define DUIMOD_HOTKEY               // CHotKeyUI
+#define DUIMOD_IPADDRESS            // CIPAddressUI
+#define DUIMOD_IPADDRESSEX          // CIPAddressExUI
+#define DUIMOD_LISTEX               // CListExUI (auto-enables COMBOBOX + RICHEDIT)
+#define DUIMOD_LOADING              // CLoadingUI
+#define DUIMOD_PAGECONTROL          // CPageControlUI
+#define DUIMOD_PROGRESS             // CProgressUI
+#define DUIMOD_RICHEDIT             // CRichEditUI
+#define DUIMOD_RING                 // CRingUI
+#define DUIMOD_ROLLTEXT             // CRollTextUI
+#define DUIMOD_SLIDER               // CSliderUI (auto-enables PROGRESS)
+#define DUIMOD_TRAYICON             // CTrayIconUI
+#define DUIMOD_TREEVIEW             // CTreeViewUI
+#define DUIMOD_WEBBROWSER           // CWebBrowserUI (auto-enables ACTIVEX)
 
-// ===========================================================================
-// 模块依赖联动（自动启用依赖模块，无需手动开启）
-// ===========================================================================
+// Module dependencies auto-enabled.
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
 #ifndef DUIMOD_ANIMATION
 #define DUIMOD_ANIMATION
 #endif
 #endif
-
 #ifdef DUIMOD_FADEBUTTON
 #ifndef DUIMOD_ANIMATION
 #define DUIMOD_ANIMATION
 #endif
 #endif
-
 #ifdef DUIMOD_LISTEX
 #ifndef DUIMOD_RICHEDIT
 #define DUIMOD_RICHEDIT
 #endif
 #endif
-
 #ifdef DUIMOD_SLIDER
 #ifndef DUIMOD_PROGRESS
 #define DUIMOD_PROGRESS
 #endif
 #endif
+#ifdef DUIMOD_WEBBROWSER
+#ifndef DUIMOD_ACTIVEX
+#define DUIMOD_ACTIVEX
+#endif
+#endif
 
-// ===========================================================================
-// 工具及核心头文件
-// ===========================================================================
 #include "Utils/Utils.h"
 #include "Utils/unzip.h"
 #include "Utils/VersionHelpers.h"
@@ -130,9 +123,6 @@
 #include "Core/UIRender.h"
 #include "Utils/WinImplBase.h"
 
-// ===========================================================================
-// 核心模块
-// ===========================================================================
 #include "Layout/UIChildLayout.h"
 #include "Layout/UIHorizontalLayout.h"
 #include "Layout/UIVerticalLayout.h"
@@ -151,11 +141,12 @@
 #include "Control/UIScrollBar.h"
 #include "Control/UIText.h"
 
-// ===========================================================================
-// 开关模块（条件包含，由上方开关控制）
-// ===========================================================================
+// Switchable modules
 #ifdef DUIMOD_ACTIVEX
 #include "Control/UIActiveX.h"
+#endif
+#ifdef DUIMOD_WEBBROWSER
+#include "Control/UIWebBrowser.h"
 #endif
 #ifdef DUIMOD_ANIMATION
 #include "Control/UIAnimation.h"
@@ -212,9 +203,7 @@
 #include "Control/UITreeView.h"
 #endif
 
-// ===========================================================================
-// 链接库
-// ===========================================================================
+// Link libraries
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "GdiPlus.lib")
 #pragma comment(lib, "Imm32.lib")

@@ -1,16 +1,16 @@
-﻿#ifndef __UIRESOURCEMANAGER_H__
+#ifndef __UIRESOURCEMANAGER_H__
 #define __UIRESOURCEMANAGER_H__
 #pragma once
 
 namespace DuiLib {
-	// 控件文字查询接口
-	class UILIB_API IQueryControlText
+	//Control text query interface
+	class DUILIB_API IQueryControlText
 	{
 	public:
 		virtual LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType) = 0;
 	};
 
-	class UILIB_API CResourceManager
+	class DUILIB_API CResourceManager
 	{
 	private:
 		CResourceManager(void);
@@ -43,13 +43,13 @@ namespace DuiLib {
 		void ResetTextMap();
 
 	private:
-		CStdStringPtrMap m_mTextResourceHashMap;
+		CDuiStringPtrMap m_mTextResourceHashMap;
 		IQueryControlText* m_pQuerypInterface;
-		CStdStringPtrMap m_mImageHashMap;
-		CStdStringPtrMap m_mXmlHashMap;
+		CDuiStringPtrMap m_mImageHashMap;
+		CDuiStringPtrMap m_mXmlHashMap;
 		CMarkup m_xml;
 		CDuiString m_sLauguage;
-		CStdStringPtrMap m_mTextHashMap;
+		CDuiStringPtrMap m_mTextHashMap;
 	};
 
 } // namespace DuiLib

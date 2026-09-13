@@ -4,12 +4,13 @@
 #pragma once
 namespace DuiLib
 {
-	class UILIB_API CPageControlUI : public CHorizontalLayoutUI
+	class DUILIB_API CPageControlUI : public CHorizontalLayoutUI
 	{
 		DECLARE_DUICONTROL(CPageControlUI)
 	public:
 		CPageControlUI();
 		~CPageControlUI();
+		virtual LPCTSTR GetClass() const;
 		//maxpage="20,6"
 		void SetMaxPages(int nPages, int nShowNum = 6);
 		void SetMaxChar(int nNum = 2);
@@ -83,7 +84,7 @@ namespace DuiLib
 		CButtonUI* m_BtnPrevious;
 		CButtonUI* m_BtnNext;
 		CButtonUI* m_BtnNextMore;
-		CStdPtrArray m_OptPageNoArr;    //COptionUI*
+		CDuiPtrArray m_OptPageNoArr;    //COptionUI*
 		CButtonUI* m_BtnGoto;
 		CEditUI* m_EdtPageNo;
 

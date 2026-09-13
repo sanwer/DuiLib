@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #ifdef DUIMOD_HOTKEY
 #include "UIHotKey.h"
 namespace DuiLib{
@@ -128,7 +128,7 @@ namespace DuiLib{
 		if( m_pOwner == NULL ) return 0;
 		GetHotKey(m_pOwner->m_wVirtualKeyCode, m_pOwner->m_wModifiers);
 		if (m_pOwner->m_wVirtualKeyCode == 0) {
-			m_pOwner->m_sText = _T("无");
+			m_pOwner->m_sText = _T("None");
 			m_pOwner->m_wModifiers = 0;
 		}
 		else {
@@ -244,12 +244,12 @@ namespace DuiLib{
 
 	LPCTSTR CHotKeyUI::GetClass() const
 	{
-		return _T("HotKeyUI");
+		return DUI_CTR_HOTKEY;
 	}
 
 	LPVOID CHotKeyUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("HotKey")) == 0 ) return static_cast<CHotKeyUI *>(this);
+		if( _tcsicmp(pstrName, DUI_CTR_HOTKEY) == 0 ) return static_cast<CHotKeyUI *>(this);
 		return CLabelUI::GetInterface(pstrName);
 	}
 

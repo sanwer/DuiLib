@@ -1,11 +1,11 @@
-﻿#ifndef __UIHORIZONTALLAYOUT_H__
+#ifndef __UIHORIZONTALLAYOUT_H__
 #define __UIHORIZONTALLAYOUT_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API CHorizontalLayoutUI : public CContainerUI
+	class DUILIB_API CHorizontalLayoutUI : public CContainerUI
 	{
 		DECLARE_DUICONTROL(CHorizontalLayoutUI)
 	public:
@@ -30,7 +30,7 @@ namespace DuiLib
 	protected:
 		int m_iSepWidth;
 		UINT m_uButtonState;
-		POINT ptLastMouse;
+		POINT m_ptLastMouse;
 		RECT m_rcNewPos;
 		bool m_bImmMode;
 	};

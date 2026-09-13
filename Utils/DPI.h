@@ -1,4 +1,4 @@
-﻿#ifndef __DPI_H__
+#ifndef __DPI_H__
 #define __DPI_H__
 #pragma once
 
@@ -22,7 +22,7 @@ typedef enum MONITOR_DPI_TYPE {
 
 namespace DuiLib
 {
-	class UILIB_API CDPI
+	class DUILIB_API CDPI
 	{
 	public:
 		CDPI(void);

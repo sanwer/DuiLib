@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_IPADDRESSEX
 #include <Shlwapi.h>
 #pragma comment(lib, "ws2_32.lib")
@@ -23,7 +23,7 @@ namespace DuiLib
 
 	LPCTSTR CIPAddressExUI::GetClass() const
 	{
-		return _T("IPAddressExUI");
+		return DUI_CTR_IPADDRESSEX;
 	}
 
 	LPVOID CIPAddressExUI::GetInterface(LPCTSTR pstrName)
@@ -120,7 +120,7 @@ namespace DuiLib
 
 			POINT p = event.ptMouse;
 			RECT r = GetPos();
-			// 判断焦点范围确定哪一段被选中
+			//Determine which segment is selected by focus range
 			int nFocus = (r.right - r.left) / 4;
 			if(p.x - r.left <= nFocus)
 			{
@@ -163,7 +163,7 @@ namespace DuiLib
 			{
 				return;
 			}
-			// 删除
+			//Delete
 			if ((event.chKey == VK_DELETE) || (event.chKey == VK_BACK))
 			{
 				switch (m_nActiveSection)
@@ -188,7 +188,7 @@ namespace DuiLib
 				UpdateText();
 			}
 
-			// 获取输入字符
+			//Get input character
 			if ((m_nActiveSection == 1) && (event.chKey >= 0x30) && (event.chKey <= 0x39) ||
 				(m_nActiveSection == 1) && (event.chKey >= VK_NUMPAD0) && (event.chKey <= VK_NUMPAD9))
 			{
@@ -379,13 +379,16 @@ namespace DuiLib
 	void CIPAddressExUI::SetIP(LPCTSTR lpIP)
 	{
 		CDuiString sIP = lpIP;
+		sIP.Remove(_T(" "));
 
-		std::vector<CDuiString>vIPs = StrSplit(sIP, _T("."));
-		if (vIPs.size() == 4) {
-			m_nFirst = _ttoi(vIPs[0]);
-			m_nSecond = _ttoi(vIPs[1]);
-			m_nThird = _ttoi(vIPs[2]);
-			m_nFourth = _ttoi(vIPs[3]);
+		int nFirst = 0, nSecond = 0, nThird = 0, nFourth = 0;
+		if (_stscanf_s(sIP, _T("%d.%d.%d.%d"), &nFirst, &nSecond, &nThird, &nFourth) == 4
+			&& nFirst >= 0 && nFirst <= 255 && nSecond >= 0 && nSecond <= 255
+			&& nThird >= 0 && nThird <= 255 && nFourth >= 0 && nFourth <= 255) {
+			m_nFirst = nFirst;
+			m_nSecond = nSecond;
+			m_nThird = nThird;
+			m_nFourth = nFourth;
 		}
 		UpdateText();
 	}

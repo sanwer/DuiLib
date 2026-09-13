@@ -8,7 +8,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CRenderClip
+	class DUILIB_API CRenderClip
 	{
 	public:
 		~CRenderClip();
@@ -26,7 +26,7 @@ namespace DuiLib {
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 
-	class UILIB_API CRenderEngine
+	class DUILIB_API CRenderEngine
 	{
 	public:
 		// 图片加载

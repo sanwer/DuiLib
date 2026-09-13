@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #include "UIEdit.h"
 
 namespace DuiLib
@@ -251,7 +251,7 @@ namespace DuiLib
 
 	LPCTSTR CEditUI::GetClass() const
 	{
-		return _T("EditUI");
+		return DUI_CTR_EDIT;
 	}
 
 	LPVOID CEditUI::GetInterface(LPCTSTR pstrName)

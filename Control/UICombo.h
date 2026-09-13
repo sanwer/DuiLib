@@ -1,4 +1,4 @@
-﻿#ifndef __UICOMBO_H__
+#ifndef __UICOMBO_H__
 #define __UICOMBO_H__
 
 #pragma once
@@ -9,7 +9,7 @@ namespace DuiLib {
 
 	class CComboWnd;
 
-	class UILIB_API CComboUI : public CContainerUI, public IListOwnerUI
+	class DUILIB_API CComboUI : public CContainerUI, public IListOwnerUI
 	{
 		DECLARE_DUICONTROL(CComboUI)
 		friend class CComboWnd;
@@ -61,8 +61,8 @@ namespace DuiLib {
 
 		bool Add(CControlUI* pControl);
 		bool AddAt(CControlUI* pControl, int iIndex);
-		bool Remove(CControlUI* pControl);
-		bool RemoveAt(int iIndex);
+		bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
+		bool RemoveAt(int iIndex, bool bDoNotDestroy=false);
 		void RemoveAll();
 
 		bool Activate();
@@ -116,6 +116,17 @@ namespace DuiLib {
 		bool IsItemShowHtml();
 		void SetItemShowHtml(bool bShowHtml = true);
 
+		bool GetShowText() const;
+		void SetShowText(bool flag);
+		int GetItemVLineSize() const;
+		void SetItemVLineSize(int nSize);
+		DWORD GetItemVLineColor() const;
+		void SetItemVLineColor(DWORD dwLineColor);
+		int GetItemHLineSize() const;
+		void SetItemHLineSize(int nSize);
+		DWORD GetItemHLineColor() const;
+		void SetItemHLineColor(DWORD dwLineColor);
+
 		SIZE EstimateSize(SIZE szAvailable);
 		void SetPos(RECT rc, bool bNeedInvalidate = true);
 		void Move(SIZE szOffset, bool bNeedInvalidate = true);
@@ -142,13 +153,14 @@ namespace DuiLib {
 		CComboWnd* m_pWindow;
 
 		int m_iCurSel;
-		DWORD m_dwTextColor;
-		DWORD m_dwDisabledTextColor;
-		int m_iFont;
-		UINT m_uTextStyle;
-		RECT m_rcTextPadding;
-		bool m_bShowHtml;
-		bool m_bShowShadow;
+	DWORD m_dwTextColor;
+	DWORD m_dwDisabledTextColor;
+	int m_iFont;
+	UINT m_uTextStyle;
+	RECT m_rcTextPadding;
+	bool m_bShowHtml;
+	bool m_bShowShadow;
+	bool m_bShowText;
 		CDuiString m_sDropBoxAttributes;
 		CDuiString m_sCurUserData;
 		SIZE m_szDropBox;

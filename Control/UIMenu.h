@@ -75,7 +75,7 @@ public:
 /////////////////////////////////////////////////
 
 class MenuReceiverImpl;
-class UILIB_API MenuObserverImpl : public MenuMenuObserverImplBase
+class DUILIB_API MenuObserverImpl : public MenuMenuObserverImplBase
 {
 	friend class Iterator;
 public:
@@ -173,7 +173,7 @@ public:
 		return m_pMainWndPaintManager;
 	}
 
-	virtual void SetMenuCheckInfo(CStdStringPtrMap* pInfo)
+	virtual void SetMenuCheckInfo(CDuiStringPtrMap* pInfo)
 	{
 		if (pInfo != NULL)
  m_pMenuCheckInfo = pInfo;
@@ -181,7 +181,7 @@ public:
  m_pMenuCheckInfo = NULL;
 	}
 
-	virtual CStdStringPtrMap* GetMenuCheckInfo() const
+	virtual CDuiStringPtrMap* GetMenuCheckInfo() const
 	{
 		return m_pMenuCheckInfo;
 	}
@@ -190,11 +190,11 @@ protected:
 	typedef std::vector<MenuMenuReceiverImplBase*> ReceiversVector;
 	ReceiversVector *pReceivers_;
 	CPaintManagerUI* m_pMainWndPaintManager;
-	CStdStringPtrMap* m_pMenuCheckInfo;
+	CDuiStringPtrMap* m_pMenuCheckInfo;
 };
 
 ////////////////////////////////////////////////////
-class UILIB_API MenuReceiverImpl : public MenuMenuReceiverImplBase
+class DUILIB_API MenuReceiverImpl : public MenuMenuReceiverImplBase
 {
 public:
 	MenuReceiverImpl()
@@ -242,7 +242,7 @@ protected:
 
 class CListUI;
 class CMenuWnd;
-class UILIB_API CMenuUI : public CListUI
+class DUILIB_API CMenuUI : public CListUI
 {
 	DECLARE_DUICONTROL(CMenuUI)
 public:
@@ -260,7 +260,7 @@ public:
 
 	virtual int GetItemIndex(CControlUI* pControl) const;
 	virtual bool SetItemIndex(CControlUI* pControl, int iIndex);
-	virtual bool Remove(CControlUI* pControl);
+	virtual bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
 
 	SIZE EstimateSize(SIZE szAvailable);
 
@@ -271,7 +271,7 @@ public:
 //
 
 class CMenuElementUI;
-class UILIB_API CMenuWnd : public CWindowWnd, public MenuReceiverImpl, public INotifyUI, public IDialogBuilderCallback
+class DUILIB_API CMenuWnd : public CWindowWnd, public MenuReceiverImpl, public INotifyUI, public IDialogBuilderCallback
 {
 public:
 	static MenuObserverImpl& GetGlobalContextMenuObserver()
@@ -280,7 +280,7 @@ public:
 		return s_context_menu_observer;
 	}
 	static CMenuWnd* CreateMenu(CMenuElementUI* pOwner, STRINGorID xml, POINT point,
-		CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = NULL,
+		CPaintManagerUI* pMainPaintManager, CDuiStringPtrMap* pMenuCheckInfo = NULL,
 		DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
 	static void DestroyMenu();
 	static MenuItemInfo* SetMenuItemInfo(LPCTSTR pstrName, bool bChecked);
@@ -300,7 +300,7 @@ public:
 	 */
 
 	void Init(CMenuElementUI* pOwner, STRINGorID xml, POINT point,
-		CPaintManagerUI* pMainPaintManager, CStdStringPtrMap* pMenuCheckInfo = NULL,
+		CPaintManagerUI* pMainPaintManager, CDuiStringPtrMap* pMenuCheckInfo = NULL,
 		DWORD dwAlignment = eMenuAlignment_Left | eMenuAlignment_Top);
 	LPCTSTR GetWindowClassName() const;
 	void OnFinalMessage(HWND hWnd);
@@ -335,7 +335,7 @@ public:
 };
 
 class CListContainerElementUI;
-class UILIB_API CMenuElementUI : public CListContainerElementUI
+class DUILIB_API CMenuElementUI : public CListContainerElementUI
 {
 	DECLARE_DUICONTROL(CMenuElementUI)
 	friend CMenuWnd;

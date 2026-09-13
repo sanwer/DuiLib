@@ -1,11 +1,11 @@
-﻿#ifndef __UIOPTION_H__
+#ifndef __UIOPTION_H__
 #define __UIOPTION_H__
 
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API COptionUI : public CButtonUI
+	class DUILIB_API COptionUI : public CButtonUI
 	{
 		DECLARE_DUICONTROL(COptionUI)
 	public:
@@ -79,7 +79,7 @@ namespace DuiLib
 		CDuiString m_sSelectedStateImage;
 	};
 
-	class UILIB_API CCheckBoxUI : public COptionUI
+	class DUILIB_API CCheckBoxUI : public COptionUI
 	{
 		DECLARE_DUICONTROL(CCheckBoxUI)
 	public:

@@ -15,7 +15,7 @@ namespace DuiLib {
 
 	LPCTSTR CListExUI::GetClass() const
 	{
-		return _T("XListUI");
+		return DUI_CTR_LISTEX;
 	}
 
 	UINT CListExUI::GetControlFlags() const
@@ -99,7 +99,7 @@ namespace DuiLib {
 	BOOL CListExUI::CheckColumCheckBoxable(int nColum)
 	{
 		CControlUI* p = m_pHeader->GetItemAt(nColum);
-		CListContainerHeaderItemUI* pHItem = static_cast<CListContainerHeaderItemUI*>(p->GetInterface(_T("ListContainerHeaderItem")));
+		CListContainerHeaderItemUI* pHItem = static_cast<CListContainerHeaderItemUI*>(p->GetInterface(DUI_CTR_LISTCONTAINERHEADERITEM));
 		return pHItem != NULL? pHItem->GetColumeCheckable() : FALSE;
 	}
 
@@ -119,7 +119,7 @@ namespace DuiLib {
 				{
 					for (int i = 0; i < GetCount(); ++i) {
 						CControlUI* p = GetItemAt(i);
-						CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
+						CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(DUI_CTR_LISTTEXTEXTDELEMENT));
 						if (pLItem != NULL) {
 							pLItem->SetCheck(bCheck);
 						}
@@ -132,7 +132,7 @@ namespace DuiLib {
 		{
 			for (int i = 0; i < GetCount(); ++i) {
 				CControlUI* p = GetItemAt(i);
-				CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
+				CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(DUI_CTR_LISTTEXTEXTDELEMENT));
 				if (pLItem != NULL && pLItem == msg.pSender)
 				{
 					OnListItemChecked(LOWORD(msg.wParam), HIWORD(msg.wParam), msg.lParam);
@@ -296,7 +296,7 @@ namespace DuiLib {
 	void CListExUI::OnListItemChecked(int nIndex, int nColum, BOOL bChecked)
 	{
 		CControlUI* p = m_pHeader->GetItemAt(nColum);
-		CListContainerHeaderItemUI* pHItem = static_cast<CListContainerHeaderItemUI*>(p->GetInterface(_T("ListContainerHeaderItem")));
+		CListContainerHeaderItemUI* pHItem = static_cast<CListContainerHeaderItemUI*>(p->GetInterface(DUI_CTR_LISTCONTAINERHEADERITEM));
 		if (pHItem == NULL)
 		{
 			return;
@@ -309,7 +309,7 @@ namespace DuiLib {
 			for(int i = 0; i < GetCount(); i++)
 			{
 				CControlUI* p = GetItemAt(i);
-				CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
+				CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(DUI_CTR_LISTTEXTEXTDELEMENT));
 				if( pLItem != NULL && !pLItem->GetCheck())
 				{
 					bCheckAll = FALSE;
@@ -342,7 +342,7 @@ namespace DuiLib {
 	void CListExUI::SetColumItemColor(int nIndex, int nColum, DWORD iBKColor)
 	{
 		CControlUI* p = GetItemAt(nIndex);
-		CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
+		CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(DUI_CTR_LISTTEXTEXTDELEMENT));
 		if( pLItem != NULL)
 		{
 			DWORD iTextBkColor = iBKColor;
@@ -353,7 +353,7 @@ namespace DuiLib {
 	BOOL CListExUI::GetColumItemColor(int nIndex, int nColum, DWORD& iBKColor)
 	{
 		CControlUI* p = GetItemAt(nIndex);
-		CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(_T("ListTextExElement")));
+		CListTextExtElementUI* pLItem = static_cast<CListTextExtElementUI*>(p->GetInterface(DUI_CTR_LISTTEXTEXTDELEMENT));
 		if( pLItem == NULL)
 		{
 			return FALSE;
@@ -378,7 +378,7 @@ namespace DuiLib {
 
 	LPCTSTR CListContainerHeaderItemUI::GetClass() const
 	{
-		return _T("ListContainerHeaderItemUI");
+		return DUI_CTR_LISTCONTAINERHEADERITEM;
 	}
 
 	LPVOID CListContainerHeaderItemUI::GetInterface(LPCTSTR pstrName)
@@ -1078,12 +1078,12 @@ Label_ForeImage:
 
 	LPCTSTR CListTextExtElementUI::GetClass() const
 	{
-		return _T("ListTextExElementUI");
+		return DUI_CTR_LISTTEXTEXTDELEMENT;
 	}
 
 	LPVOID CListTextExtElementUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("ListTextExElement")) == 0 ) return static_cast<CListTextExtElementUI*>(this);
+		if( _tcsicmp(pstrName, DUI_CTR_LISTTEXTEXTDELEMENT) == 0 ) return static_cast<CListTextExtElementUI*>(this);
 		return CListLabelElementUI::GetInterface(pstrName);
 	}
 
@@ -1119,7 +1119,7 @@ Label_ForeImage:
 	void CListTextExtElementUI::SetOwner(CControlUI* pOwner)
 	{
 		CListElementUI::SetOwner(pOwner);
-		m_pOwner = static_cast<CListUI*>(pOwner->GetInterface(_T("List")));
+		m_pOwner = static_cast<CListUI*>(pOwner->GetInterface(DUI_CTR_LIST));
 	}
 
 	CDuiString* CListTextExtElementUI::GetLinkContent(int iIndex)
@@ -1310,7 +1310,7 @@ Label_ForeImage:
 				rcItem.left += (rcCheckBox.right - rcCheckBox.left);
 			}
 
-			CDuiString strText;//不使用LPCTSTR，否则限制太多 by cddjr 2011/10/20
+			CDuiString strText;//不使用LPCTSTR，否则限制太多
 			if( pCallback ) strText = pCallback->GetItemText(this, m_iIndex, i);
 			else strText.Assign(GetText(i));
 			if( pInfo->bShowHtml )

@@ -1,4 +1,4 @@
-﻿#ifndef __UICONTAINER_H__
+#ifndef __UICONTAINER_H__
 #define __UICONTAINER_H__
 
 #pragma once
@@ -16,8 +16,8 @@ namespace DuiLib {
 		virtual int GetCount() const = 0;
 		virtual bool Add(CControlUI* pControl) = 0;
 		virtual bool AddAt(CControlUI* pControl, int iIndex)  = 0;
-		virtual bool Remove(CControlUI* pControl) = 0;
-		virtual bool RemoveAt(int iIndex)  = 0;
+		virtual bool Remove(CControlUI* pControl, bool bDoNotDestroy=false) = 0;
+		virtual bool RemoveAt(int iIndex, bool bDoNotDestroy=false)  = 0;
 		virtual void RemoveAll() = 0;
 	};
 
@@ -26,7 +26,7 @@ namespace DuiLib {
 	//
 	class CScrollBarUI;
 
-	class UILIB_API CContainerUI : public CControlUI, public IContainerUI
+	class DUILIB_API CContainerUI : public CControlUI, public IContainerUI
 	{
 		DECLARE_DUICONTROL(CContainerUI)
 
@@ -44,8 +44,8 @@ namespace DuiLib {
 		int GetCount() const;
 		bool Add(CControlUI* pControl);
 		bool AddAt(CControlUI* pControl, int iIndex);
-		bool Remove(CControlUI* pControl);
-		bool RemoveAt(int iIndex);
+		bool Remove(CControlUI* pControl, bool bDoNotDestroy=false);
+		bool RemoveAt(int iIndex, bool bDoNotDestroy=false);
 		void RemoveAll();
 
 		void DoEvent(TEventUI& event);
@@ -55,7 +55,7 @@ namespace DuiLib {
 		void SetMouseEnabled(bool bEnable = true);
 
 		virtual RECT GetInset() const;
-		virtual void SetInset(RECT rcInset); // 设置内边距，相当于设置客户区
+		virtual void SetInset(RECT rcInset); //Set inset (equivalent to client area)
 		virtual int GetChildPadding() const;
 		virtual void SetChildPadding(int iPadding);
 		virtual UINT GetChildAlign() const;
@@ -124,7 +124,7 @@ namespace DuiLib {
 		virtual void ProcessScrollBar(RECT rc, int cxRequired, int cyRequired);
 
 	protected:
-		CStdPtrArray m_items;
+		CDuiPtrArray m_items;
 		RECT m_rcInset;
 		int m_iChildPadding;
 		UINT m_iChildAlign;

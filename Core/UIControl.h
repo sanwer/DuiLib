@@ -10,12 +10,13 @@ namespace DuiLib {
 
 	typedef CControlUI* (CALLBACK* FINDCONTROLPROC)(CControlUI*, LPVOID);
 
-	class UILIB_API CControlUI
+	class DUILIB_API CControlUI
 	{
 		DECLARE_DUICONTROL(CControlUI)
 	public:
 		CControlUI();
 		virtual ~CControlUI();
+		virtual void Delete();
 
 	public:
 		virtual CDuiString GetName() const;
@@ -74,12 +75,12 @@ namespace DuiLib {
 		bool DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify = NULL);
 
 		//边框相关
-		int GetBorderSize() const;
+		RECT GetBorderSize() const;
+		void SetBorderSize(RECT rc);
 		void SetBorderSize(int nSize);
 		DWORD GetBorderColor() const;
 		void SetBorderColor(DWORD dwBorderColor);
 		RECT GetBorderRectSize() const;
-		void SetBorderSize(RECT rc);
 		int GetLeftBorderSize() const;
 		void SetLeftBorderSize(int nSize);
 		int GetTopBorderSize() const;
@@ -183,6 +184,7 @@ namespace DuiLib {
 
 		virtual void SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue);
 		CControlUI* ApplyAttributeList(LPCTSTR pstrList);
+		virtual void SetAttributeList(LPCTSTR pstrList);
 
 		virtual SIZE EstimateSize(SIZE szAvailable);
 		virtual bool Paint(HDC hDC, const RECT& rcPaint, CControlUI* pStopControl = NULL); // 返回要不要继续绘制
@@ -253,7 +255,6 @@ namespace DuiLib {
 		DWORD m_dwBorderColor;
 		DWORD m_dwFocusBorderColor;
 		bool m_bColorHSL;
-		int m_nBorderSize;
 		int m_nBorderStyle;
 		int m_nTooltipWidth;
 		WORD m_wCursor;
@@ -262,7 +263,7 @@ namespace DuiLib {
 		RECT m_rcBorderSize;
 		HINSTANCE m_instance;
 
-		CStdStringPtrMap m_mCustomAttrHash;
+		CDuiStringPtrMap m_mCustomAttrHash;
 	};
 
 } // namespace DuiLib

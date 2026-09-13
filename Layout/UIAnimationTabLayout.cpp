@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+#include "StdAfx.h"
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
 #include "UIAnimationTabLayout.h"
 
@@ -16,12 +16,12 @@ namespace DuiLib {
 
 	LPCTSTR CAnimationTabLayoutUI::GetClass() const
 	{
-		return _T("AnimationTabLayoutUI");
+		return DUI_CTR_ANIMATIONTABLAYOUT;
 	}
 
 	LPVOID CAnimationTabLayoutUI::GetInterface(LPCTSTR pstrName)
 	{
-		if( _tcsicmp(pstrName, _T("AnimationTabLayout")) == 0 )
+		if( _tcsicmp(pstrName, DUI_CTR_ANIMATIONTABLAYOUT) == 0 )
 			return static_cast<CAnimationTabLayoutUI*>(this);
 		return CTabLayoutUI::GetInterface(pstrName);
 	}

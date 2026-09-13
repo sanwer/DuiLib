@@ -1,10 +1,18 @@
-﻿#ifndef __WIN_IMPL_BASE_H__
+#ifndef __WIN_IMPL_BASE_H__
 #define __WIN_IMPL_BASE_H__
 #pragma once
 
 namespace DuiLib
 {
-	class UILIB_API WindowImplBase
+	enum UILIB_RESOURCETYPE
+	{
+		UILIB_FILE = 1,     // Disk file
+		UILIB_ZIP,          // Disk ZIP
+		UILIB_RESOURCE,     // Resource
+		UILIB_ZIPRESOURCE,  // Resource ZIP
+	};
+
+	class DUILIB_API WindowImplBase
 		: public CWindowWnd
 		, public CNotifyPump
 		, public INotifyUI
@@ -13,29 +21,28 @@ namespace DuiLib
 		, public IQueryControlText
 	{
 	public:
-		WindowImplBase(){};
-		virtual ~WindowImplBase(){};
-		// 只需主窗口重写（初始化资源与多语言接口）
-		virtual void InitResource(){};
-		// 每个窗口都可以重写
-		virtual void InitWindow(){};
-		virtual void OnFinalMessage( HWND hWnd );
+		WindowImplBase() {};
+		virtual ~WindowImplBase() {};
+		virtual void InitWindow() {};
+		virtual void OnFinalMessage(HWND hWnd);
 		virtual void Notify(TNotifyUI& msg);
 
 		DUI_DECLARE_MESSAGE_MAP()
-		virtual void OnClick(TNotifyUI& msg);
-		virtual BOOL IsInStaticControl(CControlUI *pControl);
+			virtual void OnClick(TNotifyUI& msg);
 
 	protected:
-		virtual CDuiString GetSkinType() { return _T(""); }
+		virtual CDuiString GetSkinFolder() = 0;
 		virtual CDuiString GetSkinFile() = 0;
-		virtual LPCTSTR GetWindowClassName(void) const = 0 ;
-		virtual LPCTSTR GetManagerName() { return NULL; }
+		virtual LPCTSTR GetWindowClassName(void) const = 0;
 		virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);
 		CPaintManagerUI m_pm;
+		static LPBYTE m_lpResourceZIPBuffer;
 
 	public:
 		virtual UINT GetClassStyle() const;
+		virtual UILIB_RESOURCETYPE GetResourceType() const;
+		virtual CDuiString GetZIPFileName() const;
+		virtual LPCTSTR GetResourceID() const;
 		virtual CControlUI* CreateControl(LPCTSTR pstrClass);
 		virtual LPCTSTR QueryControlText(LPCTSTR lpstrId, LPCTSTR lpstrType);
 

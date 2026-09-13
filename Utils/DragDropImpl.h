@@ -1,4 +1,4 @@
-﻿// IDataObjectImpl.h: interface for the CIDataObjectImpl class.
+// IDataObjectImpl.h: interface for the CIDataObjectImpl class.
 /**************************************************************************
 THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
 ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
@@ -21,7 +21,7 @@ namespace DuiLib {
 
 	////////////////////////////////////////////////////////////////////////////////
 	///
-	class UILIB_API CEnumFormatEtc : public IEnumFORMATETC
+	class DUILIB_API CEnumFormatEtc : public IEnumFORMATETC
 	{
 	private:
 		ULONG           m_cRefCount;
@@ -45,7 +45,7 @@ namespace DuiLib {
 
 	////////////////////////////////////////////////////////////////////////////////
 	///
-	class UILIB_API CIDropSource : public IDropSource
+	class DUILIB_API CIDropSource : public IDropSource
 	{
 		long m_cRefCount;
 	public:
@@ -68,7 +68,7 @@ namespace DuiLib {
 
 	////////////////////////////////////////////////////////////////////////////////
 	///
-	class UILIB_API CIDataObject : public IDataObject//,public IAsyncOperation
+	class DUILIB_API CIDataObject : public IDataObject//,public IAsyncOperation
 	{
 		CIDropSource* m_pDropSource;
 		long m_cRefCount;
@@ -159,7 +159,7 @@ namespace DuiLib {
 
 	////////////////////////////////////////////////////////////////////////////////
 	///
-	class UILIB_API CIDropTarget : public IDropTarget
+	class DUILIB_API CIDropTarget : public IDropTarget
 	{
 	public:
 		CIDropTarget();
@@ -209,7 +209,7 @@ namespace DuiLib {
 
 	////////////////////////////////////////////////////////////////////////////////
 	///
-	class UILIB_API CDragSourceHelper
+	class DUILIB_API CDragSourceHelper
 	{
 	public:
 		CDragSourceHelper()

@@ -1,4 +1,4 @@
-﻿#ifndef __UIGROUPBOX_H__
+#ifndef __UIGROUPBOX_H__
 #define __UIGROUPBOX_H__
 
 #pragma once
@@ -6,7 +6,7 @@
 namespace DuiLib
 {
 
-	class UILIB_API CGroupBoxUI : public CVerticalLayoutUI
+	class DUILIB_API CGroupBoxUI : public CVerticalLayoutUI
 	{
 		DECLARE_DUICONTROL(CGroupBoxUI)
 	public:

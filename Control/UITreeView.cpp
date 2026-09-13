@@ -43,7 +43,7 @@ namespace DuiLib
 		pItemButton->SetMouseEnabled(FALSE);
 
 		if(_ParentNode) {
-			if (_tcsicmp(_ParentNode->GetClass(), _T("TreeNodeUI")) != 0) return;
+			if (_tcsicmp(_ParentNode->GetClass(), DUI_CTR_TREENODE) != 0) return;
 			pDottedLine->SetVisible(_ParentNode->IsVisible());
 			pDottedLine->SetFixedWidth(_ParentNode->GetDottedLine()->GetFixedWidth()+16);
 			this->SetParentNode(_ParentNode);
@@ -74,7 +74,7 @@ namespace DuiLib
 	//************************************
 	LPCTSTR CTreeNodeUI::GetClass() const
 	{
-		return _T("TreeNodeUI");
+		return DUI_CTR_TREENODE;
 	}
 
 	//************************************
@@ -148,7 +148,7 @@ namespace DuiLib
 			return;
 
 		if( GetParent() ) {
-			CContainerUI* pParentContainer = static_cast<CContainerUI*>(GetParent()->GetInterface(_T("Container")));
+			CContainerUI* pParentContainer = static_cast<CContainerUI*>(GetParent()->GetInterface(DUI_CTR_CONTAINER));
 			if( pParentContainer ) {
 				RECT rc = pParentContainer->GetPos();
 				RECT rcInset = pParentContainer->GetInset();
@@ -221,7 +221,7 @@ namespace DuiLib
 	//************************************
 	bool CTreeNodeUI::Add( CControlUI* _pTreeNodeUI )
 	{
-		if (NULL != static_cast<CTreeNodeUI*>(_pTreeNodeUI->GetInterface(_T("TreeNode"))))
+		if (NULL != static_cast<CTreeNodeUI*>(_pTreeNodeUI->GetInterface(DUI_CTR_TREENODE)))
 			return AddChildNode((CTreeNodeUI*)_pTreeNodeUI);
 
 		return CListContainerElementUI::Add(_pTreeNodeUI);
@@ -236,7 +236,7 @@ namespace DuiLib
 	//************************************
 	bool CTreeNodeUI::AddAt( CControlUI* pControl, int iIndex )
 	{
-		if(NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode"))))
+		if(NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE)))
 			return FALSE;
 
 		CTreeNodeUI* pIndexNode = static_cast<CTreeNodeUI*>(mTreeNodes.GetAt(iIndex));
@@ -248,7 +248,7 @@ namespace DuiLib
 			return FALSE;
 
 		if(!pIndexNode && pTreeView && pTreeView->GetItemAt(GetTreeIndex()+1))
-			pIndexNode = static_cast<CTreeNodeUI*>(pTreeView->GetItemAt(GetTreeIndex()+1)->GetInterface(_T("TreeNode")));
+			pIndexNode = static_cast<CTreeNodeUI*>(pTreeView->GetItemAt(GetTreeIndex()+1)->GetInterface(DUI_CTR_TREENODE));
 
 		pControl = CalLocation((CTreeNodeUI*)pControl);
 
@@ -266,9 +266,9 @@ namespace DuiLib
 	// 参数信息: CControlUI * pControl
 	// 函数说明:
 	//************************************
-	bool CTreeNodeUI::Remove( CControlUI* pControl )
+	bool CTreeNodeUI::Remove( CControlUI* pControl, bool bDoNotDestroy )
 	{
-		return RemoveAt((CTreeNodeUI*)pControl);
+		return RemoveAt((CTreeNodeUI*)pControl, bDoNotDestroy);
 	}
 
 	//************************************
@@ -366,7 +366,7 @@ namespace DuiLib
 		if (!_pTreeNodeUI)
 			return FALSE;
 
-		if (NULL == static_cast<CTreeNodeUI*>(_pTreeNodeUI->GetInterface(_T("TreeNode"))))
+		if (NULL == static_cast<CTreeNodeUI*>(_pTreeNodeUI->GetInterface(DUI_CTR_TREENODE)))
 			return FALSE;
 
 		_pTreeNodeUI = CalLocation(_pTreeNodeUI);
@@ -392,7 +392,7 @@ namespace DuiLib
 	// 参数信息: CTreeNodeUI * _pTreeNodeUI
 	// 函数说明:
 	//************************************
-	bool CTreeNodeUI::RemoveAt( CTreeNodeUI* _pTreeNodeUI )
+	bool CTreeNodeUI::RemoveAt( CTreeNodeUI* _pTreeNodeUI, bool bDoNotDestroy )
 	{
 		int nIndex = mTreeNodes.Find(_pTreeNodeUI);
 		CTreeNodeUI* pNode = static_cast<CTreeNodeUI*>(mTreeNodes.GetAt(nIndex));
@@ -404,7 +404,7 @@ namespace DuiLib
 			mTreeNodes.Remove(nIndex);
 
 			if(pTreeView)
-				pTreeView->Remove(_pTreeNodeUI);
+				pTreeView->Remove(_pTreeNodeUI, bDoNotDestroy);
 
 			return TRUE;
 		}
@@ -513,10 +513,10 @@ namespace DuiLib
 
 	//************************************
 	// 函数名称: GetTreeNodes
-	// 返回类型: CStdPtrArray
+	// 返回类型: CDuiPtrArray
 	// 函数说明:
 	//************************************
-	CStdPtrArray CTreeNodeUI::GetTreeNodes()
+	CDuiPtrArray CTreeNodeUI::GetTreeNodes()
 	{
 		return mTreeNodes;
 	}
@@ -769,7 +769,7 @@ namespace DuiLib
 	//************************************
 	LPCTSTR CTreeViewUI::GetClass() const
 	{
-		return _T("TreeViewUI");
+		return DUI_CTR_TREEVIEW;
 	}
 
 
@@ -799,7 +799,7 @@ namespace DuiLib
 	bool CTreeViewUI::Add( CTreeNodeUI* pControl )
 	{
 		if (!pControl) return false;
-		if (NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode")))) return false;
+		if (NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE))) return false;
 
 		pControl->OnNotify += MakeDelegate(this,&CTreeViewUI::OnDBClickItem);
 		pControl->GetFolderButton()->OnNotify += MakeDelegate(this,&CTreeViewUI::OnFolderChanged);
@@ -840,7 +840,7 @@ namespace DuiLib
 	long CTreeViewUI::AddAt( CTreeNodeUI* pControl, int iIndex )
 	{
 		if (!pControl) return -1;
-		if (NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode")))) return -1;
+		if (NULL == static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE))) return -1;
 		pControl->OnNotify += MakeDelegate(this,&CTreeViewUI::OnDBClickItem);
 		pControl->GetFolderButton()->OnNotify += MakeDelegate(this,&CTreeViewUI::OnFolderChanged);
 		pControl->GetCheckBox()->OnNotify += MakeDelegate(this,&CTreeViewUI::OnCheckBoxChanged);
@@ -914,19 +914,23 @@ namespace DuiLib
 	// 参数信息: CTreeNodeUI * pControl
 	// 函数说明: pControl 对象以及下的所有节点将被一并移除
 	//************************************
-	bool CTreeViewUI::Remove( CTreeNodeUI* pControl )
+	bool CTreeViewUI::Remove( CControlUI* pControl, bool bDoNotDestroy )
 	{
-		if(pControl->GetCountChild() > 0) {
-			int nCount = pControl->GetCountChild();
+		if (!pControl) return false;
+
+		CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE));
+		if (pTreeNode == NULL) return CListUI::Remove(pControl, bDoNotDestroy);
+
+		if(pTreeNode->GetCountChild() > 0) {
+			int nCount = pTreeNode->GetCountChild();
 			for(int nIndex = nCount - 1; nIndex >= 0; nIndex--) {
-				CTreeNodeUI* pNode = pControl->GetChildNode(nIndex);
+				CTreeNodeUI* pNode = pTreeNode->GetChildNode(nIndex);
 				if(pNode){
-					pControl->Remove(pNode);
+					pTreeNode->Remove(pNode);
 				}
 			}
 		}
-		CListUI::Remove(pControl);
-		return TRUE;
+		return CListUI::Remove(pControl, bDoNotDestroy);
 	}
 
 	//************************************
@@ -935,11 +939,12 @@ namespace DuiLib
 	// 参数信息: int iIndex
 	// 函数说明: iIndex 索引以及下的所有节点将被一并移除
 	//************************************
-	bool CTreeViewUI::RemoveAt( int iIndex )
+	bool CTreeViewUI::RemoveAt( int iIndex, bool bDoNotDestroy )
 	{
-		CTreeNodeUI* pItem = (CTreeNodeUI*)GetItemAt(iIndex);
-		Remove(pItem);
-		return TRUE;
+		CControlUI* pControl = GetItemAt(iIndex);
+		if (pControl == NULL) return false;
+
+		return Remove(pControl, bDoNotDestroy);
 	}
 
 	void CTreeViewUI::RemoveAll()

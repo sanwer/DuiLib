@@ -405,7 +405,7 @@ namespace DuiLib {
 
 				// 检查插件
 				if( pControl == NULL ) {
-					CStdPtrArray* pPlugins = CPaintManagerUI::GetPlugins();
+					CDuiPtrArray* pPlugins = CPaintManagerUI::GetPlugins();
 					LPCREATECONTROL lpCreateControl = NULL;
 					for( int i = 0; i < pPlugins->GetSize(); ++i ) {
 						lpCreateControl = (LPCREATECONTROL)pPlugins->GetAt(i);
@@ -440,9 +440,9 @@ namespace DuiLib {
 #endif
 			if( pParent != NULL && pControl != NULL ) {
 #ifdef DUIMOD_TREEVIEW
-				CTreeNodeUI* pParentTreeNode = static_cast<CTreeNodeUI*>(pParent->GetInterface(_T("TreeNode")));
-				CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(_T("TreeNode")));
-				pTreeView = static_cast<CTreeViewUI*>(pParent->GetInterface(_T("TreeView")));
+				CTreeNodeUI* pParentTreeNode = static_cast<CTreeNodeUI*>(pParent->GetInterface(DUI_CTR_TREENODE));
+				CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE));
+				pTreeView = static_cast<CTreeViewUI*>(pParent->GetInterface(DUI_CTR_TREEVIEW));
 				// TreeNode子节点
 				if(pTreeNode != NULL) {
 					if(pParentTreeNode) {
@@ -471,7 +471,7 @@ namespace DuiLib {
 				else
 #endif // DUIMOD_TREEVIEW
 				{
-					if( pContainer == NULL ) pContainer = static_cast<IContainerUI*>(pParent->GetInterface(_T("IContainer")));
+					if( pContainer == NULL ) pContainer = static_cast<IContainerUI*>(pParent->GetInterface(DUI_CTR_ICONTAINER));
 					ASSERT(pContainer);
 					if( pContainer == NULL ) return NULL;
 					if( !pContainer->Add(pControl) ) {

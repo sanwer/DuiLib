@@ -1121,7 +1121,7 @@ err:
 
 	LPCTSTR CRichEditUI::GetClass() const
 	{
-		return _T("RichEditUI");
+		return DUI_CTR_RICHEDIT;
 	}
 
 	LPVOID CRichEditUI::GetInterface(LPCTSTR pstrName)
