@@ -1174,6 +1174,12 @@ Label_ForeImage:
 			}
 		}
 
+		// ListEx-only edit/checkbox logic requires a ListEx owner; plain List falls back
+		if( m_pOwner == NULL || m_pOwner->GetInterface(DUI_CTR_LISTEX) == NULL ) {
+			CListLabelElementUI::DoEvent(event);
+			return;
+		}
+
 		//检查是否需要显示编辑框或者组合框
 		CListExUI * pListCtrl = (CListExUI *)m_pOwner;
 		int nColum = HitTestColum(event.ptMouse);
@@ -1268,6 +1274,11 @@ Label_ForeImage:
 	void CListTextExtElementUI::DrawItemText(HDC hDC, const RECT& rcItem)
 	{
 		if( m_pOwner == NULL ) return;
+		if( m_pOwner->GetInterface(DUI_CTR_LISTEX) == NULL ) {
+			// plain List owner: fall back to single-text label drawing
+			CListLabelElementUI::DrawItemText(hDC, rcItem);
+			return;
+		}
 		TListInfoUI* pInfo = m_pOwner->GetListInfo();
 		DWORD iTextColor = pInfo->dwTextColor;
 
@@ -1330,6 +1341,7 @@ Label_ForeImage:
 	}
 	void CListTextExtElementUI::PaintStatusImage(HDC hDC)
 	{
+		if( m_pOwner == NULL || m_pOwner->GetInterface(DUI_CTR_LISTEX) == NULL ) return;
 		CListExUI * pListCtrl = (CListExUI *)m_pOwner;
 		TListInfoUI* pInfo = m_pOwner->GetListInfo();
 		for( int i = 0; i < pInfo->nColumns; i++ )

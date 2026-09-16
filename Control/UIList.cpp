@@ -127,7 +127,8 @@ namespace DuiLib {
 			return CVerticalLayoutUI::AddAt(pControl, 0);
 		}
 		// We also need to recognize header sub-items
-		if (_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL) {
+		if (_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL
+			|| pControl->GetInterface(DUI_CTR_LISTCONTAINERHEADERITEM) != NULL) {
 			bool ret = m_pHeader->Add(pControl);
 			m_ListInfo.nColumns = MIN(m_pHeader->GetCount(), UILIST_MAX_COLUMNS);
 			return ret;
@@ -156,7 +157,8 @@ namespace DuiLib {
 			return CVerticalLayoutUI::AddAt(pControl, 0);
 		}
 		// We also need to recognize header sub-items
-		if (_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL) {
+		if (_tcsstr(pControl->GetClass(), DUI_CTR_LISTHEADERITEM) != NULL
+			|| pControl->GetInterface(DUI_CTR_LISTCONTAINERHEADERITEM) != NULL) {
 			bool ret = m_pHeader->AddAt(pControl, iIndex);
 			m_ListInfo.nColumns = MIN(m_pHeader->GetCount(), UILIST_MAX_COLUMNS);
 			return ret;
