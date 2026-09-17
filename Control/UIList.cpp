@@ -34,16 +34,15 @@ namespace DuiLib {
 		m_ListInfo.dwHotBkColor = 0xFFE9F5FF;
 		m_ListInfo.dwDisabledTextColor = 0xFFCCCCCC;
 		m_ListInfo.dwDisabledBkColor = 0xFFFFFFFF;
-		m_ListInfo.dwLineColor = 0;
-		m_ListInfo.bShowRowLine = false;
-		m_ListInfo.bShowColumnLine = false;
+		m_ListInfo.bShowHLine = false;
+		m_ListInfo.iHLineSize = 0;
+		m_ListInfo.dwHLineColor = 0;
+		m_ListInfo.bShowVLine = false;
+		m_ListInfo.iVLineSize = 0;
+		m_ListInfo.dwVLineColor = 0;
 		m_ListInfo.bShowHtml = false;
 		m_ListInfo.bMultiExpandable = false;
 		m_ListInfo.bRSelected = false;
-		m_ListInfo.iHLineSize = 0;
-		m_ListInfo.dwHLineColor = 0xFF3C3C3C;
-		m_ListInfo.iVLineSize = 0;
-		m_ListInfo.dwVLineColor = 0xFF3C3C3C;
 		::ZeroMemory(&m_ListInfo.rcTextPadding, sizeof(m_ListInfo.rcTextPadding));
 		::ZeroMemory(&m_ListInfo.rcColumn, sizeof(m_ListInfo.rcColumn));
 
@@ -906,35 +905,9 @@ namespace DuiLib {
 		return m_ListInfo.sDisabledImage;
 	}
 
-	DWORD CListUI::GetItemLineColor() const
-	{
-		return m_ListInfo.dwLineColor;
-	}
-
 	void CListUI::SetItemLineColor(DWORD dwLineColor)
 	{
-		m_ListInfo.dwLineColor = dwLineColor;
-		Invalidate();
-	}
-
-	int CListUI::GetItemVLineSize() const
-	{
-		return m_ListInfo.iVLineSize;
-	}
-
-	void CListUI::SetItemVLineSize(int nSize)
-	{
-		m_ListInfo.iVLineSize = nSize;
-		Invalidate();
-	}
-
-	DWORD CListUI::GetItemVLineColor() const
-	{
-		return m_ListInfo.dwVLineColor;
-	}
-
-	void CListUI::SetItemVLineColor(DWORD dwLineColor)
-	{
+		m_ListInfo.dwHLineColor = dwLineColor;
 		m_ListInfo.dwVLineColor = dwLineColor;
 		Invalidate();
 	}
@@ -961,16 +934,60 @@ namespace DuiLib {
 		Invalidate();
 	}
 
+	int CListUI::GetItemVLineSize() const
+	{
+		return m_ListInfo.iVLineSize;
+	}
+
+	void CListUI::SetItemVLineSize(int nSize)
+	{
+		m_ListInfo.iVLineSize = nSize;
+		Invalidate();
+	}
+
+	DWORD CListUI::GetItemVLineColor() const
+	{
+		return m_ListInfo.dwVLineColor;
+	}
+
+	void CListUI::SetItemVLineColor(DWORD dwLineColor)
+	{
+		m_ListInfo.dwVLineColor = dwLineColor;
+		Invalidate();
+	}
+
+	bool CListUI::GetItemShowHLine() const
+	{
+		return m_ListInfo.bShowHLine;
+	}
+
+	void CListUI::SetItemShowHLine(bool bShow)
+	{
+		m_ListInfo.bShowHLine = bShow;
+		Invalidate();
+	}
+
+	bool CListUI::GetItemShowVLine() const
+	{
+		return m_ListInfo.bShowVLine;
+	}
+
+	void CListUI::SetItemShowVLine(bool bShow)
+	{
+		m_ListInfo.bShowVLine = bShow;
+		Invalidate();
+	}
+
+	// Old names kept for compatibility: RowLine=HLine, ColumnLine=VLine
 	void CListUI::SetItemShowRowLine(bool bShowLine)
 	{
-		m_ListInfo.bShowRowLine = bShowLine;
-		Invalidate();
+		SetItemShowHLine(bShowLine);
 	}
 	void CListUI::SetItemShowColumnLine(bool bShowLine)
 	{
-		m_ListInfo.bShowColumnLine = bShowLine;
-		Invalidate();
+		SetItemShowVLine(bShowLine);
 	}
+
 	bool CListUI::IsItemShowHtml()
 	{
 		return m_ListInfo.bShowHtml;
@@ -1195,13 +1212,107 @@ namespace DuiLib {
 			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
 			SetItemHLineColor(clrColor);
 		}
-		else if (_tcsicmp(pstrName, _T("itemshowrowline")) == 0) SetItemShowRowLine(_tcsicmp(pstrValue, _T("true")) == 0);
-		else if (_tcsicmp(pstrName, _T("itemshowcolumnline")) == 0) SetItemShowColumnLine(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if (_tcsicmp(pstrName, _T("itemshowline")) == 0) {
+			bool bShow = _tcsicmp(pstrValue, _T("true")) == 0;
+			SetItemShowHLine(bShow);
+			SetItemShowVLine(bShow);
+		}
+		else if (_tcsicmp(pstrName, _T("itemshowrowline")) == 0 || _tcsicmp(pstrName, _T("itemshowhline")) == 0) SetItemShowHLine(_tcsicmp(pstrValue, _T("true")) == 0);
+		else if (_tcsicmp(pstrName, _T("itemshowcolumnline")) == 0 || _tcsicmp(pstrName, _T("itemshowvline")) == 0) SetItemShowVLine(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if (_tcsicmp(pstrName, _T("itemshowhtml")) == 0) SetItemShowHtml(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if (_tcsicmp(pstrName, _T("multiselect")) == 0) SetMultiSelect(_tcsicmp(pstrValue, _T("true")) == 0);
 		else if (_tcsicmp(pstrName, _T("itemrselected")) == 0) SetItemRSelected(_tcsicmp(pstrValue, _T("true")) == 0);
 
 		else CVerticalLayoutUI::SetAttribute(pstrName, pstrValue);
+	}
+
+	void CListUI::DoInit()
+	{
+		if (GetManager() != NULL) GetManager()->AddPostPaint(this);
+	}
+
+	// List-level line painter driven by itemlinecolor/itemshowrowline/
+	// itemshowcolumnline: full-span column separators, row bottom lines and
+	// the header bottom line; rows and header draw no lines themselves.
+	// ListHeader's own itemlinecolor/itemshowrowline override the header line only.
+	void CListUI::DoPostPaint(HDC hDC, const RECT& rcPaint)
+	{
+		if (m_pHeader == NULL || m_pList == NULL) return;
+		if (!IsVisible() || !IsInternVisible()) return;
+		if (!m_ListInfo.bShowHLine && !m_ListInfo.bShowVLine) return;
+		RECT rcHeader = m_pHeader->GetPos();
+		RECT rcBody = m_pList->GetPos();
+		RECT rcAll = { rcHeader.left, rcHeader.top, rcBody.right, rcBody.bottom };
+		RECT rcInter = { 0 };
+		if (!::IntersectRect(&rcInter, &rcPaint, &rcAll)) return;
+
+		// Content area excluding opaque scrollbars
+		CScrollBarUI* pVScroll = GetVerticalScrollBar();
+		bool bVScroll = (pVScroll != NULL && pVScroll->IsVisible());
+		RECT rcV = { 0 };
+		if (bVScroll) rcV = pVScroll->GetPos();
+		CScrollBarUI* pHScroll = GetHorizontalScrollBar();
+		bool bHScroll = (pHScroll != NULL && pHScroll->IsVisible());
+		RECT rcH = { 0 };
+		if (bHScroll) rcH = pHScroll->GetPos();
+		int nContentBottom = (bHScroll && rcH.top < rcBody.bottom) ? rcH.top : rcBody.bottom;
+		int nContentRight = (bVScroll && rcV.left < rcBody.right) ? rcV.left : rcBody.right;
+
+		// Column separators: inner gaps only, the rightmost edge is the table border's job
+		HBRUSH hBrush = NULL;
+		if (m_ListInfo.bShowVLine && m_ListInfo.dwVLineColor != 0 && m_ListInfo.iVLineSize > 0) {
+			int nVSize = m_ListInfo.iVLineSize;
+			DWORD dwAdjustColor = GetAdjustColor(m_ListInfo.dwVLineColor);
+			COLORREF crLine = RGB(GetBValue(dwAdjustColor), GetGValue(dwAdjustColor), GetRValue(dwAdjustColor));
+			hBrush = ::CreateSolidBrush(crLine);
+			if (hBrush != NULL) {
+				for (int i = 0; i < m_pHeader->GetCount(); i++) {
+					CControlUI* pItem = static_cast<CControlUI*>(m_pHeader->GetItemAt(i));
+					if (pItem == NULL || !pItem->IsVisible()) continue;
+					RECT rcItem = pItem->GetPos();
+					RECT rcLine = { rcItem.right - nVSize, rcHeader.top, rcItem.right, nContentBottom };
+					if (rcLine.left < rcHeader.left) continue;
+					if (rcLine.right >= nContentRight) continue;
+					::FillRect(hDC, &rcLine, hBrush);
+				}
+				::DeleteObject(hBrush);
+			}
+		}
+
+		if (m_ListInfo.bShowHLine) {
+			int nHSize = m_ListInfo.iHLineSize;
+			// Header bottom line follows the List H line settings
+			if (nHSize > 0 && m_ListInfo.dwHLineColor != 0) {
+				DWORD dwAdjustColor = GetAdjustColor(m_ListInfo.dwHLineColor);
+				COLORREF crLine = RGB(GetBValue(dwAdjustColor), GetGValue(dwAdjustColor), GetRValue(dwAdjustColor));
+				HBRUSH hHdrBrush = ::CreateSolidBrush(crLine);
+				if (hHdrBrush != NULL) {
+					RECT rcLine = { rcHeader.left, rcHeader.bottom - nHSize, rcHeader.right, rcHeader.bottom };
+					::FillRect(hDC, &rcLine, hHdrBrush);
+					::DeleteObject(hHdrBrush);
+				}
+			}
+			// Row bottom lines: inner gaps only, the bottom edge is the table border's job
+			if (nHSize > 0 && m_ListInfo.dwHLineColor != 0) {
+				DWORD dwAdjustColor = GetAdjustColor(m_ListInfo.dwHLineColor);
+				COLORREF crLine = RGB(GetBValue(dwAdjustColor), GetGValue(dwAdjustColor), GetRValue(dwAdjustColor));
+				hBrush = ::CreateSolidBrush(crLine);
+				if (hBrush != NULL) {
+					for (int i = 0; i < m_pList->GetCount(); i++) {
+						CControlUI* pRow = static_cast<CControlUI*>(m_pList->GetItemAt(i));
+						if (pRow == NULL || !pRow->IsVisible()) continue;
+						RECT rcRow = pRow->GetPos();
+						if (rcRow.bottom <= rcHeader.bottom || rcRow.top >= rcBody.bottom) continue;
+						if (rcRow.bottom >= nContentBottom) continue;
+						int nRight = (rcRow.right < nContentRight) ? rcRow.right : nContentRight;
+						if (rcRow.left >= nRight) continue;
+						RECT rcLine = { rcRow.left, rcRow.bottom - nHSize, nRight, rcRow.bottom };
+						::FillRect(hDC, &rcLine, hBrush);
+					}
+					::DeleteObject(hBrush);
+				}
+			}
+		}
 	}
 
 	IListCallbackUI* CListUI::GetTextCallback() const
@@ -1774,22 +1885,13 @@ namespace DuiLib {
 		return m_bIsScaleHeader;
 	}
 
-	void CListHeaderUI::DoInit()
-	{
-
-	}
-	void CListHeaderUI::DoPostPaint(HDC hDC, const RECT& rcPaint)
-	{
-
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////
 	//
 	//
 	IMPLEMENT_DUICONTROL(CListHeaderItemUI)
 
 		CListHeaderItemUI::CListHeaderItemUI() : m_bDragable(true), m_uButtonState(0), m_iSepWidth(4),
-		m_dwSepColor(0), m_uTextStyle(DT_VCENTER | DT_CENTER | DT_SINGLELINE), m_dwTextColor(0), m_iFont(-1), m_bShowHtml(false), m_nScale(0)
+		m_uTextStyle(DT_VCENTER | DT_CENTER | DT_SINGLELINE), m_dwTextColor(0), m_iFont(-1), m_bShowHtml(false), m_nScale(0)
 	{
 		SetTextPadding(CDuiRect(2, 0, 2, 0));
 		ptLastMouse.x = ptLastMouse.y = 0;
@@ -1951,17 +2053,6 @@ namespace DuiLib {
 		Invalidate();
 	}
 
-	DWORD CListHeaderItemUI::GetSepColor() const
-	{
-		return m_dwSepColor;
-	}
-
-	void CListHeaderItemUI::SetSepColor(DWORD dwSepColor)
-	{
-		m_dwSepColor = dwSepColor;
-		Invalidate();
-	}
-
 	void CListHeaderItemUI::SetScale(int nScale)
 	{
 		m_nScale = nScale;
@@ -2037,12 +2128,6 @@ namespace DuiLib {
 		else if (_tcsicmp(pstrName, _T("pushedimage")) == 0) SetPushedImage(pstrValue);
 		else if (_tcsicmp(pstrName, _T("focusedimage")) == 0) SetFocusedImage(pstrValue);
 		else if (_tcsicmp(pstrName, _T("sepimage")) == 0) SetSepImage(pstrValue);
-		else if (_tcsicmp(pstrName, _T("sepcolor")) == 0) {
-			if (*pstrValue == _T('#')) pstrValue = ::CharNext(pstrValue);
-			LPTSTR pstr = NULL;
-			DWORD clrColor = _tcstoul(pstrValue, &pstr, 16);
-			SetSepColor(clrColor);
-		}
 		else if (_tcsicmp(pstrName, _T("scale")) == 0) {
 			LPTSTR pstr = NULL;
 			SetScale(_tcstol(pstrValue, &pstr, 10));
@@ -2198,17 +2283,6 @@ namespace DuiLib {
 			m_sSepImageModify.Empty();
 			m_sSepImageModify.SmallFormat(_T("dest='%d,%d,%d,%d'"), rcThumb.left, rcThumb.top, rcThumb.right, rcThumb.bottom);
 			if (!DrawImage(hDC, (LPCTSTR)m_sSepImage, (LPCTSTR)m_sSepImageModify)) {}
-		}
-		else if (m_dwSepColor != 0 && m_iSepWidth != 0) {
-			RECT rcSepLine = GetThumbRect();
-			if (m_iSepWidth > 0) {
-				rcSepLine.left = rcSepLine.right - m_iSepWidth / 2;
-			}
-			else {
-				rcSepLine.right = rcSepLine.left - m_iSepWidth / 2;
-				rcSepLine.left = rcSepLine.right - m_iSepWidth / 2;
-			}
-			CRenderEngine::DrawLine(hDC, rcSepLine, abs(m_iSepWidth), GetAdjustColor(m_dwSepColor));
 		}
 	}
 
@@ -2483,19 +2557,6 @@ namespace DuiLib {
 			if (!pInfo->sBkImage.IsEmpty()) {
 				if (!DrawImage(hDC, (LPCTSTR)pInfo->sBkImage)) {}
 				else return;
-			}
-		}
-
-		if (pInfo->dwLineColor != 0) {
-			if (pInfo->bShowRowLine) {
-				RECT rcLine = { m_rcItem.left, m_rcItem.bottom - 1, m_rcItem.right, m_rcItem.bottom - 1 };
-				CRenderEngine::DrawLine(hDC, rcLine, 1, GetAdjustColor(pInfo->dwLineColor));
-			}
-			if (pInfo->bShowColumnLine) {
-				for (int i = 0; i < pInfo->nColumns; i++) {
-					RECT rcLine = { pInfo->rcColumn[i].right - 1, m_rcItem.top, pInfo->rcColumn[i].right - 1, m_rcItem.bottom };
-					CRenderEngine::DrawLine(hDC, rcLine, 1, GetAdjustColor(pInfo->dwLineColor));
-				}
 			}
 		}
 	}
@@ -2887,7 +2948,6 @@ namespace DuiLib {
 		m_iIndex(-1),
 		m_pOwner(NULL),
 		m_bSelected(false),
-		m_bExpandable(false),
 		m_uButtonState(0)
 	{
 	}
@@ -3046,16 +3106,6 @@ namespace DuiLib {
 		return false;
 	}
 
-	bool CListContainerElementUI::GetExpandable() const
-	{
-		return m_bExpandable;
-	}
-
-	void CListContainerElementUI::SetExpandable(bool bExpandable)
-	{
-		m_bExpandable = bExpandable;
-	}
-
 	void CListContainerElementUI::DoEvent(TEventUI& event)
 	{
 		if (!IsMouseEnabled() && event.Type > UIEVENT__MOUSEBEGIN && event.Type < UIEVENT__MOUSEEND) {
@@ -3161,7 +3211,6 @@ namespace DuiLib {
 	void CListContainerElementUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if (_tcsicmp(pstrName, _T("selected")) == 0) Select();
-		else if( _tcsicmp(pstrName, _T("expandable")) == 0 ) SetExpandable(_tcsicmp(pstrValue, _T("true")) == 0);
 		else CContainerUI::SetAttribute(pstrName, pstrValue);
 	}
 
@@ -3270,19 +3319,6 @@ namespace DuiLib {
 				bool bDrawOk = DrawImage(hDC, (LPCTSTR)pInfo->sBkImage);
 				if(!pInfo->sForeImage.IsEmpty()) {
 					DrawImage(hDC, (LPCTSTR)pInfo->sForeImage);
-				}
-			}
-		}
-
-		if (pInfo->dwLineColor != 0) {
-			if (pInfo->bShowRowLine) {
-				RECT rcLine = { m_rcItem.left, m_rcItem.bottom - 1, m_rcItem.right, m_rcItem.bottom - 1 };
-				CRenderEngine::DrawLine(hDC, rcLine, 1, GetAdjustColor(pInfo->dwLineColor));
-			}
-			if (pInfo->bShowColumnLine) {
-				for (int i = 0; i < pInfo->nColumns; i++) {
-					RECT rcLine = { pInfo->rcColumn[i].right - 1, m_rcItem.top, pInfo->rcColumn[i].right - 1, m_rcItem.bottom };
-					CRenderEngine::DrawLine(hDC, rcLine, 1, GetAdjustColor(pInfo->dwLineColor));
 				}
 			}
 		}

@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_PAGECONTROL
 #include "UIPageControl.h"
 
 #pragma warning(disable:4996)
@@ -675,4 +674,3 @@ namespace DuiLib
 		return iPage;
 	}
 }
-#endif // DUIMOD_PAGECONTROL

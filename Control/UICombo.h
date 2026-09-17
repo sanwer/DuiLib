@@ -111,7 +111,6 @@ namespace DuiLib {
 		void SetDisabledItemBkColor(DWORD dwBkColor);
 		LPCTSTR GetDisabledItemImage() const;
 		void SetDisabledItemImage(LPCTSTR pStrImage);
-		DWORD GetItemLineColor() const;
 		void SetItemLineColor(DWORD dwLineColor);
 		bool IsItemShowHtml();
 		void SetItemShowHtml(bool bShowHtml = true);

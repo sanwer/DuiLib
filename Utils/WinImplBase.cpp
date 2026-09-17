@@ -52,6 +52,11 @@ namespace DuiLib
 		return _T("");
 	}
 
+	CDuiString WindowImplBase::GetSkinFolder()
+	{
+		return _T("");
+	}
+
 	CControlUI* WindowImplBase::CreateControl(LPCTSTR pstrClass)
 	{
 		return NULL;
@@ -209,8 +214,8 @@ namespace DuiLib
 		lpMMI->ptMaxPosition.x = rcWork.left;
 		lpMMI->ptMaxPosition.y = rcWork.top;
 
-		lpMMI->ptMaxTrackSize.x = rcWork.GetWidth();
-		lpMMI->ptMaxTrackSize.y = rcWork.GetHeight();
+		lpMMI->ptMaxTrackSize.x = m_pm.GetMaxInfo().cx == 0 ? rcWork.GetWidth() : m_pm.GetMaxInfo().cx;
+		lpMMI->ptMaxTrackSize.y = m_pm.GetMaxInfo().cy == 0 ? rcWork.GetHeight() : m_pm.GetMaxInfo().cy;
 
 		lpMMI->ptMinTrackSize.x = m_pm.GetMinInfo().cx;
 		lpMMI->ptMinTrackSize.y = m_pm.GetMinInfo().cy;
@@ -361,8 +366,7 @@ namespace DuiLib
 		if (pRoot == NULL)
 		{
 			MessageBox(NULL, _T("Failed to load resource file!"), _T("Duilib"), MB_OK | MB_ICONERROR);
-			ExitProcess(1);
-			return 0;
+			return -1;
 		}
 		m_pm.AttachDialog(pRoot);
 		m_pm.AddNotifier(this);

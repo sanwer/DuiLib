@@ -298,7 +298,6 @@ namespace DuiLib {
 		m_ListInfo.dwHotBkColor = 0xFFE9F5FF;
 		m_ListInfo.dwDisabledTextColor = 0xFFCCCCCC;
 		m_ListInfo.dwDisabledBkColor = 0xFFFFFFFF;
-		m_ListInfo.dwLineColor = 0;
 		m_ListInfo.bShowHtml = false;
 		m_ListInfo.bMultiExpandable = false;
 		m_ListInfo.iHLineSize = 0;
@@ -995,14 +994,10 @@ namespace DuiLib {
 		return m_ListInfo.sDisabledImage;
 	}
 
-	DWORD CComboUI::GetItemLineColor() const
-	{
-		return m_ListInfo.dwLineColor;
-	}
-
 	void CComboUI::SetItemLineColor(DWORD dwLineColor)
 	{
-		m_ListInfo.dwLineColor = dwLineColor;
+		m_ListInfo.dwHLineColor = dwLineColor;
+		m_ListInfo.dwVLineColor = dwLineColor;
 	}
 
 	bool CComboUI::GetShowText() const

@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_RICHEDIT
 #include "UIRichEdit.h"
 
 #ifdef _USEIMM
@@ -2836,4 +2835,3 @@ err:
 	}
 
 } // namespace DuiLib
-#endif // DUIMOD_RICHEDIT

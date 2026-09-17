@@ -333,7 +333,8 @@ namespace DuiLib
 		else if( _tcsicmp(pstrName, _T("shadowoffset")) == 0 ) {
 			LPTSTR pstr = NULL;
 			int offsetx = _tcstol(pstrValue, &pstr, 10);	ASSERT(pstr);
-			int offsety = _tcstol(pstr + 1, &pstr, 10);	ASSERT(pstr);
+			int offsety = 0;
+			if( pstr != NULL && *pstr == _T(',')) offsety = _tcstol(pstr + 1, &pstr, 10);
 			SetShadowOffset(offsetx, offsety);
 		}
 		else if( _tcsicmp(pstrName, _T("textcolor1")) == 0 ) {
@@ -542,19 +543,11 @@ namespace DuiLib
 	}
 
 #ifdef _USE_GDIPLUS
-	void CLabelUI::SetShadowOffset( int _offset,int _angle )
+	void CLabelUI::SetShadowOffset( int offsetx, int offsety )
 	{
-		if(_angle > 180 || _angle < -180) return;
-
-		RECT rc = m_rcItem;
-		if(_angle >= 0 && _angle <= 180) rc.top -= _offset;
-		else if(_angle > -180 && _angle < 0) rc.top += _offset;
-
-		if(_angle > -90 && _angle <= 90) rc.left -= _offset;
-		else if( _angle > 90 || _angle < -90) rc.left += _offset;
-
-		m_ShadowOffset.X = (float)rc.top;
-		m_ShadowOffset.Y = (float)rc.left;
+		// shadowoffset="offsetx,offsety": relative offsets added to the text rect when drawing shadow
+		m_ShadowOffset.X = (float)offsetx;
+		m_ShadowOffset.Y = (float)offsety;
 		Invalidate();
 	}
 

@@ -1,5 +1,4 @@
 ﻿#include "StdAfx.h"
-#ifdef DUIMOD_TREEVIEW
 #include "UITreeView.h"
 
 #pragma warning(disable: 4251)
@@ -1279,6 +1278,4 @@ namespace DuiLib
 		}
 		else CListUI::SetAttribute(pstrName,pstrValue);
 	}
-
-}
-#endif // DUIMOD_TREEVIEW
+}

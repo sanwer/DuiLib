@@ -37,17 +37,15 @@ namespace DuiLib {
 		CDuiString sHotForeImage;
 		CDuiString sSelectedForeImage;
 
-		DWORD dwLineColor;
-		bool bShowRowLine;
-		bool bShowColumnLine;
+		bool bShowHLine;
+		int iHLineSize;
+		DWORD dwHLineColor;
+		bool bShowVLine;
+		int iVLineSize;
+		DWORD dwVLineColor;
 		bool bShowHtml;
 		bool bMultiExpandable;
 		bool bRSelected;
-
-		int iHLineSize;
-		DWORD dwHLineColor;
-		int iVLineSize;
-		DWORD dwVLineColor;
 	} TListInfoUI;
 
 
@@ -201,15 +199,18 @@ namespace DuiLib {
 		DWORD GetDisabledItemTextColor() const;
 		DWORD GetDisabledItemBkColor() const;
 		LPCTSTR GetDisabledItemImage() const;
-		DWORD GetItemLineColor() const;
-		int GetItemVLineSize() const;
-		void SetItemVLineSize(int nSize);
-		DWORD GetItemVLineColor() const;
-		void SetItemVLineColor(DWORD dwLineColor);
 		int GetItemHLineSize() const;
 		void SetItemHLineSize(int nSize);
 		DWORD GetItemHLineColor() const;
 		void SetItemHLineColor(DWORD dwLineColor);
+		int GetItemVLineSize() const;
+		void SetItemVLineSize(int nSize);
+		DWORD GetItemVLineColor() const;
+		void SetItemVLineColor(DWORD dwLineColor);
+		bool GetItemShowHLine() const;
+		void SetItemShowHLine(bool bShow = true);
+		bool GetItemShowVLine() const;
+		void SetItemShowVLine(bool bShow = true);
 
 		void SetMultiExpanding(bool bMultiExpandable);
 		int GetExpandedItem() const;
@@ -222,6 +223,9 @@ namespace DuiLib {
 
 		IListCallbackUI* GetTextCallback() const;
 		void SetTextCallback(IListCallbackUI* pCallback);
+
+		void DoInit();
+		void DoPostPaint(HDC hDC, const RECT& rcPaint);
 
 		SIZE GetScrollPos() const;
 		SIZE GetScrollRange() const;
@@ -308,9 +312,6 @@ namespace DuiLib {
 
 		void SetScaleHeader(bool bIsScale);
 		bool IsScaleHeader() const;
-
-		void DoInit();
-		void DoPostPaint(HDC hDC, const RECT& rcPaint);
 	private:
 		bool m_bIsScaleHeader;
 	};
@@ -336,8 +337,6 @@ namespace DuiLib {
 		void SetDragable(bool bDragable);
 		DWORD GetSepWidth() const;
 		void SetSepWidth(int iWidth);
-		DWORD GetSepColor() const;
-		void SetSepColor(DWORD dwSepColor);
 		DWORD GetTextStyle() const;
 		void SetTextStyle(UINT uStyle);
 		DWORD GetTextColor() const;
@@ -373,7 +372,6 @@ namespace DuiLib {
 		bool m_bDragable;
 		UINT m_uButtonState;
 		int m_iSepWidth;
-		DWORD m_dwSepColor;
 		DWORD m_dwTextColor;
 		int m_iFont;
 		UINT m_uTextStyle;
@@ -517,8 +515,6 @@ namespace DuiLib {
 		bool SelectMulti(bool bSelect = true);
 		bool IsExpanded() const;
 		bool Expand(bool bExpand = true);
-		bool GetExpandable() const;
-		void SetExpandable(bool bExpandable);
 
 		void Invalidate(); //CControl::Invalidate would refresh scrollbars; override reduces the invalidate region
 		bool Activate();
@@ -535,7 +531,6 @@ namespace DuiLib {
 	protected:
 		int m_iIndex;
 		bool m_bSelected;
-		bool m_bExpandable;
 		UINT m_uButtonState;
 		IListOwnerUI* m_pOwner;
 	};

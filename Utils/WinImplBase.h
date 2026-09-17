@@ -31,7 +31,7 @@ namespace DuiLib
 			virtual void OnClick(TNotifyUI& msg);
 
 	protected:
-		virtual CDuiString GetSkinFolder() = 0;
+		virtual CDuiString GetSkinFolder();
 		virtual CDuiString GetSkinFile() = 0;
 		virtual LPCTSTR GetWindowClassName(void) const = 0;
 		virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);

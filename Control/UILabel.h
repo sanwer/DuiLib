@@ -60,7 +60,7 @@ namespace DuiLib
 		float		GetLuminousFuzzy();
 		void		SetGradientLength(int _GradientLength);
 		int			GetGradientLength();
-		void		SetShadowOffset(int _offset,int _angle);
+		void		SetShadowOffset(int offsetx,int offsety);
 		RectF		GetShadowOffset();
 		void		SetTextColor1(DWORD _TextColor1);
 		DWORD		GetTextColor1();

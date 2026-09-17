@@ -1,5 +1,4 @@
 #include "StdAfx.h"
-#ifdef DUIMOD_SLIDER
 #include "UISlider.h"
 
 namespace DuiLib
@@ -318,4 +317,3 @@ namespace DuiLib
 		}
 	}
 }
-#endif // DUIMOD_SLIDER

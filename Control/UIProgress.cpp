@@ -1,5 +1,4 @@
 #include "StdAfx.h"
-#ifdef DUIMOD_PROGRESS
 #include "UIProgress.h"
 
 namespace DuiLib
@@ -174,4 +173,3 @@ namespace DuiLib
 		}
 	}
 }
-#endif // DUIMOD_PROGRESS

@@ -435,11 +435,8 @@ namespace DuiLib {
 			}
 			// Attach to parent
 			// 因为某些属性和父窗口相关，比如selected，必须先Add到父窗口
-#ifdef DUIMOD_TREEVIEW
 			CTreeViewUI* pTreeView = NULL;
-#endif
 			if( pParent != NULL && pControl != NULL ) {
-#ifdef DUIMOD_TREEVIEW
 				CTreeNodeUI* pParentTreeNode = static_cast<CTreeNodeUI*>(pParent->GetInterface(DUI_CTR_TREENODE));
 				CTreeNodeUI* pTreeNode = static_cast<CTreeNodeUI*>(pControl->GetInterface(DUI_CTR_TREENODE));
 				pTreeView = static_cast<CTreeViewUI*>(pParent->GetInterface(DUI_CTR_TREEVIEW));
@@ -469,7 +466,6 @@ namespace DuiLib {
 				}
 				// 普通控件
 				else
-#endif // DUIMOD_TREEVIEW
 				{
 					if( pContainer == NULL ) pContainer = static_cast<IContainerUI*>(pParent->GetInterface(DUI_CTR_ICONTAINER));
 					ASSERT(pContainer);
@@ -484,12 +480,10 @@ namespace DuiLib {
 
 			// Init default attributes
 			if( pManager ) {
-#ifdef DUIMOD_TREEVIEW
 				if(pTreeView != NULL) {
 					pControl->SetManager(pManager, pTreeView, true);
 				}
 				else
-#endif // DUIMOD_TREEVIEW
 				{
 					pControl->SetManager(pManager, NULL, false);
 				}
@@ -507,13 +501,9 @@ namespace DuiLib {
 				}
 			}
 			if( pManager ) {
-#ifdef DUIMOD_TREEVIEW
 				if(pTreeView == NULL) {
-#endif
 					pControl->SetManager(NULL, NULL, false);
-#ifdef DUIMOD_TREEVIEW
 				}
-#endif
 			}
 			// Return first item
 			if( pReturn == NULL ) pReturn = pControl;

@@ -58,23 +58,17 @@
 #define DUIMOD_ACTIVEX              // CActiveXUI
 #define DUIMOD_ANIMATION            // CUIAnimation
 #define DUIMOD_ANIMATIONTABLAYOUT   // CAnimationTabLayoutUI (auto-enables ANIMATION)
-#define DUIMOD_COLORPALETTE         // CColorPaletteUI
-#define DUIMOD_FADEBUTTON           // CFadeButtonUI
+#define DUIMOD_FADEBUTTON           // CFadeButtonUI (auto-enables ANIMATION)
 #define DUIMOD_GIFANIM              // CGifAnimUI
+#define DUIMOD_COLORPALETTE         // CColorPaletteUI
 #define DUIMOD_HOTKEY               // CHotKeyUI
 #define DUIMOD_IPADDRESS            // CIPAddressUI
 #define DUIMOD_IPADDRESSEX          // CIPAddressExUI
-#define DUIMOD_LISTEX               // CListExUI (auto-enables COMBOBOX + RICHEDIT)
-#define DUIMOD_LOADING              // CLoadingUI
-#define DUIMOD_PAGECONTROL          // CPageControlUI
-#define DUIMOD_PROGRESS             // CProgressUI
-#define DUIMOD_RICHEDIT             // CRichEditUI
-#define DUIMOD_RING                 // CRingUI
 #define DUIMOD_ROLLTEXT             // CRollTextUI
-#define DUIMOD_SLIDER               // CSliderUI (auto-enables PROGRESS)
+#define DUIMOD_LOADING              // CLoadingUI
+#define DUIMOD_RING                 // CRingUI
 #define DUIMOD_TRAYICON             // CTrayIconUI
-#define DUIMOD_TREEVIEW             // CTreeViewUI
-#define DUIMOD_WEBBROWSER           // CWebBrowserUI (auto-enables ACTIVEX)
+#define DUIMOD_WEBBROWSER           // CWebBrowserUI
 
 // Module dependencies auto-enabled.
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
@@ -85,21 +79,6 @@
 #ifdef DUIMOD_FADEBUTTON
 #ifndef DUIMOD_ANIMATION
 #define DUIMOD_ANIMATION
-#endif
-#endif
-#ifdef DUIMOD_LISTEX
-#ifndef DUIMOD_RICHEDIT
-#define DUIMOD_RICHEDIT
-#endif
-#endif
-#ifdef DUIMOD_SLIDER
-#ifndef DUIMOD_PROGRESS
-#define DUIMOD_PROGRESS
-#endif
-#endif
-#ifdef DUIMOD_WEBBROWSER
-#ifndef DUIMOD_ACTIVEX
-#define DUIMOD_ACTIVEX
 #endif
 #endif
 
@@ -123,30 +102,33 @@
 #include "Core/UIRender.h"
 #include "Utils/WinImplBase.h"
 
-#include "Layout/UIChildLayout.h"
 #include "Layout/UIHorizontalLayout.h"
 #include "Layout/UIVerticalLayout.h"
 #include "Layout/UITabLayout.h"
 #include "Layout/UITileLayout.h"
+#include "Layout/UIChildLayout.h"
 #include "Control/UILabel.h"
+#include "Control/UIText.h"
 #include "Control/UIButton.h"
+#include "Control/UIOption.h"
+#include "Control/UIEdit.h"
+#include "Control/UIRichEdit.h"
 #include "Control/UIList.h"
+#include "Control/UIListEx.h"
+#include "Control/UITreeView.h"
 #include "Control/UICombo.h"
 #include "Control/UIComboBox.h"
 #include "Control/UIDateTime.h"
-#include "Control/UIEdit.h"
+#include "Control/UIProgress.h"
+#include "Control/UISlider.h"
+#include "Control/UIScrollBar.h"
 #include "Control/UIGroupBox.h"
 #include "Control/UIMenu.h"
-#include "Control/UIOption.h"
-#include "Control/UIScrollBar.h"
-#include "Control/UIText.h"
+#include "Control/UIPageControl.h"
 
 // Switchable modules
 #ifdef DUIMOD_ACTIVEX
 #include "Control/UIActiveX.h"
-#endif
-#ifdef DUIMOD_WEBBROWSER
-#include "Control/UIWebBrowser.h"
 #endif
 #ifdef DUIMOD_ANIMATION
 #include "Control/UIAnimation.h"
@@ -154,14 +136,11 @@
 #ifdef DUIMOD_ANIMATIONTABLAYOUT
 #include "Layout/UIAnimationTabLayout.h"
 #endif
-#ifdef DUIMOD_COLORPALETTE
-#include "Control/UIColorPalette.h"
-#endif
-#ifdef DUIMOD_FADEBUTTON
-#include "Control/UIFadeButton.h"
-#endif
 #ifdef DUIMOD_GIFANIM
 #include "Control/UIGifAnim.h"
+#endif
+#ifdef DUIMOD_COLORPALETTE
+#include "Control/UIColorPalette.h"
 #endif
 #ifdef DUIMOD_HOTKEY
 #include "Control/UIHotKey.h"
@@ -172,35 +151,23 @@
 #ifdef DUIMOD_IPADDRESSEX
 #include "Control/UIIPAddressEx.h"
 #endif
-#ifdef DUIMOD_LISTEX
-#include "Control/UIListEx.h"
+#ifdef DUIMOD_ROLLTEXT
+#include "Control/UIRollText.h"
+#endif
+#ifdef DUIMOD_FADEBUTTON
+#include "Control/UIFadeButton.h"
 #endif
 #ifdef DUIMOD_LOADING
 #include "Control/UILoading.h"
 #endif
-#ifdef DUIMOD_PAGECONTROL
-#include "Control/UIPageControl.h"
-#endif
-#ifdef DUIMOD_PROGRESS
-#include "Control/UIProgress.h"
-#endif
-#ifdef DUIMOD_RICHEDIT
-#include "Control/UIRichEdit.h"
-#endif
 #ifdef DUIMOD_RING
 #include "Control/UIRing.h"
-#endif
-#ifdef DUIMOD_ROLLTEXT
-#include "Control/UIRollText.h"
-#endif
-#ifdef DUIMOD_SLIDER
-#include "Control/UISlider.h"
 #endif
 #ifdef DUIMOD_TRAYICON
 #include "Utils/TrayIcon.h"
 #endif
-#ifdef DUIMOD_TREEVIEW
-#include "Control/UITreeView.h"
+#ifdef DUIMOD_WEBBROWSER
+#include "Control/UIWebBrowser.h"
 #endif
 
 // Link libraries

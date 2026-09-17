@@ -1,5 +1,4 @@
 ﻿#include "stdafx.h"
-#ifdef DUIMOD_LISTEX
 #include "UIListEx.h"
 
 namespace DuiLib {
@@ -1592,4 +1591,3 @@ Label_ForeImage:
 	}
 
 } // namespace DuiLib
-#endif // DUIMOD_LISTEX
